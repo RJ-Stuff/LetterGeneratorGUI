@@ -71,8 +71,7 @@ namespace LetterApp.view
         {
             var chk = sender as CheckBox;
 
-            Tuple<TextBox, string> tuple;
-            if (filterPair.TryGetValue(chk, out tuple) && Utils.Validate(tuple.Item1))
+            if (filterPair.TryGetValue(chk, out Tuple<TextBox, string> tuple) && Utils.Validate(tuple.Item1))
             {
                 if (chk.Checked)
                 {
@@ -93,13 +92,10 @@ namespace LetterApp.view
             }
             else
             {
-                var alt = tuple.Item1.Text.Trim().Length == 0 ? ", comience agregando algún valor al filtro." : "";
+                var alt = tuple.Item1.Text.Trim().Length == 0 ? ", comience agregando algún valor al filtro." : ".";
                 MessageBox.Show($"Hay problemas con la validación del valor del filtro{alt}", "Validación");
                 chk.Checked = false;
             }
-
-            Console.WriteLine(chk.Checked);
-            Console.WriteLine(chk.Name);
         }
 
         private void ManageCheckGroupBox(CheckBox chk, GroupBox grp)
@@ -153,6 +149,21 @@ namespace LetterApp.view
             mainWindow.btSaveEditorChanges.Click += new EventHandler(SaveEditorChanges);
             mainWindow.btRemoveFilter.Click += new EventHandler(RemoveFilter);
             mainWindow.cbLineWrap.Click += new EventHandler(LineWrap);
+            mainWindow.btAddOption.Click += new EventHandler(AddOption);
+        }
+
+        private void AddOption(object sender, EventArgs e)
+        {
+            if (mainWindow.txtbExtendedOption.Text.Trim().Length == 0)
+            {
+                MessageBox.Show("Debe introducir algún valor como opción.", "Validación");
+            }
+            else
+            {
+                var option = mainWindow.txtbExtendedOption.Text.Trim();
+                mainWindow.lbFilters.Items.Add(new Filter(option, option, ""));
+                mainWindow.txtbExtendedOption.Text = "";
+            }
         }
 
         private void LineWrap(object sender, EventArgs e)
@@ -164,14 +175,14 @@ namespace LetterApp.view
         {
             if (mainWindow.lbFilters.Items.Count == 0)
             {
-                MessageBox.Show("No existen filtros", "Información");
+                MessageBox.Show("No existen filtros.", "Información");
             }
             else
             {
                 var index = mainWindow.lbFilters.SelectedIndex;
                 if (index == -1)
                 {
-                    MessageBox.Show("Debe seleccionar el filtro a eliminar", "Información");
+                    MessageBox.Show("Debe seleccionar el filtro a eliminar.", "Información");
                 }
                 else
                 {
@@ -179,7 +190,20 @@ namespace LetterApp.view
                          "Confirmar eliminación", MessageBoxButtons.YesNo);
                     if (confirmResult == DialogResult.Yes)
                     {
-                        mainWindow.lbFilters.Items.RemoveAt(index);
+                        var filter = mainWindow.lbFilters.Items[index] as Filter;
+
+                        var chkl = filterPair.Keys.Select(k => k).Where(k => k.Text == filter.DisplayName).ToList();
+
+                        if (chkl.Count != 0)
+                        {
+                            chkl[0].Checked = false;
+                            FilterAction(chkl[0], null);
+                        }
+                        else
+                        {
+                            mainWindow.lbFilters.Items.RemoveAt(index);
+                        }
+
                         RefreshGUI();
                     }
                 }
@@ -201,7 +225,7 @@ namespace LetterApp.view
         {
             if (mainWindow.ckLbFormats.Items.Count == 0)
             {
-                MessageBox.Show(mainWindow, "No existen formatos", "Eliminar formato");
+                MessageBox.Show(mainWindow, "No existen formatos.", "Eliminar formato");
             }
             else
             {
@@ -251,7 +275,7 @@ namespace LetterApp.view
                 }
                 catch (Exception ex)
                 {
-                    MessageBox.Show("Error: No fue posible leer el formato del disco");
+                    MessageBox.Show("Error: No fue posible leer el formato del disco.");
                 }
             }
         }
