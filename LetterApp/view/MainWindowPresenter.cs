@@ -1,4 +1,5 @@
 ﻿using LetterApp.model;
+using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
@@ -6,6 +7,7 @@ using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Windows.Forms;
 
 namespace LetterApp.view
@@ -15,11 +17,23 @@ namespace LetterApp.view
         private MainWindow mainWindow;
         private Configuration configuration;
         private Dictionary<CheckBox, Tuple<TextBox, string>> filterPair;
+        private bool UnSavedChanges;
+        private JToken GUIConfiguration;
 
         public MainWindowPresenter(MainWindow mainWindow)
         {
             this.mainWindow = mainWindow;
             this.filterPair = new Dictionary<CheckBox, Tuple<TextBox, string>>();
+            UnSavedChanges = false;
+
+            GUIConfiguration = JToken.Parse(File.ReadAllText(Path.Combine(Directory.GetCurrentDirectory(), "GUIConfiguration.json")));
+
+            mainWindow.cbPaperSize.DropDownStyle = ComboBoxStyle.DropDownList;
+
+            (GUIConfiguration["papersizes"] ?? new JArray())
+            .Select(p => new PaperSize(p["name"].Value<string>(), p["displayname"].Value<string>()))
+            .ToList()
+            .ForEach(o => this.mainWindow.cbPaperSize.Items.Add(o));
 
             UpdateFilterTab();
 
@@ -31,9 +45,7 @@ namespace LetterApp.view
 
         private void UpdateFilterTab()
         {
-            var conf = JToken.Parse(File.ReadAllText(Path.Combine(Directory.GetCurrentDirectory(), "GUIConfiguration.json")));
-            var filters = conf["filters"] ?? new JArray();
-
+            var filters = GUIConfiguration["filters"] ?? new JArray();
 
             filters.Select((f, i) => new { filter = f, i = i }).ToList().ForEach(f =>
                 {
@@ -64,7 +76,7 @@ namespace LetterApp.view
                     }
                 });
 
-            ManageCheckGroupBox(mainWindow.cbExtendedOptions, mainWindow.gbExtendedOptions);
+            ManageCheckGroupBox(mainWindow.ckbExtendedOptions, mainWindow.gbExtendedOptions);
         }
 
         private void FilterAction(object sender, EventArgs e)
@@ -92,7 +104,7 @@ namespace LetterApp.view
             }
             else
             {
-                var alt = tuple.Item1.Text.Trim().Length == 0 ? ", comience agregando algún valor al filtro." : ".";
+                var alt = tuple.Item1.Text.Trim().Length == 0 ? ", comience agregando algún valor al mismo." : ".";
                 MessageBox.Show($"Hay problemas con la validación del valor del filtro{alt}", "Validación");
                 chk.Checked = false;
             }
@@ -116,7 +128,7 @@ namespace LetterApp.view
 
         private void ExtendedOptions(object sender, EventArgs e)
         {
-            mainWindow.gbExtendedOptions.Enabled = mainWindow.cbExtendedOptions.Checked;
+            mainWindow.gbExtendedOptions.Enabled = mainWindow.ckbExtendedOptions.Checked;
         }
 
         private void RefreshGUI()
@@ -125,20 +137,14 @@ namespace LetterApp.view
 
         private void LoadConfiguration()
         {
-            var conf = JToken.Parse(File.ReadAllText(Path.Combine(Directory.GetCurrentDirectory(), "configuration.json")));
-            configuration = new Configuration();
-            var files = conf["files"] ?? new JArray();
-            files.ToList().ForEach(f =>
-            {
-                var url = f["url"] ?? null;
-                if (url == null) throw new FileLoadException("Error: No es posible cargar un archivo con ua URL vacía.");
-                var fileChecked = f["checked"] ?? false;
-                var filters = f["filters"] ?? new JArray();
-                var notifications = f["notifications"] ?? new JArray();
 
-                configuration.Add(new Format(url.Value<string>(), Convert.ToBoolean(fileChecked.Value<string>()),
-                    filters.Values<string>().ToList(), notifications.Values<string>().ToList()));
-            });
+            //var jsonString = JsonConvert.SerializeObject(c);
+
+            //File.WriteAllText(Path.Combine(Directory.GetCurrentDirectory(), "test.json"), jsonString, Encoding.Default);
+
+            configuration = JsonConvert.DeserializeObject<Configuration>(
+                File.ReadAllText(Path.Combine(Directory.GetCurrentDirectory(), "configuration.json")));
+
         }
 
         private void CreateEvents()
@@ -148,8 +154,86 @@ namespace LetterApp.view
             mainWindow.btRemoveFormat.Click += new EventHandler(RemoveFormat);
             mainWindow.btSaveEditorChanges.Click += new EventHandler(SaveEditorChanges);
             mainWindow.btRemoveFilter.Click += new EventHandler(RemoveFilter);
-            mainWindow.cbLineWrap.Click += new EventHandler(LineWrap);
+            mainWindow.ckbLineWrap.Click += new EventHandler(LineWrap);
             mainWindow.btAddOption.Click += new EventHandler(AddOption);
+            mainWindow.btExtendedOptionHelp.Click += new EventHandler(ExtendedOptionHelp);
+            mainWindow.rtEditor.KeyPress += new KeyPressEventHandler(TextOnEditorChange);
+            mainWindow.btRemoveMail.Click += new EventHandler(RemoveMail);
+            mainWindow.btAddMail.Click += new EventHandler(AddMail);
+            mainWindow.ckbEditEditor.Click += new EventHandler(EditEditor);
+            mainWindow.ckLbFormats.BindingContextChanged += new EventHandler(FormatsContextChange);
+        }
+
+        private void FormatsContextChange(object sender, EventArgs e)
+        {
+            //todo probar cuando se cargue todo.
+
+            mainWindow.ckbEditEditor.Enabled = mainWindow.ckLbFormats.Items.Count != 0;
+            mainWindow.ckbEditEditor.Checked = false;
+            EditEditor(null, null);
+        }
+
+        private void EditEditor(object sender, EventArgs e)
+        {
+            mainWindow.rtEditor.Enabled = mainWindow.ckbEditEditor.Checked;
+            mainWindow.btSaveEditorChanges.Enabled = mainWindow.ckbEditEditor.Checked;
+            mainWindow.ckbLineWrap.Enabled = mainWindow.ckbEditEditor.Checked;
+        }
+
+        private void AddMail(object sender, EventArgs e)
+        {
+            var pattern = @"^\w+([-+.']\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$";
+            var r = new Regex(pattern);
+
+            if (r.Match(mainWindow.txtbEmail.Text.Trim()).Success)
+            {
+                mainWindow.lbMails.Items.Add(mainWindow.txtbEmail.Text.Trim());
+                mainWindow.txtbEmail.Text = "";
+            }
+            else
+            {
+                MessageBox.Show("Direccion de correo incorrecta.\n\n" +
+                    "Ejemplo de direcciones correctas:\n" +
+                    "titu.cusi.huallpa@rjabogados.com\n" +
+                    "joseholguin@hotmail.com", "Información");
+            }
+        }
+
+        private void RemoveMail(object sender, EventArgs e)
+        {
+            if (mainWindow.lbMails.Items.Count == 0)
+            {
+                MessageBox.Show("No existen correos.", "Información");
+            }
+            else
+            {
+                var index = mainWindow.lbMails.SelectedIndex;
+                if (index == -1)
+                {
+                    MessageBox.Show("Debe seleccionar el correo a eliminar.", "Información");
+                }
+                else
+                {
+                    var option = MessageBox.Show("¿Está seguro que desea eliminar el correo?", "Confirmación", MessageBoxButtons.YesNo);
+                    if (option == DialogResult.Yes)
+                    {
+                        mainWindow.lbMails.Items.RemoveAt(index);
+                    }
+                }
+            }
+        }
+
+        private void TextOnEditorChange(object sender, EventArgs e)
+        {
+            UnSavedChanges = true;
+        }
+
+        private void ExtendedOptionHelp(object sender, EventArgs e)
+        {
+            MessageBox.Show("Mediante esta opción es posible\n" +
+                "agregar filtros especializados o no\n" +
+                "contemplados en las restantes opciones.\n\n" +
+                "Este filtro se usa directamente en la consulta a la base de datos.", "Información");
         }
 
         private void AddOption(object sender, EventArgs e)
@@ -168,7 +252,7 @@ namespace LetterApp.view
 
         private void LineWrap(object sender, EventArgs e)
         {
-            mainWindow.rtEditor.WordWrap = !mainWindow.cbLineWrap.Checked;
+            mainWindow.rtEditor.WordWrap = !mainWindow.ckbLineWrap.Checked;
         }
 
         private void RemoveFilter(object sender, EventArgs e)
@@ -213,11 +297,26 @@ namespace LetterApp.view
 
         private void SaveEditorChanges(object sender, EventArgs e)
         {
-            var confirmResult = MessageBox.Show("¿Está seguro que desea eliminar el formato?",
-                                 "Confirmar eliminación", MessageBoxButtons.YesNo);
-            if (confirmResult == DialogResult.Yes)
+            if (!UnSavedChanges)
             {
-                //todo guardar los cambios.
+                MessageBox.Show("No existen cambios por guardar.", "Información");
+            }
+            else
+            {
+                if (mainWindow.rtEditor.Text.Trim().Length != 0)
+                {
+                    var confirmResult = MessageBox.Show("¿Está seguro que desea guardar el formato?",
+                                         "Confirmación", MessageBoxButtons.YesNo);
+                    if (confirmResult == DialogResult.Yes)
+                    {
+                        //todo guardar los cambios.
+                        //agregar  a la conf y actualizar.
+
+                        MessageBox.Show("Cambios guardados correctamente.", "Información");
+                    }
+                }
+
+                UnSavedChanges = false;
             }
         }
 

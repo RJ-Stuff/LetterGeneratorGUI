@@ -8,20 +8,22 @@ namespace LetterApp.model
     {
         public string URL { get; set; }
         public bool Checked { get; set; }
-        public List<string> Filters { get; set; }
-        public List<string> Notification { get; set; }
+        public List<Filter> Filters { get; set; }
+        public PaperSize PaperSize { get; set; }
 
-        public Format(string URL) : this(URL, true, new List<string>(), new List<string>())
+        public Format() { }
+
+        public Format(string URL) : this(URL, true, new List<Filter>(), PaperSize.DEFAULT_SIZE)
         {
 
         }
 
-        public Format(string URL, bool Checked, List<string> Filters, List<string> Notification)
+        public Format(string URL, bool Checked, List<Filter> Filters, PaperSize PaperSize)
         {
             this.URL = URL;
             this.Checked = Checked;
             this.Filters = Filters;
-            this.Notification = Notification;
+            this.PaperSize = PaperSize;
         }
 
         public override int GetHashCode()
@@ -33,17 +35,17 @@ namespace LetterApp.model
         {
             return Path.GetFileNameWithoutExtension(URL);
         }
-
-
     }
 
     class Configuration
     {
         public List<Format> Formats { get; set; }
+        public List<string> Notification { get; set; }
 
         public Configuration()
         {
             Formats = new List<Format>();
+            Notification = new List<string>();
         }
 
         public void Add(string URL)

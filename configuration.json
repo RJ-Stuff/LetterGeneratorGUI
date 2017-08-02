@@ -1,10 +1,20 @@
 {
-  "files": [
+  "Formats": [
     {
-      "url": "C:\\Users\\rigo\\OneDrive - ASESCOM RJ ABOGADOS EIRL\\git\\LetterGeneratorGUI\\formats",
-      "checked": "true",
-      "filters": [""],
-      "notifications": [ "" ]
+      "URL": "c:\\aaa.rjf",
+      "Checked": true,
+      "Filters": [
+        {
+          "DisplayName": "Negocio",
+          "InternalName": "negocio",
+          "Value": "TDP"
+        }
+      ],
+      "PaperSize": {
+        "Papersize": 4,
+        "DisplayName": "Papel Oficio"
+      }
     }
-  ]
+  ],
+  "Notification": [ "rlsalgado2006@gmail.com" ]
 }

@@ -45,5 +45,15 @@
       "internalname": "monto",
       "box": "true"
     }
+  ],
+  "papersizes": [
+    {
+      "name": "wdPaperLegal",
+      "displayname": "Papel Oficio"
+    },
+    {
+      "name": "wdPaperA4",
+      "displayname": "Papel A4"
+    }
   ]
 }
