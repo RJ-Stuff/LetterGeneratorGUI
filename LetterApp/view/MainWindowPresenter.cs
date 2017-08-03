@@ -26,7 +26,7 @@ namespace LetterApp.view
             this.filterPair = new Dictionary<CheckBox, Tuple<TextBox, string>>();
             UnSavedChanges = false;
 
-            GUIConfiguration = JToken.Parse(File.ReadAllText(Path.Combine(Directory.GetCurrentDirectory(), "GUIConfiguration.json")));
+            GUIConfiguration = JToken.Parse(File.ReadAllText(Path.Combine(Directory.GetCurrentDirectory(), "GUIConfiguration.json"), Encoding.Default));
 
             mainWindow.cbPaperSize.DropDownStyle = ComboBoxStyle.DropDownList;
 
@@ -38,9 +38,120 @@ namespace LetterApp.view
             UpdateFilterTab();
 
             LoadConfiguration();
-            RefreshGUI();
 
             CreateEvents();
+        }
+
+        private void CreateEvents()
+        {
+            mainWindow.btGenerateWords.Click += new EventHandler(GenerateLetterButtonEvent);
+            mainWindow.btAddFormat.Click += new EventHandler(AddFormat);
+            mainWindow.btRemoveFormat.Click += new EventHandler(RemoveFormat);
+            mainWindow.btSaveEditorChanges.Click += new EventHandler(SaveEditorChanges);
+            mainWindow.btRemoveFilter.Click += new EventHandler(RemoveFilter);
+            mainWindow.ckbLineWrap.Click += new EventHandler(LineWrap);
+            mainWindow.btAddOption.Click += new EventHandler(AddOption);
+            mainWindow.btExtendedOptionHelp.Click += new EventHandler(ExtendedOptionHelp);
+            mainWindow.rtEditor.KeyPress += new KeyPressEventHandler(TextOnEditorChange);
+            mainWindow.btRemoveMail.Click += new EventHandler(RemoveMail);
+            mainWindow.btAddMail.Click += new EventHandler(AddMail);
+            mainWindow.ckbEditEditor.Click += new EventHandler(EditEditor);
+            mainWindow.ckLbFormats.SelectedIndexChanged += new EventHandler((s, e) => RefreshGUI());
+            mainWindow.cbPaperSize.SelectedIndexChanged += new EventHandler(SelectedPaperSizeChange);
+            mainWindow.ckLbFormats.ItemCheck += new ItemCheckEventHandler(FormatCheck);
+            mainWindow.btMailHelp.Click += new EventHandler(MailHelp);
+        }
+
+        private void MailHelp(object sender, EventArgs e)
+        {
+            MessageBox.Show("Las credenciales son las mismas que se \n" +
+                "utilizan para abrir el correo de la empresa.\n\n" +
+                "Ejemplo:\nUsuario: titu.cusi.huallpa@rjabogados.com\n" +
+                "Contraseña: tu-contraseña-personal", "Información");
+        }
+
+        private void RefreshGUI()
+        {
+            mainWindow.ckbEditEditor.Enabled = mainWindow.ckLbFormats.Items.Count != 0;
+
+            try
+            {
+                //limpiar filtros
+                mainWindow.lbFilters.Items.Clear();
+                filterPair.Keys.ToList().ForEach(k =>
+                {
+                    k.Checked = false;
+                    var tuple = filterPair[k];
+                    if (tuple.Item1 != null)
+                    {
+                        tuple.Item1.Text = "";
+                        tuple.Item1.Enabled = true;
+                    }
+                });
+                mainWindow.ckbExtendedOptions.Checked = false;
+                mainWindow.gbExtendedOptions.Enabled = false;
+                mainWindow.txtbExtendedOption.Text = "";
+
+                //limpiar editor
+                mainWindow.rtEditor.Text = "";
+
+                //actualiza el editable
+                mainWindow.ckbEditEditor.Checked = false;
+                EditEditor(null, null);
+
+                var index = mainWindow.ckLbFormats.SelectedIndex;
+                if (index != -1)
+                {
+                    var format = mainWindow.ckLbFormats.Items[index] as Format;
+
+                    //actualiza editor.
+                    //todo crear resaltado para json.
+                    var currentEncoding = Encoding.UTF8;
+                    using (var reader = new StreamReader(format.URL, true))
+                    {
+                        currentEncoding = reader.CurrentEncoding;
+                    }
+                    mainWindow.rtEditor.Text = File.ReadAllText(format.URL, currentEncoding);
+
+                    //actualiza el tipo de papel
+                    mainWindow.cbPaperSize.SelectedItem = format.PaperSize;
+
+                    //actualiza filtros
+                    format.Filters.ForEach(f =>
+                    {
+                        mainWindow.lbFilters.Items.Add(f);
+                        var keys = filterPair.Keys.Where(k => k.Text == f.DisplayName).ToList();
+                        if (keys.Count != 0)
+                        {
+                            var key = keys[0];
+                            key.Checked = true;
+                            if (filterPair.ContainsKey(key))
+                            {
+                                var tuple = filterPair[key];
+                                if (tuple.Item1 != null)
+                                {
+                                    tuple.Item1.Text = f.Value.ToString();
+                                }
+                            }
+                        }
+                    });
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("No fue posible leer el formato del disco.", "Error");
+            }
+        }
+
+        private void FormatCheck(object sender, ItemCheckEventArgs e)
+        {
+            var index = e.Index;
+            if (index != -1)
+            {
+                var format = mainWindow.ckLbFormats.Items[index] as Format;
+                format.Checked = e.NewValue == CheckState.Checked ? true : false;
+                configuration.SetFormats(mainWindow.ckLbFormats.Items.Cast<Format>().ToList());
+            }
         }
 
         private void UpdateFilterTab()
@@ -101,6 +212,7 @@ namespace LetterApp.view
                         tuple.Item1.Enabled = true;
                     }
                 }
+                FiltersChange();
             }
             else
             {
@@ -131,46 +243,77 @@ namespace LetterApp.view
             mainWindow.gbExtendedOptions.Enabled = mainWindow.ckbExtendedOptions.Checked;
         }
 
-        private void RefreshGUI()
-        {
-        }
-
         private void LoadConfiguration()
         {
+            //todo si no hay formatos en la conf, buscarlos en la carpeta formats.
+            try
+            {
+                configuration = JsonConvert.DeserializeObject<Configuration>(
+                                File.ReadAllText(Path.Combine(Directory.GetCurrentDirectory(), "configuration.json"), Encoding.Default));
 
-            //var jsonString = JsonConvert.SerializeObject(c);
+                configuration.Formats
+                    .Select((f, i) => new { format = f, index = i })
+                    .ToList()
+                    .ForEach(p =>
+                    {
+                        mainWindow.ckLbFormats.Items.Add(p.format);
+                        mainWindow.ckLbFormats.SetItemCheckState(p.index, p.format.Checked ? CheckState.Checked : CheckState.Unchecked);
+                    });
 
-            //File.WriteAllText(Path.Combine(Directory.GetCurrentDirectory(), "test.json"), jsonString, Encoding.Default);
+                configuration.Notifications.ForEach(n => mainWindow.lbMails.Items.Add(n));
 
-            configuration = JsonConvert.DeserializeObject<Configuration>(
-                File.ReadAllText(Path.Combine(Directory.GetCurrentDirectory(), "configuration.json")));
+                
+                if(mainWindow.ckLbFormats.Items.Count == 0)
+                {
+                    var dir = Path.Combine(Directory.GetCurrentDirectory(), "formats");
+                    if (Directory.Exists(dir))
+                    {
+                        var stream = Directory
+                            .EnumerateFiles(dir, "*.rjf")
+                            .Select((url,i) => new { format = new Format(url), index = i });
 
+                        configuration.SetFormats(stream.Select(o => o.format).ToList());
+                        stream.ToList().ForEach(o =>
+                        {
+                            mainWindow.ckLbFormats.Items.Add(o.format);
+                            mainWindow.ckLbFormats.SetItemCheckState(o.index, o.format.Checked ? CheckState.Checked : CheckState.Unchecked);
+                        });
+                    }
+                }
+
+                if (mainWindow.ckLbFormats.Items.Count != 0)
+                {
+                    mainWindow.ckLbFormats.SetSelected(0, true);
+                }
+
+                RefreshGUI();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Ocurrió un problema al cargar la configuración.", "Error");
+            }
         }
 
-        private void CreateEvents()
+        private void FiltersChange()
         {
-            mainWindow.btGenerateWords.Click += new EventHandler(GenerateLetterButtonEvent);
-            mainWindow.btAddFormat.Click += new EventHandler(AddFormat);
-            mainWindow.btRemoveFormat.Click += new EventHandler(RemoveFormat);
-            mainWindow.btSaveEditorChanges.Click += new EventHandler(SaveEditorChanges);
-            mainWindow.btRemoveFilter.Click += new EventHandler(RemoveFilter);
-            mainWindow.ckbLineWrap.Click += new EventHandler(LineWrap);
-            mainWindow.btAddOption.Click += new EventHandler(AddOption);
-            mainWindow.btExtendedOptionHelp.Click += new EventHandler(ExtendedOptionHelp);
-            mainWindow.rtEditor.KeyPress += new KeyPressEventHandler(TextOnEditorChange);
-            mainWindow.btRemoveMail.Click += new EventHandler(RemoveMail);
-            mainWindow.btAddMail.Click += new EventHandler(AddMail);
-            mainWindow.ckbEditEditor.Click += new EventHandler(EditEditor);
-            mainWindow.ckLbFormats.BindingContextChanged += new EventHandler(FormatsContextChange);
+            var index = mainWindow.ckLbFormats.SelectedIndex;
+            if (index != -1)
+            {
+                var format = mainWindow.ckLbFormats.Items[index] as Format;
+                format.Filters = mainWindow.lbFilters.Items.Cast<Filter>().ToList();
+                configuration.SetFormats(mainWindow.ckLbFormats.Items.Cast<Format>().ToList());
+            }
         }
 
-        private void FormatsContextChange(object sender, EventArgs e)
+        private void SelectedPaperSizeChange(object sender, EventArgs e)
         {
-            //todo probar cuando se cargue todo.
-
-            mainWindow.ckbEditEditor.Enabled = mainWindow.ckLbFormats.Items.Count != 0;
-            mainWindow.ckbEditEditor.Checked = false;
-            EditEditor(null, null);
+            var index = mainWindow.ckLbFormats.SelectedIndex;
+            if (index != -1)
+            {
+                var format = mainWindow.ckLbFormats.Items[index] as Format;
+                format.PaperSize = (mainWindow.cbPaperSize.SelectedItem as PaperSize) ?? PaperSize.DEFAULT_SIZE;
+                configuration.SetFormats(mainWindow.ckLbFormats.Items.Cast<Format>().ToList());
+            }
         }
 
         private void EditEditor(object sender, EventArgs e)
@@ -189,6 +332,7 @@ namespace LetterApp.view
             {
                 mainWindow.lbMails.Items.Add(mainWindow.txtbEmail.Text.Trim());
                 mainWindow.txtbEmail.Text = "";
+                configuration.SetNotifications(mainWindow.lbMails.Items.Cast<string>().ToList());
             }
             else
             {
@@ -218,6 +362,7 @@ namespace LetterApp.view
                     if (option == DialogResult.Yes)
                     {
                         mainWindow.lbMails.Items.RemoveAt(index);
+                        configuration.SetNotifications(mainWindow.lbMails.Items.Cast<string>().ToList());
                     }
                 }
             }
@@ -247,6 +392,7 @@ namespace LetterApp.view
                 var option = mainWindow.txtbExtendedOption.Text.Trim();
                 mainWindow.lbFilters.Items.Add(new Filter(option, option, ""));
                 mainWindow.txtbExtendedOption.Text = "";
+                FiltersChange();
             }
         }
 
@@ -287,8 +433,7 @@ namespace LetterApp.view
                         {
                             mainWindow.lbFilters.Items.RemoveAt(index);
                         }
-
-                        RefreshGUI();
+                        FiltersChange();
                     }
                 }
             }
@@ -309,10 +454,32 @@ namespace LetterApp.view
                                          "Confirmación", MessageBoxButtons.YesNo);
                     if (confirmResult == DialogResult.Yes)
                     {
-                        //todo guardar los cambios.
-                        //agregar  a la conf y actualizar.
+                        var index = mainWindow.ckLbFormats.SelectedIndex;
+                        if (index != -1)
+                        {
+                            try
+                            {
+                                var format = mainWindow.ckLbFormats.Items[index] as Format;
 
-                        MessageBox.Show("Cambios guardados correctamente.", "Información");
+                                var currentEncoding = Encoding.UTF8;
+                                using (var reader = new StreamReader(format.URL, true))
+                                {
+                                    currentEncoding = reader.CurrentEncoding;
+                                }
+
+                                File.WriteAllText(format.URL, mainWindow.rtEditor.Text, currentEncoding);
+                                RefreshGUI();
+
+                                MessageBox.Show("Cambios guardados correctamente.", "Información");
+                            }
+                            catch (Exception ex)
+                            {
+                                MessageBox.Show("Ocurrió un error al guardar el formato.", "Error");
+                            }
+
+                        }
+
+
                     }
                 }
 
@@ -328,7 +495,8 @@ namespace LetterApp.view
             }
             else
             {
-                if (mainWindow.ckLbFormats.SelectedIndex == -1)
+                var index = mainWindow.ckLbFormats.SelectedIndex;
+                if (index == -1)
                 {
                     MessageBox.Show(mainWindow, "Debe seleccionar un formato a eliminar", "Eliminar formato");
                 }
@@ -338,11 +506,18 @@ namespace LetterApp.view
                                          "Confirmar eliminación", MessageBoxButtons.YesNo);
                     if (confirmResult == DialogResult.Yes)
                     {
-                        //todo eliminar de la conf y actualizar.
+                        mainWindow.ckLbFormats.Items.RemoveAt(index);
+                        configuration.SetFormats(mainWindow.ckLbFormats.Items.Cast<Format>().ToList());
+
+                        if (mainWindow.ckLbFormats.Items.Count != 0)
+                        {
+                            mainWindow.ckLbFormats.SetSelected(0, true);
+                        }
+
+                        RefreshGUI();
                     }
                 }
             }
-
         }
 
         private void AddFormat(object sender, EventArgs e)
@@ -357,34 +532,14 @@ namespace LetterApp.view
 
             if (openFileDialog.ShowDialog() == DialogResult.OK)
             {
-                try
-                {
-                    //todo ver si ya está en la conf actual.
-                    //todo crear resaltado para json.
-                    var currentEncoding = Encoding.UTF8;
-                    using (var reader = new System.IO.StreamReader(openFileDialog.FileName, true))
-                    {
-                        currentEncoding = reader.CurrentEncoding;
-                    }
-                    mainWindow.rtEditor.Text = File.ReadAllText(openFileDialog.FileName, currentEncoding);
-                    configuration.Add(openFileDialog.FileName);
-                    RefreshGUI();
-                    CleanFilters();
-                    CleanNotifications();
-                }
-                catch (Exception ex)
-                {
-                    MessageBox.Show("Error: No fue posible leer el formato del disco.");
-                }
+                var format = new Format(openFileDialog.FileName);
+                configuration.Add(format);
+                mainWindow.ckLbFormats.Items.Add(format);
+                mainWindow.ckLbFormats.SetSelected(mainWindow.ckLbFormats.Items.Count - 1, true);
+                mainWindow.ckLbFormats.SetItemChecked(mainWindow.ckLbFormats.Items.Count - 1, true);
             }
-        }
 
-        private void CleanNotifications()
-        {
-        }
-
-        private void CleanFilters()
-        {
+            RefreshGUI();
         }
 
         private void GenerateLetterButtonEvent(object sender, EventArgs e)

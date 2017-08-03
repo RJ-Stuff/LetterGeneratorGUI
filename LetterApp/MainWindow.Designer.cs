@@ -69,13 +69,11 @@
             this.btRemoveFormat = new System.Windows.Forms.Button();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.archivosToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.cargarConfiguraciónToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.guardarConfiguraciónToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.cerrarToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.acercaDeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.groupBox5 = new System.Windows.Forms.GroupBox();
+            this.btMailHelp = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.picLogo)).BeginInit();
             this.tabControl1.SuspendLayout();
             this.tabEditor.SuspendLayout();
@@ -401,6 +399,7 @@
             // 
             // groupBox1
             // 
+            this.groupBox1.Controls.Add(this.btMailHelp);
             this.groupBox1.Controls.Add(this.txtbUser);
             this.groupBox1.Controls.Add(this.label1);
             this.groupBox1.Controls.Add(this.txtbPass);
@@ -436,6 +435,7 @@
             this.txtbPass.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.txtbPass.Location = new System.Drawing.Point(101, 51);
             this.txtbPass.Name = "txtbPass";
+            this.txtbPass.PasswordChar = '*';
             this.txtbPass.Size = new System.Drawing.Size(170, 23);
             this.txtbPass.TabIndex = 3;
             // 
@@ -503,35 +503,15 @@
             // archivosToolStripMenuItem
             // 
             this.archivosToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.cargarConfiguraciónToolStripMenuItem,
-            this.guardarConfiguraciónToolStripMenuItem,
-            this.toolStripSeparator1,
             this.cerrarToolStripMenuItem});
             this.archivosToolStripMenuItem.Name = "archivosToolStripMenuItem";
             this.archivosToolStripMenuItem.Size = new System.Drawing.Size(65, 20);
             this.archivosToolStripMenuItem.Text = "Archivos";
             // 
-            // cargarConfiguraciónToolStripMenuItem
-            // 
-            this.cargarConfiguraciónToolStripMenuItem.Name = "cargarConfiguraciónToolStripMenuItem";
-            this.cargarConfiguraciónToolStripMenuItem.Size = new System.Drawing.Size(193, 22);
-            this.cargarConfiguraciónToolStripMenuItem.Text = "Cargar configuración";
-            // 
-            // guardarConfiguraciónToolStripMenuItem
-            // 
-            this.guardarConfiguraciónToolStripMenuItem.Name = "guardarConfiguraciónToolStripMenuItem";
-            this.guardarConfiguraciónToolStripMenuItem.Size = new System.Drawing.Size(193, 22);
-            this.guardarConfiguraciónToolStripMenuItem.Text = "Guardar configuración";
-            // 
-            // toolStripSeparator1
-            // 
-            this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(190, 6);
-            // 
             // cerrarToolStripMenuItem
             // 
             this.cerrarToolStripMenuItem.Name = "cerrarToolStripMenuItem";
-            this.cerrarToolStripMenuItem.Size = new System.Drawing.Size(193, 22);
+            this.cerrarToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.cerrarToolStripMenuItem.Text = "Cerrar";
             // 
             // toolStripMenuItem1
@@ -545,7 +525,7 @@
             // acercaDeToolStripMenuItem
             // 
             this.acercaDeToolStripMenuItem.Name = "acercaDeToolStripMenuItem";
-            this.acercaDeToolStripMenuItem.Size = new System.Drawing.Size(126, 22);
+            this.acercaDeToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.acercaDeToolStripMenuItem.Text = "Acerca de";
             // 
             // groupBox5
@@ -559,6 +539,15 @@
             this.groupBox5.TabIndex = 8;
             this.groupBox5.TabStop = false;
             this.groupBox5.Text = "Opciones del formato";
+            // 
+            // btMailHelp
+            // 
+            this.btMailHelp.Location = new System.Drawing.Point(277, 22);
+            this.btMailHelp.Name = "btMailHelp";
+            this.btMailHelp.Size = new System.Drawing.Size(23, 23);
+            this.btMailHelp.TabIndex = 4;
+            this.btMailHelp.Text = "?";
+            this.btMailHelp.UseVisualStyleBackColor = true;
             // 
             // MainWindow
             // 
@@ -620,10 +609,6 @@
         public System.Windows.Forms.RichTextBox rtEditor;
         private System.Windows.Forms.MenuStrip menuStrip1;
         private System.Windows.Forms.ToolStripMenuItem archivosToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem cargarConfiguraciónToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem guardarConfiguraciónToolStripMenuItem;
-        private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
-        private System.Windows.Forms.ToolStripMenuItem cerrarToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem1;
         public System.Windows.Forms.Button btAddFormat;
         public System.Windows.Forms.Button btRemoveFormat;
@@ -651,6 +636,8 @@
         private System.Windows.Forms.Label label4;
         public System.Windows.Forms.ComboBox cbPaperSize;
         private System.Windows.Forms.GroupBox groupBox5;
+        public System.Windows.Forms.Button btMailHelp;
+        public System.Windows.Forms.ToolStripMenuItem cerrarToolStripMenuItem;
     }
 }
 

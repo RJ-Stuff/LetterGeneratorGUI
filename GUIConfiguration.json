@@ -44,6 +44,11 @@
       "kind": "Monto",
       "internalname": "monto",
       "box": "true"
+    },
+    {
+      "kind": "Cliente especial",
+      "internalname": "especial",
+      "box": "false"
     }
   ],
   "papersizes": [

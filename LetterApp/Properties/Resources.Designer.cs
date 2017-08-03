@@ -61,22 +61,12 @@ namespace LetterApp.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        ///   Looks up a localized resource of type System.Drawing.Icon similar to (Icon).
         /// </summary>
-        internal static System.Drawing.Bitmap database2word {
+        internal static System.Drawing.Icon iconApp {
             get {
-                object obj = ResourceManager.GetObject("database2word", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
-        /// </summary>
-        internal static System.Drawing.Bitmap favicon {
-            get {
-                object obj = ResourceManager.GetObject("favicon", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
+                object obj = ResourceManager.GetObject("iconApp", resourceCulture);
+                return ((System.Drawing.Icon)(obj));
             }
         }
         
