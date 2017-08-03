@@ -8,10 +8,10 @@ namespace Letters
 {
     public class NonComplianceLetter : Letter
     {
-        public NonComplianceLetter(JToken configuration, InputData input, 
-            Dictionary<string, int> FontSizes, Document document, Subject<object> progress, 
-            string letterKind, bool useCharge) :
-            base(configuration, input, FontSizes, document, progress, letterKind, useCharge)
+        public NonComplianceLetter(JToken configuration, List<Client> clients,
+            Document document, Subject<object> progress, SimpleCharge charge,
+            WdPaperSize paperSize) :
+            base(configuration, clients, document, progress, charge, paperSize)
         {
         }
 
@@ -59,7 +59,9 @@ namespace Letters
             Paragraph paragraph = document.Content.Paragraphs.Add();
 
             var PaymentPlace =
-                paragraph.Range.InlineShapes.AddPicture(configuration["PaymentPlace"].Value<string>());
+                paragraph.Range.InlineShapes.AddPicture(
+                    string.Format(configuration["PaymentPlace"].Value<string>(),currentDir)
+                    );
 
             var PaymentPlaceShape = PaymentPlace.ConvertToShape();
             PaymentPlaceShape.Left = Convert.ToSingle(WdShapePosition.wdShapeCenter);

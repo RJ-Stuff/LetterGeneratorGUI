@@ -54,6 +54,7 @@
     <Reference Include="System.Reactive.Windows.Threading, Version=3.0.1000.0, Culture=neutral, PublicKeyToken=94bc3704cddfc263, processorArchitecture=MSIL">
       <HintPath>..\packages\System.Reactive.Windows.Threading.3.1.1\lib\net45\System.Reactive.Windows.Threading.dll</HintPath>
     </Reference>
+    <Reference Include="System.Reflection.Context" />
     <Reference Include="System.Windows" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -65,7 +66,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Letters\AllInOneGenerator.cs" />
-    <Compile Include="Letters\Charge.cs" />
+    <Compile Include="Letters\SimpleCharge.cs" />
     <Compile Include="Letters\Client.cs" />
     <Compile Include="Letters\Format.cs" />
     <Compile Include="Letters\InputData.cs" />

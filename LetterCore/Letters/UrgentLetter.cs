@@ -9,10 +9,10 @@ namespace Letters
 {
     class UrgentLetter : Letter
     {
-        public UrgentLetter(JToken configuration, InputData input, Document document,
-            Subject<object> progress, string letterKind, bool useCharge) :
-            base(configuration, input, new Dictionary<string, int>() { { "SetTextb4Table", 9 } },
-                document, progress, letterKind, useCharge)
+        public UrgentLetter(JToken configuration, List<Client> clients,
+            Document document, Subject<object> progress, SimpleCharge charge,
+            WdPaperSize paperSize) :
+            base(configuration, clients, document, progress, charge, paperSize)
         {
         }
 
@@ -52,7 +52,9 @@ namespace Letters
             Paragraph paragraph = document.Content.Paragraphs.Add();
 
             var PaymentPlace =
-                paragraph.Range.InlineShapes.AddPicture(configuration["PaymentPlace"].Value<string>());
+                paragraph.Range.InlineShapes.AddPicture(
+                    string.Format(configuration["PaymentPlace"].Value<string>(), currentDir)
+                    );
             var PaymentPlaceShape = PaymentPlace.ConvertToShape();
             PaymentPlaceShape.Left = Convert.ToSingle(WdShapePosition.wdShapeCenter);
             paragraph.Range.InsertParagraphAfter();
@@ -104,7 +106,9 @@ namespace Letters
         {
             Paragraph paragraph = document.Content.Paragraphs.Add();
             var LawyerSignature =
-                paragraph.Range.InlineShapes.AddPicture(configuration["LawyerSignature"].Value<string>());
+                paragraph.Range.InlineShapes.AddPicture(
+                    string.Format(configuration["LawyerSignature"].Value<string>(),currentDir)
+                    );
             var LawyerSignatureShape = LawyerSignature.ConvertToShape();
             LawyerSignatureShape.Left = Convert.ToSingle(WdShapePosition.wdShapeLeft);
             paragraph.SpaceAfter = 2;

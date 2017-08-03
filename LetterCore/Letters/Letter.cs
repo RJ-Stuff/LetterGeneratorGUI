@@ -2,6 +2,7 @@
 using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Reactive.Subjects;
 using static Letters.AllInOneGenerator;
@@ -10,27 +11,34 @@ namespace Letters
 {
     public class Letter
     {
+        public const float PointsToCM = 28.3464567F;
+
         protected JToken configuration;
-        protected InputData input;
+        protected List<Client> clients;
         protected string businessName;
         protected string letterKind;
         protected Dictionary<string, int> FontSizes;
         protected Document document;
         protected Subject<object> progress;
         protected int progressCount;
-        protected bool useCharge;
+        protected SimpleCharge charge;
+        protected string currentDir;
 
-        public Letter(JToken configuration, InputData input, Dictionary<string, int> FontSizes,
-            Document document, Subject<object> progress, string letterKind, bool useCharge)
+        public Letter(JToken configuration, List<Client> clients,
+            Document document, Subject<object> progress, SimpleCharge charge,
+            WdPaperSize paperSize)
         {
             this.document = document;
-            this.input = input;
+            this.clients = clients;
             this.configuration = configuration;
             this.progress = progress;
-            this.letterKind = letterKind;
-            this.useCharge = useCharge;
+            this.charge = charge;
+            letterKind = configuration["letterKind"].Value<string>();
+            currentDir = Directory.GetCurrentDirectory();
 
-            this.FontSizes = new Dictionary<string, int>
+            SetPage(this.document, configuration, paperSize);
+
+            FontSizes = new Dictionary<string, int>
             {
                 ["SetTextb4Table"] = 10,
                 ["SetTextAfterTable"] = 10,
@@ -38,18 +46,36 @@ namespace Letters
                 ["SetBusinessURL"] = 10,
                 ["SetFinalInfo"] = 9
             };
-            FontSizes.ToList().ForEach(p => this.FontSizes[p.Key] = p.Value);
+
+            configuration["fontsizes"]
+                .ToList()
+                .ForEach(f =>
+                {
+                    var key = f["part"].Value<string>();
+                    var value = f["size"].Value<int>();
+                    FontSizes[key] = value;
+                });
+        }
+
+        private void SetPage(Document document, JToken configuration, WdPaperSize paperSize)
+        {
+            document.PageSetup.PaperSize = WdPaperSize.wdPaperLegal;
+            document.PageSetup.PaperSize = paperSize;
+            document.PageSetup.LeftMargin = configuration["LeftMargin"].Value<float>() * PointsToCM;
+            document.PageSetup.TopMargin = configuration["TopMargin"].Value<float>() * PointsToCM;
+            document.PageSetup.RightMargin = configuration["RightMargin"].Value<float>() * PointsToCM;
+            document.PageSetup.BottomMargin = configuration["BottomMargin"].Value<float>() * PointsToCM;
         }
 
         protected virtual void UpdateProgress()
         {
-            progress.OnNext(new { count = input.GetCount(), progress = ++progressCount, information = $"Creando cartas del tipo: {letterKind}" });
+            progress.OnNext(new { count = clients.Count, progress = ++progressCount, information = $"Creando cartas del tipo: {letterKind}" });
         }
 
         public virtual void CreatePages()
         {
             this.progressCount = 0;
-            input.GetClients().ForEach(c =>
+            clients.ForEach(c =>
             {
                 CreatePage(document, c);
                 document.Words.Last.InsertBreak(WdBreakType.wdPageBreak);
@@ -72,7 +98,7 @@ namespace Letters
             SetPaymentPlace(document);
             SetSignature(document);
             SetFinalInfo(document);
-            SetPseudoFooter(document, client);
+            if (charge != null) SetPseudoFooter(document, client);
         }
 
         protected virtual void SetPseudoFooter(Document document, Client client)
@@ -108,10 +134,7 @@ namespace Letters
             line.HorizontalLineFormat.Alignment = WdHorizontalLineAlignment.wdHorizontalLineAlignCenter;
             paragraph.SpaceAfter = 0;
 
-            if (useCharge)
-            {
-                Charge.CreateDocument(document, client, businessName, configuration["ChargeFormat"].Value<string>());
-            }
+            charge.CreateDocument(document, client, businessName);
         }
 
         protected virtual void SetFinalInfo(Document document)
@@ -137,7 +160,9 @@ namespace Letters
 
             paragraph = document.Content.Paragraphs.Add();
             var LawyerSignature =
-                paragraph.Range.InlineShapes.AddPicture(configuration["LawyerSignature"].Value<string>());
+                paragraph.Range.InlineShapes.AddPicture(
+                    String.Format(configuration["LawyerSignature"].Value<string>(), currentDir)
+                    );
             var LawyerSignatureShape = LawyerSignature.ConvertToShape();
             LawyerSignatureShape.Left = Convert.ToSingle(WdShapePosition.wdShapeLeft);
             paragraph.SpaceAfter = 0;
@@ -161,7 +186,9 @@ namespace Letters
             Paragraph paragraph = document.Content.Paragraphs.Add();
 
             var PaymentPlace =
-                paragraph.Range.InlineShapes.AddPicture(configuration["PaymentPlace"].Value<string>());
+                paragraph.Range.InlineShapes.AddPicture(
+                    string.Format(configuration["PaymentPlace"].Value<string>(), currentDir)
+                    );
         }
 
         protected virtual void SetBusinessURL(Document document)
@@ -172,7 +199,6 @@ namespace Letters
             paragraph.Range.Font.Name = "Candara";
             paragraph.Range.Font.Bold = 1;
             paragraph.Range.Font.Underline = WdUnderline.wdUnderlineSingle;
-            //todo ver color correcto.
             paragraph.Range.Font.Color = WdColor.wdColorBlue;
             paragraph.Range.Text = configuration["BusinessURL"].Value<string>();
             paragraph.Range.ParagraphFormat.Alignment = WdParagraphAlignment.wdAlignParagraphCenter;
@@ -307,8 +333,6 @@ namespace Letters
 
         protected virtual void SetTitle(Document document)
         {
-            //todo estandarizar el tema de la fuente.
-            //todo la primera línea va subrayada.
             Paragraph paragraph = document.Content.Paragraphs.Add();
             paragraph.Range.Font.Size = 17;
             paragraph.Range.Font.Name = "Candara";
@@ -322,13 +346,24 @@ namespace Letters
         {
             Paragraph paragraph = document.Content.Paragraphs.Add();
 
-            var BusinessLogo =
-                paragraph.Range.InlineShapes.AddPicture(configuration["BusinessLogo"].Value<string>());
-            var Logo =
-                paragraph.Range.InlineShapes.AddPicture(configuration["Logo"].Value<string>());
-            var LogoShape = Logo.ConvertToShape();
-            LogoShape.Left = Convert.ToSingle(WdShapePosition.wdShapeRight);
-            LogoShape.Top = Convert.ToSingle(WdShapePosition.wdShapeTop);
+            if (charge != null)
+            {
+                var BusinessLogo =
+                paragraph.Range.InlineShapes.AddPicture(
+                    string.Format(configuration["BusinessLogo"].Value<string>(), currentDir)
+                    );
+                var Logo =
+                    paragraph.Range.InlineShapes.AddPicture(
+                        string.Format(configuration["Logo"].Value<string>(), currentDir)
+                        );
+                var LogoShape = Logo.ConvertToShape();
+                LogoShape.Left = Convert.ToSingle(WdShapePosition.wdShapeRight);
+                LogoShape.Top = Convert.ToSingle(WdShapePosition.wdShapeTop);
+            }
+            else
+            {
+                paragraph.Range.InsertParagraphAfter();
+            }
             paragraph.SpaceAfter = 0;
         }
 
@@ -338,7 +373,7 @@ namespace Letters
             paragraph.Range.Font.Size = 10;
             paragraph.Range.Font.Name = "Candara";
             paragraph.Range.Text = String.Format("{0}, {1} de {2} de {3}",
-                configuration["CurrentCity"], date.Day, date.ToString("MMMM"), date.Year);
+                configuration["CurrentCity"], date.Day, date.ToString("MMMM").ToLower(), date.Year);
             paragraph.Range.ParagraphFormat.Alignment = WdParagraphAlignment.wdAlignParagraphRight;
 
             object charUnit = WdUnits.wdCharacter;

@@ -1,22 +1,19 @@
 ﻿using Letters;
-using Microsoft.Office.Interop.Word;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace LetterCore.Letters
 {
     public class Format
     {
-        public string URL { get; set; }
-        public List<Client> Clients { get; set; }
+        public string URL { get; }
+        public List<Client> Clients { get; }
+        public string ChargeClazz { get; }
 
-        public Format(string URL, List<Client> Clients)
+        public Format(string URL, List<Client> Clients, string ChargeClazz)
         {
             this.URL = URL;
             this.Clients = Clients;
+            this.ChargeClazz = ChargeClazz;
         }
     }
 }

@@ -4,21 +4,28 @@ using System.Linq;
 
 namespace Letters
 {
-    public class Charge
+    public class SimpleCharge
     {
-        public static void CreateDocument(Document document, Client client, string BusinessName, string template)
+        public SimpleCharge() { }
+
+        public virtual void CreateDocument(Document document, Client client, string BusinessName)
         {
             var parCount = document.Paragraphs.Count;
             var offset = document.Paragraphs[parCount - 1].Range.End;
 
-            var text = File.ReadAllText(template);
+            string fullPath = System.Reflection.Assembly.GetAssembly(typeof(SimpleCharge)).Location;
+            string currentDir = Path.GetDirectoryName(fullPath);
+
+            var path = $@"{currentDir}\charges\simplecharge.txt";
+            
+            var text = File.ReadAllText(path);
             text = string.Format(text, BusinessName, client.DocID, client.CodLuna, client.Name, client.TotalDebt,
                 client.BaseAddress, client.NewAddress, client.AlternativeAddress);
 
             Paragraph paragraph = document.Content.Paragraphs.Add();
             paragraph.Range.Text = text.Replace("$", "");
             paragraph.Range.Font.Size = 8;
-            paragraph.Range.Font.Name = "candara";
+            paragraph.Range.Font.Name = "Candara";
             paragraph.Range.ParagraphFormat.Alignment = WdParagraphAlignment.wdAlignParagraphLeft;
 
             int position = 0;
