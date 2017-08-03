@@ -59,6 +59,7 @@
             this.btRemoveMail = new System.Windows.Forms.Button();
             this.lbMails = new System.Windows.Forms.ListBox();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.btMailHelp = new System.Windows.Forms.Button();
             this.txtbUser = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
             this.txtbPass = new System.Windows.Forms.TextBox();
@@ -73,7 +74,6 @@
             this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.acercaDeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.groupBox5 = new System.Windows.Forms.GroupBox();
-            this.btMailHelp = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.picLogo)).BeginInit();
             this.tabControl1.SuspendLayout();
             this.tabEditor.SuspendLayout();
@@ -412,6 +412,15 @@
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Credenciales para el envío";
             // 
+            // btMailHelp
+            // 
+            this.btMailHelp.Location = new System.Drawing.Point(277, 22);
+            this.btMailHelp.Name = "btMailHelp";
+            this.btMailHelp.Size = new System.Drawing.Size(23, 23);
+            this.btMailHelp.TabIndex = 4;
+            this.btMailHelp.Text = "?";
+            this.btMailHelp.UseVisualStyleBackColor = true;
+            // 
             // txtbUser
             // 
             this.txtbUser.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -511,7 +520,7 @@
             // cerrarToolStripMenuItem
             // 
             this.cerrarToolStripMenuItem.Name = "cerrarToolStripMenuItem";
-            this.cerrarToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.cerrarToolStripMenuItem.Size = new System.Drawing.Size(106, 22);
             this.cerrarToolStripMenuItem.Text = "Cerrar";
             // 
             // toolStripMenuItem1
@@ -525,7 +534,7 @@
             // acercaDeToolStripMenuItem
             // 
             this.acercaDeToolStripMenuItem.Name = "acercaDeToolStripMenuItem";
-            this.acercaDeToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.acercaDeToolStripMenuItem.Size = new System.Drawing.Size(126, 22);
             this.acercaDeToolStripMenuItem.Text = "Acerca de";
             // 
             // groupBox5
@@ -539,15 +548,6 @@
             this.groupBox5.TabIndex = 8;
             this.groupBox5.TabStop = false;
             this.groupBox5.Text = "Opciones del formato";
-            // 
-            // btMailHelp
-            // 
-            this.btMailHelp.Location = new System.Drawing.Point(277, 22);
-            this.btMailHelp.Name = "btMailHelp";
-            this.btMailHelp.Size = new System.Drawing.Size(23, 23);
-            this.btMailHelp.TabIndex = 4;
-            this.btMailHelp.Text = "?";
-            this.btMailHelp.UseVisualStyleBackColor = true;
             // 
             // MainWindow
             // 

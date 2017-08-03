@@ -1,8 +1,8 @@
 {
-	"LawyerSignature" : "C:\\Users\\rigo\\OneDrive - ASESCOM RJ ABOGADOS EIRL\\git\\LetterGenerator\\resources\\lawyer_signature.png",
-	"PaymentPlace" : "C:\\Users\\rigo\\OneDrive - ASESCOM RJ ABOGADOS EIRL\\git\\LetterGenerator\\resources\\business_logo.png",
-	"BusinessLogo" : "C:\\Users\\rigo\\OneDrive - ASESCOM RJ ABOGADOS EIRL\\git\\LetterGenerator\\resources\\business_logo.png",
-	"Logo" : "C:\\Users\\rigo\\OneDrive - ASESCOM RJ ABOGADOS EIRL\\git\\LetterGenerator\\resources\\logo.png",
+	"LawyerSignature" : "{0}\\resources\\lawyer_signature.png",
+	"PaymentPlace" : "{0}\\resources\\business_logo.png",
+	"BusinessLogo" : "{0}\\resources\\business_logo.png",
+	"Logo" : "{0}\\resources\\logo.png",
 	"LeftMargin" : 2.5,
 	"TopMargin" : 2.25,
 	"RightMargin" : 2.5,
@@ -18,7 +18,16 @@
 	"LawyerName" : "\u000B_____________________\u000BLuis Valdivia Cornelio\u000BJEFE DE GESTIÓN\u000BRJ ABOGADOS",
 	"FinalInfo" : "La presente comunicación ha sido emitida en base a la información disponible en nuestros sistemas al día $$$. Solo pueden financiar las líneas que no tuvieran mes de dos financiamientos anulados en los últimos 12 meses. De no hacer efectivo el pago de la cuota inicial en el período establecido, queda sin efecto la facilidad de financiamiento.",
 	"FooterInfo" : "Oficina Principal: Jr. Ayacucho N° 590, Of. 309 – 418\u000BTelf. 044-252772 / 044-242477\u000BTrujillo	   										                  FI-4-RJA",
-	"ChargeFormat" : "C:\\Users\\rigo\\OneDrive - ASESCOM RJ ABOGADOS EIRL\\git\\LetterGenerator\\resources\\charge.txt",
+	"ChargeFormat" : "{0}\\charges\\charge.txt",
 	"BusinessName" : "TDP",
-	"OutputDir" : "C:\\Users\\rigo\\Desktop\\output"
+	"query" : "{0}\\queries\\tdp-lastchance.sql",
+	"letterKind" : "Última oportunidad de pago",
+	"fontsizes" : [
+	{"SetTextb4Table": 9},
+	{"SetTextAfterTable": 9},
+	{"SetGeneralPaymentInfo": 9},
+	{"SetBusinessURL": 9},
+	{"SetFinalInfo": 9}
+	],
+	"classname" : "Letter"
 }

@@ -1,8 +1,8 @@
 {
-	"LawyerSignature" : "C:\\Users\\rigo\\OneDrive - ASESCOM RJ ABOGADOS EIRL\\git\\LetterGenerator\\resources\\lawyer_signature.png",
-	"PaymentPlace" : "C:\\Users\\rigo\\OneDrive - ASESCOM RJ ABOGADOS EIRL\\git\\LetterGenerator\\resources\\business_logo.png",
-	"BusinessLogo" : "C:\\Users\\rigo\\OneDrive - ASESCOM RJ ABOGADOS EIRL\\git\\LetterGenerator\\resources\\business_logo.png",
-	"Logo" : "C:\\Users\\rigo\\OneDrive - ASESCOM RJ ABOGADOS EIRL\\git\\LetterGenerator\\resources\\logo.png",
+	"LawyerSignature" : "{0}\\resources\\lawyer_signature.png",
+	"PaymentPlace" : "{0}\\resources\\business_logo.png",
+	"BusinessLogo" : "{0}\\resources\\business_logo.png",
+	"Logo" : "{0}\\resources\\logo.png",
 	"LeftMargin" : 2.5,
 	"TopMargin" : 2.25,
 	"RightMargin" : 2.5,
@@ -18,7 +18,10 @@
 	"FinalInfo" : "La presente comunicación ha sido emitida en base a la información disponible en nuestros sistemas al día $$$. En caso Ud. haya regularizados, por favor hacer caso omiso a la presente.",
 	"FooterInfo" : "Oficina Principal: Jr. Ayacucho N° 590, Of. 309 – 418\u000BTelf. 044-252772 / 044-242477\u000BTrujillo	   										                  RQ-3-RJA",
 	"TextAfterPaymentPlace" : "De igual modo comunicarse al teléfono (01) 642-9892 OPCIÓN 5, para confirmar su abono.\u000B",
-	"ChargeFormat" : "C:\\Users\\rigo\\OneDrive - ASESCOM RJ ABOGADOS EIRL\\git\\LetterGenerator\\resources\\charge.txt",
+	"ChargeFormat" : "{0}\\charges\\charge.txt",
 	"BusinessName" : "TDP",
-	"OutputDir" : "C:\\Users\\rigo\\Desktop\\output"
+	"query" : "{0}\\queries\\tdp-urgent.sql",
+	"letterKind" : "Urgente",
+	"fontsizes" : [{"SetTextb4Table": 9}],
+	"classname" : "UrgentLetter"
 }

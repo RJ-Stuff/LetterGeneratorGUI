@@ -1,4 +1,5 @@
-﻿using Microsoft.Office.Interop.Word;
+﻿using Letters;
+using Microsoft.Office.Interop.Word;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,17 +8,15 @@ using System.Threading.Tasks;
 
 namespace LetterCore.Letters
 {
-    class Format
+    public class Format
     {
         public string URL { get; set; }
-        public string Filters { get; set; }
-        public WdPaperSize PaperSize { get; set; }
+        public List<Client> Clients { get; set; }
 
-        public Format(string URL, string Filters, WdPaperSize PaperSize)
+        public Format(string URL, List<Client> Clients)
         {
             this.URL = URL;
-            this.Filters = Filters;
-            this.PaperSize = PaperSize;
+            this.Clients = Clients;
         }
     }
 }

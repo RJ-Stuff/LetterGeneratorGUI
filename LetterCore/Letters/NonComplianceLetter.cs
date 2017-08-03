@@ -9,7 +9,8 @@ namespace Letters
     public class NonComplianceLetter : Letter
     {
         public NonComplianceLetter(JToken configuration, InputData input, 
-            Dictionary<string, int> FontSizes, Document document, Subject<object> progress, string letterKind, bool useCharge) :
+            Dictionary<string, int> FontSizes, Document document, Subject<object> progress, 
+            string letterKind, bool useCharge) :
             base(configuration, input, FontSizes, document, progress, letterKind, useCharge)
         {
         }
