@@ -13,6 +13,16 @@ namespace Letters
     {
         public const float PointsToCM = 28.3464567F;
 
+        /**
+         * todo 
+         * -pasar una lista de formatos, de ahi 
+         * -crear conf e input para cada uno luego crear las cartas.
+         * -actualizar los comodines dentro de las clases
+         * -eliminar o comentar los encabezdos y pie de pagina.
+         * -imprimir una muestra
+         * -ver las consultas.
+         
+             */
         public static void CreateDocs(InputData input, string output, Subject<object> progress, WdPaperSize paperSize)
         {
             var configuration72horas = Utils.LoadConfiguration($@"{Directory.GetCurrentDirectory()}\resources\tdp-72.json");

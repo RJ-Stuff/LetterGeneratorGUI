@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LetterApp", "LetterApp\Lett
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LetterCore", "LetterCore\LetterCore.csproj", "{6542EE75-261E-4E2D-B85D-75FA5F09C4C8}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Test", "Test\Test.csproj", "{52DD78D2-98C8-4ABD-85E0-26CE453AE703}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{6542EE75-261E-4E2D-B85D-75FA5F09C4C8}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6542EE75-261E-4E2D-B85D-75FA5F09C4C8}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6542EE75-261E-4E2D-B85D-75FA5F09C4C8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{52DD78D2-98C8-4ABD-85E0-26CE453AE703}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{52DD78D2-98C8-4ABD-85E0-26CE453AE703}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{52DD78D2-98C8-4ABD-85E0-26CE453AE703}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{52DD78D2-98C8-4ABD-85E0-26CE453AE703}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
