@@ -38,15 +38,6 @@
             this.ckbLineWrap = new System.Windows.Forms.CheckBox();
             this.btSaveEditorChanges = new System.Windows.Forms.Button();
             this.rtEditor = new System.Windows.Forms.RichTextBox();
-            this.tabFilters = new System.Windows.Forms.TabPage();
-            this.btRemoveFilter = new System.Windows.Forms.Button();
-            this.gbFilters = new System.Windows.Forms.GroupBox();
-            this.gbExtendedOptions = new System.Windows.Forms.GroupBox();
-            this.btAddOption = new System.Windows.Forms.Button();
-            this.ckbExtendedOptions = new System.Windows.Forms.CheckBox();
-            this.btExtendedOptionHelp = new System.Windows.Forms.Button();
-            this.txtbExtendedOption = new System.Windows.Forms.TextBox();
-            this.lbFilters = new System.Windows.Forms.ListBox();
             this.tabNotifications = new System.Windows.Forms.TabPage();
             this.groupBox4 = new System.Windows.Forms.GroupBox();
             this.rbOnlyMail = new System.Windows.Forms.RadioButton();
@@ -77,11 +68,12 @@
             this.label5 = new System.Windows.Forms.Label();
             this.cbCharge = new System.Windows.Forms.ComboBox();
             this.btChargesHelp = new System.Windows.Forms.Button();
+            this.tabData = new System.Windows.Forms.TabPage();
+            this.dataGridView1 = new System.Windows.Forms.DataGridView();
+            this.button1 = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.picLogo)).BeginInit();
             this.tabControl1.SuspendLayout();
             this.tabEditor.SuspendLayout();
-            this.tabFilters.SuspendLayout();
-            this.gbExtendedOptions.SuspendLayout();
             this.tabNotifications.SuspendLayout();
             this.groupBox4.SuspendLayout();
             this.groupBox3.SuspendLayout();
@@ -89,6 +81,8 @@
             this.groupBox1.SuspendLayout();
             this.menuStrip1.SuspendLayout();
             this.groupBox5.SuspendLayout();
+            this.tabData.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.SuspendLayout();
             // 
             // picLogo
@@ -123,7 +117,7 @@
             // tabControl1
             // 
             this.tabControl1.Controls.Add(this.tabEditor);
-            this.tabControl1.Controls.Add(this.tabFilters);
+            this.tabControl1.Controls.Add(this.tabData);
             this.tabControl1.Controls.Add(this.tabNotifications);
             this.tabControl1.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.tabControl1.Location = new System.Drawing.Point(219, 117);
@@ -189,98 +183,6 @@
             this.rtEditor.Size = new System.Drawing.Size(1080, 456);
             this.rtEditor.TabIndex = 0;
             this.rtEditor.Text = "";
-            // 
-            // tabFilters
-            // 
-            this.tabFilters.Controls.Add(this.btRemoveFilter);
-            this.tabFilters.Controls.Add(this.gbFilters);
-            this.tabFilters.Controls.Add(this.gbExtendedOptions);
-            this.tabFilters.Controls.Add(this.lbFilters);
-            this.tabFilters.Location = new System.Drawing.Point(4, 25);
-            this.tabFilters.Name = "tabFilters";
-            this.tabFilters.Padding = new System.Windows.Forms.Padding(3);
-            this.tabFilters.Size = new System.Drawing.Size(1092, 499);
-            this.tabFilters.TabIndex = 1;
-            this.tabFilters.Text = "Filtros";
-            this.tabFilters.UseVisualStyleBackColor = true;
-            // 
-            // btRemoveFilter
-            // 
-            this.btRemoveFilter.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btRemoveFilter.Location = new System.Drawing.Point(234, 463);
-            this.btRemoveFilter.Name = "btRemoveFilter";
-            this.btRemoveFilter.Size = new System.Drawing.Size(75, 28);
-            this.btRemoveFilter.TabIndex = 13;
-            this.btRemoveFilter.Text = "Eliminar";
-            this.btRemoveFilter.UseVisualStyleBackColor = true;
-            // 
-            // gbFilters
-            // 
-            this.gbFilters.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.gbFilters.Location = new System.Drawing.Point(315, 6);
-            this.gbFilters.Name = "gbFilters";
-            this.gbFilters.Size = new System.Drawing.Size(401, 372);
-            this.gbFilters.TabIndex = 12;
-            this.gbFilters.TabStop = false;
-            this.gbFilters.Text = "Filtros";
-            // 
-            // gbExtendedOptions
-            // 
-            this.gbExtendedOptions.Controls.Add(this.btAddOption);
-            this.gbExtendedOptions.Controls.Add(this.ckbExtendedOptions);
-            this.gbExtendedOptions.Controls.Add(this.btExtendedOptionHelp);
-            this.gbExtendedOptions.Controls.Add(this.txtbExtendedOption);
-            this.gbExtendedOptions.Enabled = false;
-            this.gbExtendedOptions.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.gbExtendedOptions.Location = new System.Drawing.Point(315, 384);
-            this.gbExtendedOptions.Name = "gbExtendedOptions";
-            this.gbExtendedOptions.Size = new System.Drawing.Size(401, 107);
-            this.gbExtendedOptions.TabIndex = 11;
-            this.gbExtendedOptions.TabStop = false;
-            // 
-            // btAddOption
-            // 
-            this.btAddOption.Location = new System.Drawing.Point(217, 65);
-            this.btAddOption.Name = "btAddOption";
-            this.btAddOption.Size = new System.Drawing.Size(125, 28);
-            this.btAddOption.TabIndex = 10;
-            this.btAddOption.Text = "Agregar opción";
-            this.btAddOption.UseVisualStyleBackColor = true;
-            // 
-            // ckbExtendedOptions
-            // 
-            this.ckbExtendedOptions.AutoSize = true;
-            this.ckbExtendedOptions.Location = new System.Drawing.Point(12, 0);
-            this.ckbExtendedOptions.Name = "ckbExtendedOptions";
-            this.ckbExtendedOptions.Size = new System.Drawing.Size(204, 21);
-            this.ckbExtendedOptions.TabIndex = 0;
-            this.ckbExtendedOptions.Text = "Activar opciones avanzadas";
-            this.ckbExtendedOptions.UseVisualStyleBackColor = true;
-            // 
-            // btExtendedOptionHelp
-            // 
-            this.btExtendedOptionHelp.Location = new System.Drawing.Point(319, 34);
-            this.btExtendedOptionHelp.Name = "btExtendedOptionHelp";
-            this.btExtendedOptionHelp.Size = new System.Drawing.Size(23, 25);
-            this.btExtendedOptionHelp.TabIndex = 1;
-            this.btExtendedOptionHelp.Text = "?";
-            this.btExtendedOptionHelp.UseVisualStyleBackColor = true;
-            // 
-            // txtbExtendedOption
-            // 
-            this.txtbExtendedOption.Location = new System.Drawing.Point(12, 36);
-            this.txtbExtendedOption.Name = "txtbExtendedOption";
-            this.txtbExtendedOption.Size = new System.Drawing.Size(301, 23);
-            this.txtbExtendedOption.TabIndex = 9;
-            // 
-            // lbFilters
-            // 
-            this.lbFilters.FormattingEnabled = true;
-            this.lbFilters.ItemHeight = 16;
-            this.lbFilters.Location = new System.Drawing.Point(6, 6);
-            this.lbFilters.Name = "lbFilters";
-            this.lbFilters.Size = new System.Drawing.Size(303, 436);
-            this.lbFilters.TabIndex = 0;
             // 
             // tabNotifications
             // 
@@ -581,6 +483,35 @@
             this.btChargesHelp.Text = "?";
             this.btChargesHelp.UseVisualStyleBackColor = true;
             // 
+            // tabData
+            // 
+            this.tabData.Controls.Add(this.button1);
+            this.tabData.Controls.Add(this.dataGridView1);
+            this.tabData.Location = new System.Drawing.Point(4, 25);
+            this.tabData.Name = "tabData";
+            this.tabData.Size = new System.Drawing.Size(1092, 499);
+            this.tabData.TabIndex = 3;
+            this.tabData.Text = "Datos";
+            this.tabData.UseVisualStyleBackColor = true;
+            // 
+            // dataGridView1
+            // 
+            this.dataGridView1.AllowUserToOrderColumns = true;
+            this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dataGridView1.Location = new System.Drawing.Point(3, 3);
+            this.dataGridView1.Name = "dataGridView1";
+            this.dataGridView1.Size = new System.Drawing.Size(1086, 462);
+            this.dataGridView1.TabIndex = 0;
+            // 
+            // button1
+            // 
+            this.button1.Location = new System.Drawing.Point(985, 471);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(104, 25);
+            this.button1.TabIndex = 1;
+            this.button1.Text = "Cargar datos";
+            this.button1.UseVisualStyleBackColor = true;
+            // 
             // MainWindow
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -603,9 +534,6 @@
             this.tabControl1.ResumeLayout(false);
             this.tabEditor.ResumeLayout(false);
             this.tabEditor.PerformLayout();
-            this.tabFilters.ResumeLayout(false);
-            this.gbExtendedOptions.ResumeLayout(false);
-            this.gbExtendedOptions.PerformLayout();
             this.tabNotifications.ResumeLayout(false);
             this.groupBox4.ResumeLayout(false);
             this.groupBox4.PerformLayout();
@@ -618,6 +546,8 @@
             this.menuStrip1.PerformLayout();
             this.groupBox5.ResumeLayout(false);
             this.groupBox5.PerformLayout();
+            this.tabData.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -627,7 +557,6 @@
 
         private System.Windows.Forms.PictureBox picLogo;
         private System.Windows.Forms.TabPage tabEditor;
-        private System.Windows.Forms.TabPage tabFilters;
         private System.Windows.Forms.TabPage tabNotifications;
         private System.Windows.Forms.GroupBox groupBox3;
         private System.Windows.Forms.Label label3;
@@ -645,14 +574,6 @@
         public System.Windows.Forms.Button btAddFormat;
         public System.Windows.Forms.Button btRemoveFormat;
         public System.Windows.Forms.Button btSaveEditorChanges;
-        public System.Windows.Forms.CheckBox ckbExtendedOptions;
-        public System.Windows.Forms.GroupBox gbExtendedOptions;
-        public System.Windows.Forms.GroupBox gbFilters;
-        public System.Windows.Forms.Button btRemoveFilter;
-        public System.Windows.Forms.ListBox lbFilters;
-        public System.Windows.Forms.Button btAddOption;
-        public System.Windows.Forms.Button btExtendedOptionHelp;
-        public System.Windows.Forms.TextBox txtbExtendedOption;
         public System.Windows.Forms.TextBox txtbEmail;
         public System.Windows.Forms.CheckBox ckbLineWrap;
         public System.Windows.Forms.Button btRemoveMail;
@@ -673,6 +594,9 @@
         private System.Windows.Forms.Label label5;
         public System.Windows.Forms.ComboBox cbCharge;
         public System.Windows.Forms.Button btChargesHelp;
+        private System.Windows.Forms.TabPage tabData;
+        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.DataGridView dataGridView1;
     }
 }
 

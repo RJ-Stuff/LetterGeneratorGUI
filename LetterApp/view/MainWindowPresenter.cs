@@ -44,7 +44,7 @@ namespace LetterApp.view
             .ToList()
             .ForEach(o => this.mainWindow.cbPaperSize.Items.Add(o));
 
-            UpdateFilterTab();
+           // UpdateFilterTab();
 
             LoadConfiguration();
 
@@ -57,10 +57,10 @@ namespace LetterApp.view
             mainWindow.btAddFormat.Click += new EventHandler(AddFormat);
             mainWindow.btRemoveFormat.Click += new EventHandler(RemoveFormat);
             mainWindow.btSaveEditorChanges.Click += new EventHandler(SaveEditorChanges);
-            mainWindow.btRemoveFilter.Click += new EventHandler(RemoveFilter);
+           // mainWindow.btRemoveFilter.Click += new EventHandler(RemoveFilter);
             mainWindow.ckbLineWrap.Click += new EventHandler(LineWrap);
-            mainWindow.btAddOption.Click += new EventHandler(AddOption);
-            mainWindow.btExtendedOptionHelp.Click += new EventHandler(ExtendedOptionHelp);
+           // mainWindow.btAddOption.Click += new EventHandler(AddOption);
+          //  mainWindow.btExtendedOptionHelp.Click += new EventHandler(ExtendedOptionHelp);
             mainWindow.rtEditor.KeyPress += new KeyPressEventHandler(TextOnEditorChange);
             mainWindow.btRemoveMail.Click += new EventHandler(RemoveMail);
             mainWindow.btAddMail.Click += new EventHandler(AddMail);
@@ -112,21 +112,21 @@ namespace LetterApp.view
 
             try
             {
-                //limpiar filtros
-                mainWindow.lbFilters.Items.Clear();
-                filterPair.Keys.ToList().ForEach(k =>
-                {
-                    k.Checked = false;
-                    var tuple = filterPair[k];
-                    if (tuple.Item1 != null)
-                    {
-                        tuple.Item1.Text = "";
-                        tuple.Item1.Enabled = true;
-                    }
-                });
-                mainWindow.ckbExtendedOptions.Checked = false;
-                mainWindow.gbExtendedOptions.Enabled = false;
-                mainWindow.txtbExtendedOption.Text = "";
+                ////limpiar filtros
+                //mainWindow.lbFilters.Items.Clear();
+                //filterPair.Keys.ToList().ForEach(k =>
+                //{
+                //    k.Checked = false;
+                //    var tuple = filterPair[k];
+                //    if (tuple.Item1 != null)
+                //    {
+                //        tuple.Item1.Text = "";
+                //        tuple.Item1.Enabled = true;
+                //    }
+                //});
+                //mainWindow.ckbExtendedOptions.Checked = false;
+                //mainWindow.gbExtendedOptions.Enabled = false;
+                //mainWindow.txtbExtendedOption.Text = "";
 
                 //limpiar editor
                 mainWindow.rtEditor.Text = "";
@@ -157,25 +157,25 @@ namespace LetterApp.view
                     format.PaperSize.Charges.ForEach(c => mainWindow.cbCharge.Items.Add(c));
                     mainWindow.cbCharge.SelectedItem = format.Charge;
 
-                    //actualiza filtros
-                    format.Filters.ForEach(f =>
-                    {
-                        mainWindow.lbFilters.Items.Add(f);
-                        var keys = filterPair.Keys.Where(k => k.Text == f.DisplayName).ToList();
-                        if (keys.Count != 0)
-                        {
-                            var key = keys[0];
-                            key.Checked = true;
-                            if (filterPair.ContainsKey(key))
-                            {
-                                var tuple = filterPair[key];
-                                if (tuple.Item1 != null)
-                                {
-                                    tuple.Item1.Text = f.Value.ToString();
-                                }
-                            }
-                        }
-                    });
+                    ////actualiza filtros
+                    //format.Filters.ForEach(f =>
+                    //{
+                    //    mainWindow.lbFilters.Items.Add(f);
+                    //    var keys = filterPair.Keys.Where(k => k.Text == f.DisplayName).ToList();
+                    //    if (keys.Count != 0)
+                    //    {
+                    //        var key = keys[0];
+                    //        key.Checked = true;
+                    //        if (filterPair.ContainsKey(key))
+                    //        {
+                    //            var tuple = filterPair[key];
+                    //            if (tuple.Item1 != null)
+                    //            {
+                    //                tuple.Item1.Text = f.Value.ToString();
+                    //            }
+                    //        }
+                    //    }
+                    //});
                 }
             }
             catch (Exception ex)
@@ -196,94 +196,94 @@ namespace LetterApp.view
         }
 
         //todo crear un GUI configuration
-        private void UpdateFilterTab()
-        {
-            var filters = GUIConfiguration["filters"] ?? new JArray();
+        //private void UpdateFilterTab()
+        //{
+        //    var filters = GUIConfiguration["filters"] ?? new JArray();
 
-            filters.Select((f, i) => new { filter = f, i = i }).ToList().ForEach(f =>
-                {
-                    var ckb = new CheckBox()
-                    {
-                        Text = f.filter["kind"].Value<string>(),
-                        Location = new Point(5, (f.i + 1) * 23),
-                        Width = 210
-                    };
-                    ckb.Click += new EventHandler(FilterAction);
-                    mainWindow.gbFilters.Controls.Add(ckb);
+        //    filters.Select((f, i) => new { filter = f, i = i }).ToList().ForEach(f =>
+        //        {
+        //            var ckb = new CheckBox()
+        //            {
+        //                Text = f.filter["kind"].Value<string>(),
+        //                Location = new Point(5, (f.i + 1) * 23),
+        //                Width = 210
+        //            };
+        //            ckb.Click += new EventHandler(FilterAction);
+        //            mainWindow.gbFilters.Controls.Add(ckb);
 
-                    if (Convert.ToBoolean(f.filter["box"].Value<string>()))
-                    {
-                        var txb = new TextBox()
-                        {
-                            Location = new Point(215, (f.i + 1) * 23),
-                            Width = 150,
-                            Height = 23
-                        };
-                        mainWindow.gbFilters.Controls.Add(txb);
+        //            if (Convert.ToBoolean(f.filter["box"].Value<string>()))
+        //            {
+        //                var txb = new TextBox()
+        //                {
+        //                    Location = new Point(215, (f.i + 1) * 23),
+        //                    Width = 150,
+        //                    Height = 23
+        //                };
+        //                mainWindow.gbFilters.Controls.Add(txb);
 
-                        filterPair[ckb] = Tuple.Create(txb, f.filter["internalname"].Value<string>());
-                    }
-                    else
-                    {
-                        filterPair[ckb] = new Tuple<TextBox, string>(null, f.filter["internalname"].Value<string>());
-                    }
-                });
+        //                filterPair[ckb] = Tuple.Create(txb, f.filter["internalname"].Value<string>());
+        //            }
+        //            else
+        //            {
+        //                filterPair[ckb] = new Tuple<TextBox, string>(null, f.filter["internalname"].Value<string>());
+        //            }
+        //        });
 
-            ManageCheckGroupBox(mainWindow.ckbExtendedOptions, mainWindow.gbExtendedOptions);
-        }
+        //   // ManageCheckGroupBox(mainWindow.ckbExtendedOptions, mainWindow.gbExtendedOptions);
+        //}
 
-        private void FilterAction(object sender, EventArgs e)
-        {
-            var chk = sender as CheckBox;
+        //private void FilterAction(object sender, EventArgs e)
+        //{
+        //    var chk = sender as CheckBox;
 
-            if (filterPair.TryGetValue(chk, out Tuple<TextBox, string> tuple) && Utils.Validate(tuple.Item1))
-            {
-                if (chk.Checked)
-                {
-                    mainWindow.lbFilters.Items.Add(new Filter(chk.Text, tuple.Item2, (tuple.Item1 ?? new TextBox()).Text));
-                    if (tuple.Item1 != null)
-                    {
-                        tuple.Item1.Enabled = false;
-                    }
-                }
-                else
-                {
-                    mainWindow.lbFilters.Items.Remove(new Filter(chk.Text, tuple.Item2, (tuple.Item1 ?? new TextBox()).Text));
-                    if (tuple.Item1 != null)
-                    {
-                        tuple.Item1.Enabled = true;
-                    }
-                }
-                FiltersChange();
-            }
-            else
-            {
-                var alt = tuple.Item1.Text.Trim().Length == 0 ? ", comience agregando algún valor al mismo." : ".";
-                MessageBox.Show($"Hay problemas con la validación del valor del filtro{alt}", "Validación");
-                chk.Checked = false;
-            }
-        }
+        //    if (filterPair.TryGetValue(chk, out Tuple<TextBox, string> tuple) && Utils.Validate(tuple.Item1))
+        //    {
+        //        if (chk.Checked)
+        //        {
+        //            mainWindow.lbFilters.Items.Add(new Filter(chk.Text, tuple.Item2, (tuple.Item1 ?? new TextBox()).Text));
+        //            if (tuple.Item1 != null)
+        //            {
+        //                tuple.Item1.Enabled = false;
+        //            }
+        //        }
+        //        else
+        //        {
+        //            mainWindow.lbFilters.Items.Remove(new Filter(chk.Text, tuple.Item2, (tuple.Item1 ?? new TextBox()).Text));
+        //            if (tuple.Item1 != null)
+        //            {
+        //                tuple.Item1.Enabled = true;
+        //            }
+        //        }
+        //        FiltersChange();
+        //    }
+        //    else
+        //    {
+        //        var alt = tuple.Item1.Text.Trim().Length == 0 ? ", comience agregando algún valor al mismo." : ".";
+        //        MessageBox.Show($"Hay problemas con la validación del valor del filtro{alt}", "Validación");
+        //        chk.Checked = false;
+        //    }
+        //}
 
-        private void ManageCheckGroupBox(CheckBox chk, GroupBox grp)
-        {
-            if (chk.Parent == grp)
-            {
-                grp.Parent.Controls.Add(chk);
+        //private void ManageCheckGroupBox(CheckBox chk, GroupBox grp)
+        //{
+        //    if (chk.Parent == grp)
+        //    {
+        //        grp.Parent.Controls.Add(chk);
 
-                chk.Location = new Point(
-                    chk.Left + grp.Left,
-                    chk.Top + grp.Top);
+        //        chk.Location = new Point(
+        //            chk.Left + grp.Left,
+        //            chk.Top + grp.Top);
 
-                chk.BringToFront();
-            }
+        //        chk.BringToFront();
+        //    }
 
-            chk.Click += new EventHandler(ExtendedOptions);
-        }
+        //    chk.Click += new EventHandler(ExtendedOptions);
+        //}
 
-        private void ExtendedOptions(object sender, EventArgs e)
-        {
-            mainWindow.gbExtendedOptions.Enabled = mainWindow.ckbExtendedOptions.Checked;
-        }
+        //private void ExtendedOptions(object sender, EventArgs e)
+        //{
+        //    mainWindow.gbExtendedOptions.Enabled = mainWindow.ckbExtendedOptions.Checked;
+        //}
 
         private void LoadConfiguration()
         {
@@ -334,16 +334,16 @@ namespace LetterApp.view
             }
         }
 
-        private void FiltersChange()
-        {
-            var index = mainWindow.ckLbFormats.SelectedIndex;
-            if (index != -1)
-            {
-                var format = mainWindow.ckLbFormats.Items[index] as Format;
-                format.Filters = mainWindow.lbFilters.Items.Cast<Filter>().ToList();
-                configuration.SetFormats(mainWindow.ckLbFormats.Items.Cast<Format>().ToList());
-            }
-        }
+        //private void FiltersChange()
+        //{
+        //    var index = mainWindow.ckLbFormats.SelectedIndex;
+        //    if (index != -1)
+        //    {
+        //        var format = mainWindow.ckLbFormats.Items[index] as Format;
+        //        format.Filters = mainWindow.lbFilters.Items.Cast<Filter>().ToList();
+        //        configuration.SetFormats(mainWindow.ckLbFormats.Items.Cast<Format>().ToList());
+        //    }
+        //}
 
         private void SelectedPaperSizeChange(object sender, EventArgs e)
         {
@@ -437,64 +437,64 @@ namespace LetterApp.view
                 "Este filtro se usa directamente en la consulta a la base de datos.", "Información");
         }
 
-        private void AddOption(object sender, EventArgs e)
-        {
-            if (mainWindow.txtbExtendedOption.Text.Trim().Length == 0)
-            {
-                MessageBox.Show("Debe introducir algún valor como opción.", "Validación");
-            }
-            else
-            {
-                var option = mainWindow.txtbExtendedOption.Text.Trim();
-                mainWindow.lbFilters.Items.Add(new Filter(option, option, ""));
-                mainWindow.txtbExtendedOption.Text = "";
-                FiltersChange();
-            }
-        }
+        //private void AddOption(object sender, EventArgs e)
+        //{
+        //    if (mainWindow.txtbExtendedOption.Text.Trim().Length == 0)
+        //    {
+        //        MessageBox.Show("Debe introducir algún valor como opción.", "Validación");
+        //    }
+        //    else
+        //    {
+        //        var option = mainWindow.txtbExtendedOption.Text.Trim();
+        //        mainWindow.lbFilters.Items.Add(new Filter(option, option, ""));
+        //        mainWindow.txtbExtendedOption.Text = "";
+        //        FiltersChange();
+        //    }
+        //}
 
         private void LineWrap(object sender, EventArgs e)
         {
             mainWindow.rtEditor.WordWrap = !mainWindow.ckbLineWrap.Checked;
         }
 
-        private void RemoveFilter(object sender, EventArgs e)
-        {
-            if (mainWindow.lbFilters.Items.Count == 0)
-            {
-                MessageBox.Show("No existen filtros.", "Información");
-            }
-            else
-            {
-                var index = mainWindow.lbFilters.SelectedIndex;
-                if (index == -1)
-                {
-                    MessageBox.Show("Debe seleccionar el filtro a eliminar.", "Información");
-                }
-                else
-                {
-                    var confirmResult = MessageBox.Show("¿Está seguro que desea eliminar el filtro?",
-                         "Confirmar eliminación", MessageBoxButtons.YesNo);
-                    if (confirmResult == DialogResult.Yes)
-                    {
-                        var filter = mainWindow.lbFilters.Items[index] as Filter;
+        //private void RemoveFilter(object sender, EventArgs e)
+        //{
+        //    if (mainWindow.lbFilters.Items.Count == 0)
+        //    {
+        //        MessageBox.Show("No existen filtros.", "Información");
+        //    }
+        //    else
+        //    {
+        //        var index = mainWindow.lbFilters.SelectedIndex;
+        //        if (index == -1)
+        //        {
+        //            MessageBox.Show("Debe seleccionar el filtro a eliminar.", "Información");
+        //        }
+        //        else
+        //        {
+        //            var confirmResult = MessageBox.Show("¿Está seguro que desea eliminar el filtro?",
+        //                 "Confirmar eliminación", MessageBoxButtons.YesNo);
+        //            if (confirmResult == DialogResult.Yes)
+        //            {
+        //                var filter = mainWindow.lbFilters.Items[index] as Filter;
 
-                        var chkl = filterPair.Keys.Select(k => k).Where(k => k.Text == filter.DisplayName).ToList();
+        //                var chkl = filterPair.Keys.Select(k => k).Where(k => k.Text == filter.DisplayName).ToList();
 
-                        if (chkl.Count != 0)
-                        {
-                            chkl[0].Checked = false;
-                            FilterAction(chkl[0], null);
-                        }
-                        else
-                        {
-                            mainWindow.lbFilters.Items.RemoveAt(index);
-                        }
-                        FiltersChange();
-                    }
-                }
-            }
+        //                if (chkl.Count != 0)
+        //                {
+        //                    chkl[0].Checked = false;
+        //                    FilterAction(chkl[0], null);
+        //                }
+        //                else
+        //                {
+        //                    mainWindow.lbFilters.Items.RemoveAt(index);
+        //                }
+        //                FiltersChange();
+        //            }
+        //        }
+        //    }
 
-        }
+        //}
 
         private void SaveEditorChanges(object sender, EventArgs e)
         {
