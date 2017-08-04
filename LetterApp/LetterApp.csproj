@@ -78,6 +78,7 @@
     <Compile Include="MainWindow.Designer.cs">
       <DependentUpon>MainWindow.cs</DependentUpon>
     </Compile>
+    <Compile Include="model\Charge.cs" />
     <Compile Include="model\Configuration.cs" />
     <Compile Include="model\Filter.cs" />
     <Compile Include="model\Format.cs" />

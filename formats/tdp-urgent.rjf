@@ -22,6 +22,6 @@
 	"BusinessName" : "TDP",
 	"query" : "{0}\\queries\\tdp-urgent.sql",
 	"letterKind" : "Urgente",
-	"fontsizes" : [{"SetTextb4Table": 9}],
+	"fontsizes" : [{"part":"SetTextb4Table", "size": 9}],
 	"classname" : "UrgentLetter"
 }

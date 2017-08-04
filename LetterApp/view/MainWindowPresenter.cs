@@ -29,9 +29,18 @@ namespace LetterApp.view
             GUIConfiguration = JToken.Parse(File.ReadAllText(Path.Combine(Directory.GetCurrentDirectory(), "GUIConfiguration.json"), Encoding.Default));
 
             mainWindow.cbPaperSize.DropDownStyle = ComboBoxStyle.DropDownList;
+            mainWindow.cbCharge.DropDownStyle = ComboBoxStyle.DropDownList;
 
             (GUIConfiguration["papersizes"] ?? new JArray())
-            .Select(p => new PaperSize(p["name"].Value<string>(), p["displayname"].Value<string>()))
+            .Select(p =>
+            {
+                var chargesTokens = p["charges"] ?? new JArray();
+                var charges = chargesTokens
+                .Select(t => new Charge(t["ChargeClazz"].Value<string>(), t["DisplayName"].Value<string>()))
+                .ToList();
+
+                return new PaperSize(p["name"].Value<string>(), p["displayname"].Value<string>(), charges);
+            })
             .ToList()
             .ForEach(o => this.mainWindow.cbPaperSize.Items.Add(o));
 
@@ -60,6 +69,33 @@ namespace LetterApp.view
             mainWindow.cbPaperSize.SelectedIndexChanged += new EventHandler(SelectedPaperSizeChange);
             mainWindow.ckLbFormats.ItemCheck += new ItemCheckEventHandler(FormatCheck);
             mainWindow.btMailHelp.Click += new EventHandler(MailHelp);
+            mainWindow.cbCharge.SelectedIndexChanged += new EventHandler(SelectedChargeChange);
+            mainWindow.btChargesHelp.Click += new EventHandler(ChargesHelp);
+            mainWindow.acercaDeToolStripMenuItem.Click += new EventHandler(AboutHelp);
+        }
+
+        private void AboutHelp(object sender, EventArgs e)
+        {
+            var year = DateTime.Now.ToString("yyyy");
+            MessageBox.Show($"Aplicación para la generación de cartas.\nVersión 0.1.\n\nAutor: Rigoberto L. Salgado Reyes.\nCorreo: rigoberto.salgado@rjabogados.com.\n\n© {year} RJAbogados.\nTodos los derechos reservados.", "Acerca de",MessageBoxButtons.OK, MessageBoxIcon.Information);
+        }
+
+        private void ChargesHelp(object sender, EventArgs e)
+        {
+            MessageBox.Show("El cargo está en relación con el tamaño de la hoja.","Información");
+        }
+
+        private void SelectedChargeChange(object sender, EventArgs e)
+        {
+            var charge = (mainWindow.cbCharge.SelectedItem as Charge) ?? Charge.DEFAULT_CHARGE;
+
+            mainWindow.ckLbFormats
+                .Items
+                .Cast<Format>()
+                .ToList()
+                .ForEach(f => f.Charge = charge);
+
+            configuration.SetFormats(mainWindow.ckLbFormats.Items.Cast<Format>().ToList());
         }
 
         private void MailHelp(object sender, EventArgs e)
@@ -116,6 +152,11 @@ namespace LetterApp.view
                     //actualiza el tipo de papel
                     mainWindow.cbPaperSize.SelectedItem = format.PaperSize;
 
+                    //actualiza el cargo
+                    mainWindow.cbCharge.Items.Clear();
+                    format.PaperSize.Charges.ForEach(c => mainWindow.cbCharge.Items.Add(c));
+                    mainWindow.cbCharge.SelectedItem = format.Charge;
+
                     //actualiza filtros
                     format.Filters.ForEach(f =>
                     {
@@ -154,6 +195,7 @@ namespace LetterApp.view
             }
         }
 
+        //todo crear un GUI configuration
         private void UpdateFilterTab()
         {
             var filters = GUIConfiguration["filters"] ?? new JArray();
@@ -245,7 +287,6 @@ namespace LetterApp.view
 
         private void LoadConfiguration()
         {
-            //todo si no hay formatos en la conf, buscarlos en la carpeta formats.
             try
             {
                 configuration = JsonConvert.DeserializeObject<Configuration>(
@@ -262,15 +303,14 @@ namespace LetterApp.view
 
                 configuration.Notifications.ForEach(n => mainWindow.lbMails.Items.Add(n));
 
-                
-                if(mainWindow.ckLbFormats.Items.Count == 0)
+                if (mainWindow.ckLbFormats.Items.Count == 0)
                 {
                     var dir = Path.Combine(Directory.GetCurrentDirectory(), "formats");
                     if (Directory.Exists(dir))
                     {
                         var stream = Directory
                             .EnumerateFiles(dir, "*.rjf")
-                            .Select((url,i) => new { format = new Format(url), index = i });
+                            .Select((url, i) => new { format = new Format(url), index = i });
 
                         configuration.SetFormats(stream.Select(o => o.format).ToList());
                         stream.ToList().ForEach(o =>
@@ -307,13 +347,29 @@ namespace LetterApp.view
 
         private void SelectedPaperSizeChange(object sender, EventArgs e)
         {
-            var index = mainWindow.ckLbFormats.SelectedIndex;
-            if (index != -1)
+            var paperSize = (mainWindow.cbPaperSize.SelectedItem as PaperSize) ?? PaperSize.DEFAULT_SIZE;
+
+            mainWindow.cbCharge.Items.Clear();
+            paperSize.Charges.ForEach(c => mainWindow.cbCharge.Items.Add(c));
+
+            if (mainWindow.cbCharge.Items.Count != 0)
             {
-                var format = mainWindow.ckLbFormats.Items[index] as Format;
-                format.PaperSize = (mainWindow.cbPaperSize.SelectedItem as PaperSize) ?? PaperSize.DEFAULT_SIZE;
-                configuration.SetFormats(mainWindow.ckLbFormats.Items.Cast<Format>().ToList());
+                mainWindow.cbCharge.SelectedItem = mainWindow.cbCharge.Items[0];
             }
+
+            var charge = (mainWindow.cbCharge.SelectedItem as Charge) ?? Charge.DEFAULT_CHARGE;
+
+            mainWindow.ckLbFormats
+                .Items
+                .Cast<Format>()
+                .ToList()
+                .ForEach(f =>
+                {
+                    f.PaperSize = paperSize;
+                    f.Charge = charge;
+                });
+
+            configuration.SetFormats(mainWindow.ckLbFormats.Items.Cast<Format>().ToList());
         }
 
         private void EditEditor(object sender, EventArgs e)

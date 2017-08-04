@@ -74,6 +74,9 @@
             this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.acercaDeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.groupBox5 = new System.Windows.Forms.GroupBox();
+            this.label5 = new System.Windows.Forms.Label();
+            this.cbCharge = new System.Windows.Forms.ComboBox();
+            this.btChargesHelp = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.picLogo)).BeginInit();
             this.tabControl1.SuspendLayout();
             this.tabEditor.SuspendLayout();
@@ -539,6 +542,9 @@
             // 
             // groupBox5
             // 
+            this.groupBox5.Controls.Add(this.btChargesHelp);
+            this.groupBox5.Controls.Add(this.cbCharge);
+            this.groupBox5.Controls.Add(this.label5);
             this.groupBox5.Controls.Add(this.label4);
             this.groupBox5.Controls.Add(this.cbPaperSize);
             this.groupBox5.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -548,6 +554,32 @@
             this.groupBox5.TabIndex = 8;
             this.groupBox5.TabStop = false;
             this.groupBox5.Text = "Opciones del formato";
+            // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Location = new System.Drawing.Point(7, 72);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(50, 17);
+            this.label5.TabIndex = 2;
+            this.label5.Text = "Cargo:";
+            // 
+            // cbCharge
+            // 
+            this.cbCharge.FormattingEnabled = true;
+            this.cbCharge.Location = new System.Drawing.Point(139, 65);
+            this.cbCharge.Name = "cbCharge";
+            this.cbCharge.Size = new System.Drawing.Size(159, 24);
+            this.cbCharge.TabIndex = 3;
+            // 
+            // btChargesHelp
+            // 
+            this.btChargesHelp.Location = new System.Drawing.Point(304, 65);
+            this.btChargesHelp.Name = "btChargesHelp";
+            this.btChargesHelp.Size = new System.Drawing.Size(25, 24);
+            this.btChargesHelp.TabIndex = 4;
+            this.btChargesHelp.Text = "?";
+            this.btChargesHelp.UseVisualStyleBackColor = true;
             // 
             // MainWindow
             // 
@@ -638,6 +670,9 @@
         private System.Windows.Forms.GroupBox groupBox5;
         public System.Windows.Forms.Button btMailHelp;
         public System.Windows.Forms.ToolStripMenuItem cerrarToolStripMenuItem;
+        private System.Windows.Forms.Label label5;
+        public System.Windows.Forms.ComboBox cbCharge;
+        public System.Windows.Forms.Button btChargesHelp;
     }
 }
 

@@ -9,20 +9,22 @@ namespace LetterApp.model
         public bool Checked { get; set; }
         public List<Filter> Filters { get; set; }
         public PaperSize PaperSize { get; set; }
+        public Charge Charge { get; set; }
 
         public Format() { }
 
-        public Format(string URL) : this(URL, true, new List<Filter>(), PaperSize.DEFAULT_SIZE)
+        public Format(string URL) : this(URL, true, new List<Filter>(), PaperSize.DEFAULT_SIZE, Charge.DEFAULT_CHARGE)
         {
 
         }
 
-        public Format(string URL, bool Checked, List<Filter> Filters, PaperSize PaperSize)
+        public Format(string URL, bool Checked, List<Filter> Filters, PaperSize PaperSize, Charge Charge)
         {
             this.URL = URL;
             this.Checked = Checked;
             this.Filters = Filters;
             this.PaperSize = PaperSize;
+            this.Charge = Charge;
         }
 
         public override int GetHashCode()
