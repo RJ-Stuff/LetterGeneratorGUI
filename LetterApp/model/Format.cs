@@ -1,11 +1,11 @@
-﻿using System.Collections.Generic;
-using System.IO;
-
-namespace LetterApp.model
+﻿namespace LetterApp.model
 {
+    using System.Collections.Generic;
+    using System.IO;
+
     class Format
     {
-        public string URL { get; set; }
+        public string Url { get; set; }
         public bool Checked { get; set; }
         public List<Filter> Filters { get; set; }
         public PaperSize PaperSize { get; set; }
@@ -13,27 +13,26 @@ namespace LetterApp.model
 
         public Format() { }
 
-        public Format(string URL) : this(URL, true, new List<Filter>(), PaperSize.DEFAULT_SIZE, Charge.DEFAULT_CHARGE)
+        public Format(string url) : this(url, true, new List<Filter>(), PaperSize.DefaultSize, Charge.DefaultCharge)
         {
-
         }
 
-        public Format(string URL, bool Checked, List<Filter> Filters, PaperSize PaperSize, Charge Charge)
+        private Format(string url, bool Checked, List<Filter> filters, PaperSize paperSize, Charge charge)
         {
-            this.URL = URL;
+            this.Url = url;
             this.Checked = Checked;
-            this.Filters = Filters;
-            this.PaperSize = PaperSize;
-            this.Charge = Charge;
+            this.Filters = filters;
+            this.PaperSize = paperSize;
+            this.Charge = charge;
         }
 
         public override int GetHashCode()
         {
             unchecked
             {
-                int hash = 17;
+                var hash = 17;
 
-                hash = hash * 23 + URL.GetHashCode();
+                hash = hash * 23 + this.Url.GetHashCode();
                 hash = hash * 23 + Checked.GetHashCode();
                 hash = hash * 23 + Filters.GetHashCode();
                 hash = hash * 23 + PaperSize.GetHashCode();
@@ -44,7 +43,7 @@ namespace LetterApp.model
 
         public override string ToString()
         {
-            return Path.GetFileNameWithoutExtension(URL);
+            return Path.GetFileNameWithoutExtension(this.Url);
         }
     }
 }

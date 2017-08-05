@@ -1,14 +1,15 @@
-﻿using Microsoft.Office.Interop.Word;
-using System;
-using System.Collections.Generic;
-
-namespace LetterApp.model
+﻿namespace LetterApp.model
 {
+    using System;
+    using System.Collections.Generic;
+
+    using Microsoft.Office.Interop.Word;
+
     class PaperSize
     {
-        public static readonly PaperSize DEFAULT_SIZE =
+        public static readonly PaperSize DefaultSize =
             new PaperSize("wdPaperA4", "Papel A4",
-                new List<Charge>() { Charge.DEFAULT_CHARGE });
+                new List<Charge> { Charge.DefaultCharge });
 
         public WdPaperSize Papersize { get; set; }
         public string DisplayName { get; set; }
@@ -16,14 +17,14 @@ namespace LetterApp.model
 
         public PaperSize() { }
 
-        public PaperSize(string paperSize, string displayName, List<Charge> Charges)
+        public PaperSize(string paperSize, string displayName, List<Charge> charges)
         {
             Papersize = (WdPaperSize)Enum.Parse(typeof(WdPaperSize), paperSize);
             DisplayName = displayName;
-            this.Charges = Charges;
+            this.Charges = charges;
         }
 
-        public PaperSize(int paperSize, string displayName, List<Charge> Charges)
+        public PaperSize(int paperSize, string displayName, List<Charge> charges)
         {
             if (Enum.IsDefined(typeof(WdPaperSize), paperSize))
             {
@@ -35,7 +36,7 @@ namespace LetterApp.model
             }
 
             DisplayName = displayName;
-            this.Charges = Charges;
+            this.Charges = charges;
         }
 
         public override string ToString()
@@ -47,7 +48,7 @@ namespace LetterApp.model
         {
             unchecked
             {
-                int hash = 17;
+                var hash = 17;
 
                 hash = hash * 23 + Papersize.ToString().GetHashCode();
                 hash = hash * 23 + DisplayName.GetHashCode();
@@ -58,7 +59,7 @@ namespace LetterApp.model
 
         public override bool Equals(object obj)
         {
-            return obj.GetHashCode() == GetHashCode();
+            return obj != null && obj.GetHashCode() == GetHashCode();
         }
     }
 }

@@ -1,16 +1,13 @@
-﻿using LetterCore.Letters;
-using Letters;
-using Microsoft.Office.Interop.Word;
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Reactive.Subjects;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Test
+﻿namespace Test
 {
+    using System.Collections.Generic;
+    using System.IO;
+    using System.Reactive.Subjects;
+
+    using LetterCore.Letters;
+
+    using Microsoft.Office.Interop.Word;
+
     class Program
     {
         static void Main(string[] args)
@@ -20,7 +17,6 @@ namespace Test
             ////var configurationUrgent = Utils.LoadConfiguration($@"{Directory.GetCurrentDirectory()}\resources\tdp-urgent.json");
             ////var configurationLastChance = Utils.LoadConfiguration($@"{Directory.GetCurrentDirectory()}\resources\tdp-lastchance.json");
             ////var configurationNonCompliance = Utils.LoadConfiguration($@"{Directory.GetCurrentDirectory()}\resources\tdp-non-compliance.json");
-
             var progress = new Subject<object>();
             var input = new InputData();
 
@@ -29,9 +25,9 @@ namespace Test
                 input.GetClients(),
                 null);
 
-            AllInOneGenerator.CreateDocs(new List<Format>() { format1 }, progress, WdPaperSize.wdPaperLegal);
+            AllInOneGenerator.CreateDocs(new List<Format> { format1 }, progress, WdPaperSize.wdPaperLegal);
             
-            //Console.ReadKey();
+            // Console.ReadKey();
         }
     }
 }

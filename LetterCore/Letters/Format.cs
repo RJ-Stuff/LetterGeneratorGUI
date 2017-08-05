@@ -1,19 +1,20 @@
-﻿using Letters;
-using System.Collections.Generic;
-
-namespace LetterCore.Letters
+﻿namespace LetterCore.Letters
 {
+    using System.Collections.Generic;
+
     public class Format
     {
-        public string URL { get; }
-        public List<Client> Clients { get; }
-        public string ChargeClazz { get; }
-
-        public Format(string URL, List<Client> Clients, string ChargeClazz)
+        public Format(string url, List<Client> clients, string chargeClazz)
         {
-            this.URL = URL;
-            this.Clients = Clients;
-            this.ChargeClazz = ChargeClazz;
+            Url = url;
+            Clients = clients;
+            ChargeClazz = chargeClazz;
         }
+
+        public string Url { get; }
+
+        public List<Client> Clients { get; }
+
+        public string ChargeClazz { get; }
     }
 }

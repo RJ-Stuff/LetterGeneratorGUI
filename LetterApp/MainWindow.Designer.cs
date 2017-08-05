@@ -1,11 +1,17 @@
 ﻿namespace LetterApp
 {
+    using System.ComponentModel;
+    using System.Windows.Forms;
+
+    using GridExtensions;
+    using GridExtensions.GridFilterFactories;
+
     partial class MainWindow
     {
         /// <summary>
         /// Required designer variable.
         /// </summary>
-        private System.ComponentModel.IContainer components = null;
+        private IContainer components = null;
 
         /// <summary>
         /// Clean up any resources being used.
@@ -17,6 +23,7 @@
             {
                 components.Dispose();
             }
+
             base.Dispose(disposing);
         }
 
@@ -28,6 +35,8 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
+            GridExtensions.GridFilterFactories.DefaultGridFilterFactory defaultGridFilterFactory1 = new GridExtensions.GridFilterFactories.DefaultGridFilterFactory();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainWindow));
             this.picLogo = new System.Windows.Forms.PictureBox();
             this.btGenerateWords = new System.Windows.Forms.Button();
@@ -38,6 +47,8 @@
             this.ckbLineWrap = new System.Windows.Forms.CheckBox();
             this.btSaveEditorChanges = new System.Windows.Forms.Button();
             this.rtEditor = new System.Windows.Forms.RichTextBox();
+            this.tabData = new System.Windows.Forms.TabPage();
+            this.btLoadData = new System.Windows.Forms.Button();
             this.tabNotifications = new System.Windows.Forms.TabPage();
             this.groupBox4 = new System.Windows.Forms.GroupBox();
             this.rbOnlyMail = new System.Windows.Forms.RadioButton();
@@ -65,15 +76,15 @@
             this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.acercaDeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.groupBox5 = new System.Windows.Forms.GroupBox();
-            this.label5 = new System.Windows.Forms.Label();
-            this.cbCharge = new System.Windows.Forms.ComboBox();
             this.btChargesHelp = new System.Windows.Forms.Button();
-            this.tabData = new System.Windows.Forms.TabPage();
-            this.dataGridView1 = new System.Windows.Forms.DataGridView();
-            this.button1 = new System.Windows.Forms.Button();
+            this.cbCharge = new System.Windows.Forms.ComboBox();
+            this.label5 = new System.Windows.Forms.Label();
+            this._extender = new GridExtensions.DataGridFilterExtender(this.components);
+            this.dgClients = new GridExtensions.ExtendedDataGrid();
             ((System.ComponentModel.ISupportInitialize)(this.picLogo)).BeginInit();
             this.tabControl1.SuspendLayout();
             this.tabEditor.SuspendLayout();
+            this.tabData.SuspendLayout();
             this.tabNotifications.SuspendLayout();
             this.groupBox4.SuspendLayout();
             this.groupBox3.SuspendLayout();
@@ -81,8 +92,8 @@
             this.groupBox1.SuspendLayout();
             this.menuStrip1.SuspendLayout();
             this.groupBox5.SuspendLayout();
-            this.tabData.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this._extender)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dgClients)).BeginInit();
             this.SuspendLayout();
             // 
             // picLogo
@@ -183,6 +194,26 @@
             this.rtEditor.Size = new System.Drawing.Size(1080, 456);
             this.rtEditor.TabIndex = 0;
             this.rtEditor.Text = "";
+            // 
+            // tabData
+            // 
+            this.tabData.Controls.Add(this.btLoadData);
+            this.tabData.Controls.Add(this.dgClients);
+            this.tabData.Location = new System.Drawing.Point(4, 25);
+            this.tabData.Name = "tabData";
+            this.tabData.Size = new System.Drawing.Size(1092, 499);
+            this.tabData.TabIndex = 3;
+            this.tabData.Text = "Datos";
+            this.tabData.UseVisualStyleBackColor = true;
+            // 
+            // btLoadData
+            // 
+            this.btLoadData.Location = new System.Drawing.Point(985, 471);
+            this.btLoadData.Name = "btLoadData";
+            this.btLoadData.Size = new System.Drawing.Size(104, 25);
+            this.btLoadData.TabIndex = 1;
+            this.btLoadData.Text = "Cargar datos";
+            this.btLoadData.UseVisualStyleBackColor = true;
             // 
             // tabNotifications
             // 
@@ -457,23 +488,6 @@
             this.groupBox5.TabStop = false;
             this.groupBox5.Text = "Opciones del formato";
             // 
-            // label5
-            // 
-            this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(7, 72);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(50, 17);
-            this.label5.TabIndex = 2;
-            this.label5.Text = "Cargo:";
-            // 
-            // cbCharge
-            // 
-            this.cbCharge.FormattingEnabled = true;
-            this.cbCharge.Location = new System.Drawing.Point(139, 65);
-            this.cbCharge.Name = "cbCharge";
-            this.cbCharge.Size = new System.Drawing.Size(159, 24);
-            this.cbCharge.TabIndex = 3;
-            // 
             // btChargesHelp
             // 
             this.btChargesHelp.Location = new System.Drawing.Point(304, 65);
@@ -483,34 +497,47 @@
             this.btChargesHelp.Text = "?";
             this.btChargesHelp.UseVisualStyleBackColor = true;
             // 
-            // tabData
+            // cbCharge
             // 
-            this.tabData.Controls.Add(this.button1);
-            this.tabData.Controls.Add(this.dataGridView1);
-            this.tabData.Location = new System.Drawing.Point(4, 25);
-            this.tabData.Name = "tabData";
-            this.tabData.Size = new System.Drawing.Size(1092, 499);
-            this.tabData.TabIndex = 3;
-            this.tabData.Text = "Datos";
-            this.tabData.UseVisualStyleBackColor = true;
+            this.cbCharge.FormattingEnabled = true;
+            this.cbCharge.Location = new System.Drawing.Point(139, 65);
+            this.cbCharge.Name = "cbCharge";
+            this.cbCharge.Size = new System.Drawing.Size(159, 24);
+            this.cbCharge.TabIndex = 3;
             // 
-            // dataGridView1
+            // label5
             // 
-            this.dataGridView1.AllowUserToOrderColumns = true;
-            this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView1.Location = new System.Drawing.Point(3, 3);
-            this.dataGridView1.Name = "dataGridView1";
-            this.dataGridView1.Size = new System.Drawing.Size(1086, 462);
-            this.dataGridView1.TabIndex = 0;
+            this.label5.AutoSize = true;
+            this.label5.Location = new System.Drawing.Point(7, 72);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(50, 17);
+            this.label5.TabIndex = 2;
+            this.label5.Text = "Cargo:";
             // 
-            // button1
+            // _extender
             // 
-            this.button1.Location = new System.Drawing.Point(985, 471);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(104, 25);
-            this.button1.TabIndex = 1;
-            this.button1.Text = "Cargar datos";
-            this.button1.UseVisualStyleBackColor = true;
+            this._extender.DataGrid = this.dgClients;
+            defaultGridFilterFactory1.CreateDistinctGridFilters = false;
+            defaultGridFilterFactory1.DefaultGridFilterType = typeof(GridExtensions.GridFilters.TextGridFilter);
+            defaultGridFilterFactory1.DefaultShowDateInBetweenOperator = false;
+            defaultGridFilterFactory1.DefaultShowNumericInBetweenOperator = false;
+            defaultGridFilterFactory1.HandleEnumerationTypes = true;
+            defaultGridFilterFactory1.MaximumDistinctValues = 20;
+            this._extender.FilterFactory = defaultGridFilterFactory1;
+            this._extender.GridMode = GridExtensions.GridMode.Filter;
+            // 
+            // dgClients
+            // 
+            this.dgClients.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.dgClients.AutoCreateTableStyles = true;
+            this.dgClients.DataMember = "";
+            this.dgClients.HeaderForeColor = System.Drawing.SystemColors.ControlText;
+            this.dgClients.Location = new System.Drawing.Point(3, 3);
+            this.dgClients.Name = "dgClients";
+            this.dgClients.Size = new System.Drawing.Size(1086, 462);
+            this.dgClients.TabIndex = 0;
             // 
             // MainWindow
             // 
@@ -534,6 +561,7 @@
             this.tabControl1.ResumeLayout(false);
             this.tabEditor.ResumeLayout(false);
             this.tabEditor.PerformLayout();
+            this.tabData.ResumeLayout(false);
             this.tabNotifications.ResumeLayout(false);
             this.groupBox4.ResumeLayout(false);
             this.groupBox4.PerformLayout();
@@ -546,8 +574,8 @@
             this.menuStrip1.PerformLayout();
             this.groupBox5.ResumeLayout(false);
             this.groupBox5.PerformLayout();
-            this.tabData.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this._extender)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dgClients)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -555,48 +583,49 @@
 
         #endregion
 
-        private System.Windows.Forms.PictureBox picLogo;
-        private System.Windows.Forms.TabPage tabEditor;
-        private System.Windows.Forms.TabPage tabNotifications;
-        private System.Windows.Forms.GroupBox groupBox3;
-        private System.Windows.Forms.Label label3;
-        private System.Windows.Forms.GroupBox groupBox2;
-        private System.Windows.Forms.GroupBox groupBox1;
-        private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.Label label2;
-        public System.Windows.Forms.Button btGenerateWords;
-        public System.Windows.Forms.CheckedListBox ckLbFormats;
-        public System.Windows.Forms.TabControl tabControl1;
-        public System.Windows.Forms.RichTextBox rtEditor;
-        private System.Windows.Forms.MenuStrip menuStrip1;
-        private System.Windows.Forms.ToolStripMenuItem archivosToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem1;
-        public System.Windows.Forms.Button btAddFormat;
-        public System.Windows.Forms.Button btRemoveFormat;
-        public System.Windows.Forms.Button btSaveEditorChanges;
-        public System.Windows.Forms.TextBox txtbEmail;
-        public System.Windows.Forms.CheckBox ckbLineWrap;
-        public System.Windows.Forms.Button btRemoveMail;
-        public System.Windows.Forms.ListBox lbMails;
-        public System.Windows.Forms.Button btAddMail;
-        public System.Windows.Forms.TextBox txtbUser;
-        private System.Windows.Forms.GroupBox groupBox4;
-        public System.Windows.Forms.RadioButton rbOnlyMail;
-        public System.Windows.Forms.RadioButton rbMailWithAtt;
-        public System.Windows.Forms.TextBox txtbPass;
-        public System.Windows.Forms.ToolStripMenuItem acercaDeToolStripMenuItem;
-        public System.Windows.Forms.CheckBox ckbEditEditor;
-        private System.Windows.Forms.Label label4;
-        public System.Windows.Forms.ComboBox cbPaperSize;
-        private System.Windows.Forms.GroupBox groupBox5;
-        public System.Windows.Forms.Button btMailHelp;
-        public System.Windows.Forms.ToolStripMenuItem cerrarToolStripMenuItem;
-        private System.Windows.Forms.Label label5;
-        public System.Windows.Forms.ComboBox cbCharge;
-        public System.Windows.Forms.Button btChargesHelp;
-        private System.Windows.Forms.TabPage tabData;
-        private System.Windows.Forms.Button button1;
-        private System.Windows.Forms.DataGridView dataGridView1;
+        private PictureBox picLogo;
+        private TabPage tabEditor;
+        private TabPage tabNotifications;
+        private GroupBox groupBox3;
+        private Label label3;
+        private GroupBox groupBox2;
+        private GroupBox groupBox1;
+        private Label label1;
+        private Label label2;
+        public Button btGenerateWords;
+        public CheckedListBox ckLbFormats;
+        public TabControl tabControl1;
+        public RichTextBox rtEditor;
+        private MenuStrip menuStrip1;
+        private ToolStripMenuItem archivosToolStripMenuItem;
+        private ToolStripMenuItem toolStripMenuItem1;
+        public Button btAddFormat;
+        public Button btRemoveFormat;
+        public Button btSaveEditorChanges;
+        public TextBox txtbEmail;
+        public CheckBox ckbLineWrap;
+        public Button btRemoveMail;
+        public ListBox lbMails;
+        public Button btAddMail;
+        public TextBox txtbUser;
+        private GroupBox groupBox4;
+        public RadioButton rbOnlyMail;
+        public RadioButton rbMailWithAtt;
+        public TextBox txtbPass;
+        public ToolStripMenuItem acercaDeToolStripMenuItem;
+        public CheckBox ckbEditEditor;
+        private Label label4;
+        public ComboBox cbPaperSize;
+        private GroupBox groupBox5;
+        public Button btMailHelp;
+        public ToolStripMenuItem cerrarToolStripMenuItem;
+        private Label label5;
+        public ComboBox cbCharge;
+        public Button btChargesHelp;
+        private TabPage tabData;
+        private DataGridFilterExtender _extender;
+        public Button btLoadData;
+        public ExtendedDataGrid dgClients;
     }
 }
 

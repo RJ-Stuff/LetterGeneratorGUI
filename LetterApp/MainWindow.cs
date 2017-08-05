@@ -1,7 +1,7 @@
-﻿using System.Windows.Forms;
-
-namespace LetterApp
+﻿namespace LetterApp
 {
+    using System.Windows.Forms;
+
     public partial class MainWindow : Form
     {
         public MainWindow()

@@ -2,17 +2,17 @@
 {
     class Charge
     {
-        public static readonly Charge DEFAULT_CHARGE = new Charge("", "Sin cargo");
+        public static readonly Charge DefaultCharge = new Charge(string.Empty, "Sin cargo");
 
         public string ChargeClazz { get; set; }
         public string DisplayName { get; set; }
 
         public Charge() { }
 
-        public Charge(string ChargeClazz, string DisplayName)
+        public Charge(string chargeClazz, string displayName)
         {
-            this.ChargeClazz = ChargeClazz;
-            this.DisplayName = DisplayName;
+            this.ChargeClazz = chargeClazz;
+            this.DisplayName = displayName;
         }
 
         public override string ToString()
@@ -24,7 +24,7 @@
         {
             unchecked
             {
-                int hash = 17;
+                var hash = 17;
 
                 hash = hash * 23 + ChargeClazz.GetHashCode();
                 hash = hash * 23 + DisplayName.GetHashCode();
@@ -35,7 +35,7 @@
 
         public override bool Equals(object obj)
         {
-            return obj.GetHashCode() == GetHashCode();
+            return obj != null && obj.GetHashCode() == GetHashCode();
         }
     }
 }

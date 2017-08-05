@@ -1,12 +1,13 @@
-﻿using Newtonsoft.Json;
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Text;
-using System.Windows.Forms;
-
-namespace LetterApp.model
+﻿namespace LetterApp.model
 {
+    using System;
+    using System.Collections.Generic;
+    using System.IO;
+    using System.Text;
+    using System.Windows.Forms;
+
+    using Newtonsoft.Json;
+
     class Configuration
     {
         public List<Format> Formats;
@@ -18,26 +19,26 @@ namespace LetterApp.model
             Notifications = new List<string>();
         }
 
-        public void Add(string URL)
+        public void AddFormat(string url)
         {
-            Add(new Format(URL));
+            AddFormat(new Format(url));
         }
 
-        public void Add(Format format)
+        public void AddFormat(Format format)
         {
             Formats.Add(format);
             Persist();
         }
 
-        public void SetFormats(List<Format> Formats)
+        public void SetFormats(List<Format> formats)
         {
-            this.Formats = Formats;
+            this.Formats = formats;
             Persist();
         }
 
-        public void SetNotifications(List<string> Notifications)
+        public void SetNotifications(List<string> notifications)
         {
-            this.Notifications = Notifications;
+            this.Notifications = notifications;
             Persist();
         }
 
@@ -48,7 +49,7 @@ namespace LetterApp.model
                 var jsonString = JsonConvert.SerializeObject(this, Formatting.Indented);
                 File.WriteAllText(Path.Combine(Directory.GetCurrentDirectory(), "configuration.json"), jsonString, Encoding.Default);
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 MessageBox.Show("Ocurrió un problema al guardar la configuración.", "Error");
             }

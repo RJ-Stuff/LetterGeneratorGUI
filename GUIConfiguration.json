@@ -6,17 +6,17 @@
       "box": "true"
     },
     {
-      "kind": "Rango deuda 91-120 dÃ­as",
+      "kind": "Rango deuda 91-120 días",
       "internalname": "deuda91-120",
       "box": "false"
     },
     {
-      "kind": "Rango deuda 120-150 dÃ­as",
+      "kind": "Rango deuda 120-150 días",
       "internalname": "deuda120-150",
       "box": "false"
     },
     {
-      "kind": "Rango deuda 151-180 dÃ­as",
+      "kind": "Rango deuda 151-180 días",
       "internalname": "deuda-151-180",
       "box": "false"
     },
@@ -36,7 +36,7 @@
       "box": "true"
     },
     {
-      "kind": "Tipo de gestiÃ³n",
+      "kind": "Tipo de gestión",
       "internalname": "gestion",
       "box": "true"
     },
@@ -54,11 +54,23 @@
   "papersizes": [
     {
       "name": "wdPaperLegal",
-      "displayname": "Papel Oficio"
+      "displayname": "Papel Oficio",
+      "charges": [
+        {
+          "ChargeClazz": "SimpleCharge",
+          "DisplayName": "Cargo simple"
+        }
+      ]
     },
     {
       "name": "wdPaperA4",
-      "displayname": "Papel A4"
+      "displayname": "Papel A4",
+      "charges": [
+        {
+          "ChargeClazz": "",
+          "DisplayName": "Sin cargo"
+        }
+      ]
     }
   ]
 }

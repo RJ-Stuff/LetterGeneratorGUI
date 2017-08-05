@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace LetterApp.model
+﻿namespace LetterApp.model
 {
     class Filter
     {
@@ -12,16 +6,16 @@ namespace LetterApp.model
         public string InternalName { get; set; }
         public object Value { get; set; }
 
-        public Filter(string DisplayName, string InternalName, object Value)
+        public Filter(string displayName, string internalName, object value)
         {
-            this.DisplayName = DisplayName;
-            this.InternalName = InternalName;
-            this.Value = Value;
+            this.DisplayName = displayName;
+            this.InternalName = internalName;
+            this.Value = value;
         }
 
         public override string ToString()
         {
-            var value = Value.ToString().Trim().Length != 0 ? " = " + Value.ToString() : "";
+            var value = Value.ToString().Trim().Length != 0 ? " = " + Value : string.Empty;
             return $"{DisplayName}{value}";
         }
 
@@ -29,7 +23,7 @@ namespace LetterApp.model
         {
             unchecked
             {
-                int hash = 17;
+                var hash = 17;
                 
                 hash = hash * 23 + DisplayName.GetHashCode();
                 hash = hash * 23 + InternalName.GetHashCode();
@@ -48,7 +42,7 @@ namespace LetterApp.model
                 return false;
             }
 
-            return this.GetHashCode() == item.GetHashCode();
+            return GetHashCode() == item.GetHashCode();
         }
     }
 }

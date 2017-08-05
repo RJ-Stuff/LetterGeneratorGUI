@@ -1,8 +1,9 @@
-﻿using Newtonsoft.Json.Linq;
-using System.IO;
-
-namespace Letters
+﻿namespace LetterCore.Letters
 {
+    using System.IO;
+
+    using Newtonsoft.Json.Linq;
+
     public class Utils
     {
         public static JToken LoadConfiguration(string configurationPath)

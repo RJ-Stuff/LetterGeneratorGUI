@@ -1,12 +1,14 @@
-﻿using Microsoft.Office.Interop.Word;
-using Newtonsoft.Json.Linq;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Reactive.Subjects;
-
-namespace Letters
+﻿namespace LetterCore.Letters
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Reactive.Subjects;
+
+    using Microsoft.Office.Interop.Word;
+
+    using Newtonsoft.Json.Linq;
+
     class UrgentLetter : Letter
     {
         public UrgentLetter(JToken configuration, List<Client> clients,
@@ -18,15 +20,15 @@ namespace Letters
 
         protected override void SetTextAfterTable(Document document)
         {
-            Paragraph paragraph = document.Content.Paragraphs.Add();
-            paragraph.Range.Font.Size = FontSizes["SetTextAfterTable"];
+            var paragraph = document.Content.Paragraphs.Add();
+            paragraph.Range.Font.Size = this.FontSizes["SetTextAfterTable"];
             paragraph.Range.Font.Name = "Candara";
 
-            var text = configuration["TextAfterTable"].Value<string>();
+            var text = this.Configuration["TextAfterTable"].Value<string>();
             var start = paragraph.Range.Start + text.IndexOf("$");
             var end = paragraph.Range.Start + text.LastIndexOf("$");
 
-            paragraph.Range.Text = text.Replace("$", "");
+            paragraph.Range.Text = text.Replace("$", string.Empty);
 
             var rng = document.Range(start, end);
             rng.Font.Underline = WdUnderline.wdUnderlineSingle;
@@ -38,7 +40,7 @@ namespace Letters
             paragraph.Range.Font.Size = 9;
             paragraph.Range.Font.Name = "Candara";
             paragraph.Range.Font.Bold = 1;
-            paragraph.Range.Text = configuration["AfterTableItems"]
+            paragraph.Range.Text = this.Configuration["AfterTableItems"]
                 .Values()
                 .Select(it => it.Value<string>())
                 .Select(s => $"•        {s}\u000B")
@@ -49,14 +51,14 @@ namespace Letters
 
         protected override void SetPaymentPlace(Document document)
         {
-            Paragraph paragraph = document.Content.Paragraphs.Add();
+            var paragraph = document.Content.Paragraphs.Add();
 
-            var PaymentPlace =
+            var paymentPlace =
                 paragraph.Range.InlineShapes.AddPicture(
-                    string.Format(configuration["PaymentPlace"].Value<string>(), currentDir)
+                    string.Format(this.Configuration["PaymentPlace"].Value<string>(), this.CurrentDir)
                     );
-            var PaymentPlaceShape = PaymentPlace.ConvertToShape();
-            PaymentPlaceShape.Left = Convert.ToSingle(WdShapePosition.wdShapeCenter);
+            var paymentPlaceShape = paymentPlace.ConvertToShape();
+            paymentPlaceShape.Left = Convert.ToSingle(WdShapePosition.wdShapeCenter);
             paragraph.Range.InsertParagraphAfter();
             paragraph.Range.InsertParagraphAfter();
             paragraph.Range.InsertParagraphAfter();
@@ -66,28 +68,28 @@ namespace Letters
             paragraph = document.Content.Paragraphs.Add();
             paragraph.Range.Font.Size = 9;
             paragraph.Range.Font.Name = "Candara";
-            paragraph.Range.Text = configuration["TextAfterPaymentPlace"].Value<string>();
+            paragraph.Range.Text = this.Configuration["TextAfterPaymentPlace"].Value<string>();
             paragraph.Range.InsertParagraphAfter();
         }
 
-        protected override void SetBusinessURL(Document document)
+        protected override void SetBusinessUrl(Document document)
         {
         }
 
         protected override void SetGeneralPaymentInfo(Document document)
         {
-            Paragraph paragraph = document.Content.Paragraphs.Add();
-            paragraph.Range.Font.Size = FontSizes["SetGeneralPaymentInfo"];
+            var paragraph = document.Content.Paragraphs.Add();
+            paragraph.Range.Font.Size = this.FontSizes["SetGeneralPaymentInfo"];
             paragraph.Range.Font.Name = "Candara";
 
-            var text = configuration["GeneralPaymentInfo"].Value<string>();
+            var text = this.Configuration["GeneralPaymentInfo"].Value<string>();
             var start = paragraph.Range.Start + text.IndexOf("$");
             var end = paragraph.Range.Start + text.LastIndexOf("$");
 
             var start2 = paragraph.Range.Start + text.IndexOf("%") - 2;
             var end2 = paragraph.Range.Start + text.LastIndexOf("%") - 3;
 
-            paragraph.Range.Text = text.Replace("$", "").Replace("%", "");
+            paragraph.Range.Text = text.Replace("$", string.Empty).Replace("%", string.Empty);
 
             var rng = document.Range(start, end);
             rng.Bold = 1;
@@ -104,19 +106,19 @@ namespace Letters
 
         protected override void SetSignature(Document document)
         {
-            Paragraph paragraph = document.Content.Paragraphs.Add();
-            var LawyerSignature =
+            var paragraph = document.Content.Paragraphs.Add();
+            var lawyerSignature =
                 paragraph.Range.InlineShapes.AddPicture(
-                    string.Format(configuration["LawyerSignature"].Value<string>(),currentDir)
+                    string.Format(this.Configuration["LawyerSignature"].Value<string>(), this.CurrentDir)
                     );
-            var LawyerSignatureShape = LawyerSignature.ConvertToShape();
-            LawyerSignatureShape.Left = Convert.ToSingle(WdShapePosition.wdShapeLeft);
+            var lawyerSignatureShape = lawyerSignature.ConvertToShape();
+            lawyerSignatureShape.Left = Convert.ToSingle(WdShapePosition.wdShapeLeft);
             paragraph.SpaceAfter = 2;
 
             paragraph = document.Content.Paragraphs.Add();
             paragraph.Range.Font.Size = 10;
             paragraph.Range.Font.Name = "Candara";
-            paragraph.Range.Text = $"{"\u000B"}{configuration["LawyerName"].Value<string>()}";
+            paragraph.Range.Text = $"\v{this.Configuration["LawyerName"].Value<string>()}";
             paragraph.Range.ParagraphFormat.Alignment = WdParagraphAlignment.wdAlignParagraphLeft;
 
             paragraph.Range.InsertParagraphAfter();

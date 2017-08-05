@@ -1,11 +1,13 @@
-﻿using Microsoft.Office.Interop.Word;
-using Newtonsoft.Json.Linq;
-using System;
-using System.Collections.Generic;
-using System.Reactive.Subjects;
-
-namespace Letters
+﻿namespace LetterCore.Letters
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Reactive.Subjects;
+
+    using Microsoft.Office.Interop.Word;
+
+    using Newtonsoft.Json.Linq;
+
     public class NonComplianceLetter : Letter
     {
         public NonComplianceLetter(JToken configuration, List<Client> clients,
@@ -17,32 +19,32 @@ namespace Letters
 
         protected override void SetTextb4Table(Document document)
         {
-            Paragraph paragraph = document.Content.Paragraphs.Add();
-            var size = FontSizes["SetTextb4Table"];
+            var paragraph = document.Content.Paragraphs.Add();
+            var size = this.FontSizes["SetTextb4Table"];
             paragraph.Range.Font.Size = size;
             paragraph.Range.Font.Name = "Candara";
-            paragraph.Range.Text = configuration["Textb4Table"].Value<string>()
+            paragraph.Range.Text = this.Configuration["Textb4Table"].Value<string>()
                 .Replace("$$$", DateTime.Now.ToString("dd/MM/yyyy"));
             paragraph.Range.ParagraphFormat.Alignment = WdParagraphAlignment.wdAlignParagraphLeft;
             paragraph.Range.InsertParagraphAfter();
         }
 
-        protected override void SetBusinessURL(Document document)
+        protected override void SetBusinessUrl(Document document)
         {
         }
 
         protected override void SetGeneralPaymentInfo(Document document)
         {
-            Paragraph paragraph = document.Content.Paragraphs.Add();
-            paragraph.Range.Font.Size = FontSizes["SetGeneralPaymentInfo"];
+            var paragraph = document.Content.Paragraphs.Add();
+            paragraph.Range.Font.Size = this.FontSizes["SetGeneralPaymentInfo"];
             paragraph.Range.Font.Name = "Candara";
 
-            var text = configuration["GeneralPaymentInfo"].Value<string>();
+            var text = this.Configuration["GeneralPaymentInfo"].Value<string>();
 
             var start2 = paragraph.Range.Start + text.IndexOf("%");
             var end2 = paragraph.Range.Start + text.LastIndexOf("%") - 1;
 
-            paragraph.Range.Text = text.Replace("%", "");
+            paragraph.Range.Text = text.Replace("%", string.Empty);
 
             var rng2 = document.Range(start2, end2);
             rng2.Font.Bold = 1;
@@ -56,15 +58,15 @@ namespace Letters
 
         protected override void SetPaymentPlace(Document document)
         {
-            Paragraph paragraph = document.Content.Paragraphs.Add();
+            var paragraph = document.Content.Paragraphs.Add();
 
-            var PaymentPlace =
+            var paymentPlace =
                 paragraph.Range.InlineShapes.AddPicture(
-                    string.Format(configuration["PaymentPlace"].Value<string>(),currentDir)
+                    string.Format(this.Configuration["PaymentPlace"].Value<string>(), this.CurrentDir)
                     );
 
-            var PaymentPlaceShape = PaymentPlace.ConvertToShape();
-            PaymentPlaceShape.Left = Convert.ToSingle(WdShapePosition.wdShapeCenter);
+            var paymentPlaceShape = paymentPlace.ConvertToShape();
+            paymentPlaceShape.Left = Convert.ToSingle(WdShapePosition.wdShapeCenter);
             paragraph.Range.InsertParagraphAfter();
             paragraph.Range.InsertParagraphAfter();
             paragraph.Range.InsertParagraphAfter();

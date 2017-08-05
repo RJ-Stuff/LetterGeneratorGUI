@@ -80,6 +80,7 @@
     </Compile>
     <Compile Include="model\Charge.cs" />
     <Compile Include="model\Configuration.cs" />
+    <Compile Include="model\DataHelper.cs" />
     <Compile Include="model\Filter.cs" />
     <Compile Include="model\Format.cs" />
     <Compile Include="model\PaperSize.cs" />
@@ -132,6 +133,10 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\GridExtensions\GridExtensions.csproj">
+      <Project>{d87a363f-c131-4108-8149-e993f15aaaaf}</Project>
+      <Name>GridExtensions</Name>
+    </ProjectReference>
     <ProjectReference Include="..\LetterCore\LetterCore.csproj">
       <Project>{6542ee75-261e-4e2d-b85d-75fa5f09c4c8}</Project>
       <Name>LetterCore</Name>

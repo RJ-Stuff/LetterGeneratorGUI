@@ -1,44 +1,46 @@
-﻿using Microsoft.Office.Interop.Word;
-using Newtonsoft.Json.Linq;
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Reactive.Subjects;
-using static Letters.AllInOneGenerator;
-
-namespace Letters
+﻿namespace LetterCore.Letters
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Drawing;
+    using System.IO;
+    using System.Linq;
+    using System.Reactive.Subjects;
+
+    using Microsoft.Office.Interop.Word;
+
+    using Newtonsoft.Json.Linq;
+
     public class Letter
     {
-        public const float PointsToCM = 28.3464567F;
+        public const float PointsToCm = 28.3464567F;
 
-        protected JToken configuration;
-        protected List<Client> clients;
-        protected string businessName;
-        protected string letterKind;
+        protected JToken Configuration;
+        protected List<Client> Clients;
+        protected string BusinessName;
+        protected string LetterKind;
         protected Dictionary<string, int> FontSizes;
-        protected Document document;
-        protected Subject<object> progress;
-        protected int progressCount;
-        protected SimpleCharge charge;
-        protected string currentDir;
+        protected Document Document;
+        protected Subject<object> Progress;
+        protected int ProgressCount;
+        protected SimpleCharge Charge;
+        protected string CurrentDir;
 
         public Letter(JToken configuration, List<Client> clients,
             Document document, Subject<object> progress, SimpleCharge charge,
             WdPaperSize paperSize)
         {
-            this.document = document;
-            this.clients = clients;
-            this.configuration = configuration;
-            this.progress = progress;
-            this.charge = charge;
-            letterKind = configuration["letterKind"].Value<string>();
-            currentDir = Directory.GetCurrentDirectory();
+            this.Document = document;
+            this.Clients = clients;
+            this.Configuration = configuration;
+            this.Progress = progress;
+            this.Charge = charge;
+            this.LetterKind = configuration["letterKind"].Value<string>();
+            this.CurrentDir = Directory.GetCurrentDirectory();
 
-            SetPage(this.document, configuration, paperSize);
+            this.SetPage(this.Document, configuration, paperSize);
 
-            FontSizes = new Dictionary<string, int>
+            this.FontSizes = new Dictionary<string, int>
             {
                 ["SetTextb4Table"] = 10,
                 ["SetTextAfterTable"] = 10,
@@ -53,7 +55,7 @@ namespace Letters
                 {
                     var key = f["part"].Value<string>();
                     var value = f["size"].Value<int>();
-                    FontSizes[key] = value;
+                    this.FontSizes[key] = value;
                 });
         }
 
@@ -61,66 +63,66 @@ namespace Letters
         {
             document.PageSetup.PaperSize = WdPaperSize.wdPaperLegal;
             document.PageSetup.PaperSize = paperSize;
-            document.PageSetup.LeftMargin = configuration["LeftMargin"].Value<float>() * PointsToCM;
-            document.PageSetup.TopMargin = configuration["TopMargin"].Value<float>() * PointsToCM;
-            document.PageSetup.RightMargin = configuration["RightMargin"].Value<float>() * PointsToCM;
-            document.PageSetup.BottomMargin = configuration["BottomMargin"].Value<float>() * PointsToCM;
+            document.PageSetup.LeftMargin = configuration["LeftMargin"].Value<float>() * PointsToCm;
+            document.PageSetup.TopMargin = configuration["TopMargin"].Value<float>() * PointsToCm;
+            document.PageSetup.RightMargin = configuration["RightMargin"].Value<float>() * PointsToCm;
+            document.PageSetup.BottomMargin = configuration["BottomMargin"].Value<float>() * PointsToCm;
         }
 
         protected virtual void UpdateProgress()
         {
-            progress.OnNext(new { count = clients.Count, progress = ++progressCount, information = $"Creando cartas del tipo: {letterKind}" });
+            this.Progress.OnNext(new { count = this.Clients.Count, progress = ++this.ProgressCount, information = $"Creando cartas del tipo: {this.LetterKind}" });
         }
 
         public virtual void CreatePages()
         {
-            this.progressCount = 0;
-            clients.ForEach(c =>
+            this.ProgressCount = 0;
+            this.Clients.ForEach(c =>
             {
-                CreatePage(document, c);
-                document.Words.Last.InsertBreak(WdBreakType.wdPageBreak);
-                UpdateProgress();
+                this.CreatePage(this.Document, c);
+                this.Document.Words.Last.InsertBreak(WdBreakType.wdPageBreak);
+                this.UpdateProgress();
             });
         }
 
         protected virtual void CreatePage(Document document, Client client)
         {
-            SetPseudoHeader(document);
-            SetDate(document, DateTime.Now);
-            SetTitle(document);
-            SetClient(document, client);
-            SetTotalDebt(document, client.TotalDebt);
-            SetTextb4Table(document);
-            SetClientDebts(document, client);
-            SetTextAfterTable(document);
-            SetGeneralPaymentInfo(document);
-            SetBusinessURL(document);
-            SetPaymentPlace(document);
-            SetSignature(document);
-            SetFinalInfo(document);
-            if (charge != null) SetPseudoFooter(document, client);
+            this.SetPseudoHeader(document);
+            this.SetDate(document, DateTime.Now);
+            this.SetTitle(document);
+            this.SetClient(document, client);
+            this.SetTotalDebt(document, client.TotalDebt);
+            this.SetTextb4Table(document);
+            this.SetClientDebts(document, client);
+            this.SetTextAfterTable(document);
+            this.SetGeneralPaymentInfo(document);
+            this.SetBusinessUrl(document);
+            this.SetPaymentPlace(document);
+            this.SetSignature(document);
+            this.SetFinalInfo(document);
+            if (this.Charge != null) this.SetPseudoFooter(document, client);
         }
 
         protected virtual void SetPseudoFooter(Document document, Client client)
         {
-            Paragraph paragraph = document.Content.Paragraphs.Add();
+            var paragraph = document.Content.Paragraphs.Add();
 
             var line = paragraph.Range.InlineShapes.AddHorizontalLineStandard();
             line.Height = 1.5F;
             line.Fill.Solid();
             line.HorizontalLineFormat.NoShade = true;
-            line.Fill.ForeColor.RGB = System.Drawing.ColorTranslator.ToOle(System.Drawing.Color.Black);
+            line.Fill.ForeColor.RGB = ColorTranslator.ToOle(Color.Black);
             line.HorizontalLineFormat.Alignment = WdHorizontalLineAlignment.wdHorizontalLineAlignCenter;
             paragraph.SpaceAfter = 0;
 
             paragraph = document.Content.Paragraphs.Add();
-            paragraph.Range.Text = configuration["FooterInfo"].Value<string>();
+            paragraph.Range.Text = this.Configuration["FooterInfo"].Value<string>();
             paragraph.Range.Font.Size = 8;
             paragraph.Range.Font.Name = "candara";
             paragraph.Range.ParagraphFormat.Alignment = WdParagraphAlignment.wdAlignParagraphLeft;
 
             object charUnit = WdUnits.wdCharacter;
-            object move = -5F * PointsToCM;
+            object move = -5F * PointsToCm;
             var rng = paragraph.Range;
             rng.MoveStart(charUnit, move);
 
@@ -130,20 +132,20 @@ namespace Letters
             line.Height = 1F;
             line.Fill.Solid();
             line.HorizontalLineFormat.NoShade = true;
-            line.Fill.ForeColor.RGB = System.Drawing.ColorTranslator.ToOle(System.Drawing.Color.Black);
+            line.Fill.ForeColor.RGB = ColorTranslator.ToOle(Color.Black);
             line.HorizontalLineFormat.Alignment = WdHorizontalLineAlignment.wdHorizontalLineAlignCenter;
             paragraph.SpaceAfter = 0;
 
-            charge.CreateDocument(document, client, businessName);
+            this.Charge.CreateDocument(document, client, this.BusinessName);
         }
 
         protected virtual void SetFinalInfo(Document document)
         {
-            Paragraph paragraph = document.Content.Paragraphs.Add();
-            var size = FontSizes.ContainsKey("SetFinalInfo") ? FontSizes["SetTextb4Table"] : 9;
+            var paragraph = document.Content.Paragraphs.Add();
+            var size = this.FontSizes.ContainsKey("SetFinalInfo") ? this.FontSizes["SetTextb4Table"] : 9;
             paragraph.Range.Font.Size = size;
             paragraph.Range.Font.Name = "Candara";
-            paragraph.Range.Text = configuration["FinalInfo"].Value<string>()
+            paragraph.Range.Text = this.Configuration["FinalInfo"].Value<string>()
                 .Replace("$$$", DateTime.Now.ToString("dd/MM/yyyy"));
             paragraph.Range.ParagraphFormat.Alignment = WdParagraphAlignment.wdAlignParagraphLeft;
             paragraph.Range.InsertParagraphAfter();
@@ -151,7 +153,7 @@ namespace Letters
 
         protected virtual void SetSignature(Document document)
         {
-            Paragraph paragraph = document.Content.Paragraphs.Add();
+            var paragraph = document.Content.Paragraphs.Add();
             paragraph.Range.Font.Size = 10;
             paragraph.Range.Font.Name = "Candara";
             paragraph.Range.Text = "Atentamente,\u000B";
@@ -159,22 +161,22 @@ namespace Letters
             paragraph.Range.InsertParagraphAfter();
 
             paragraph = document.Content.Paragraphs.Add();
-            var LawyerSignature =
+            var lawyerSignature =
                 paragraph.Range.InlineShapes.AddPicture(
-                    String.Format(configuration["LawyerSignature"].Value<string>(), currentDir)
+                    string.Format(this.Configuration["LawyerSignature"].Value<string>(), this.CurrentDir)
                     );
-            var LawyerSignatureShape = LawyerSignature.ConvertToShape();
-            LawyerSignatureShape.Left = Convert.ToSingle(WdShapePosition.wdShapeLeft);
+            var lawyerSignatureShape = lawyerSignature.ConvertToShape();
+            lawyerSignatureShape.Left = Convert.ToSingle(WdShapePosition.wdShapeLeft);
             paragraph.SpaceAfter = 0;
 
             paragraph = document.Content.Paragraphs.Add();
             paragraph.Range.Font.Size = 10;
             paragraph.Range.Font.Name = "Candara";
-            paragraph.Range.Text = $"{"\u000B"}{configuration["LawyerName"].Value<string>()}";
+            paragraph.Range.Text = $"\v{this.Configuration["LawyerName"].Value<string>()}";
             paragraph.Range.ParagraphFormat.Alignment = WdParagraphAlignment.wdAlignParagraphLeft;
 
             object charUnit = WdUnits.wdCharacter;
-            object move = -4F * PointsToCM;
+            object move = -4F * PointsToCm;
             var rng = paragraph.Range;
             rng.MoveStart(charUnit, move);
 
@@ -183,40 +185,38 @@ namespace Letters
 
         protected virtual void SetPaymentPlace(Document document)
         {
-            Paragraph paragraph = document.Content.Paragraphs.Add();
+            var paragraph = document.Content.Paragraphs.Add();
 
-            var PaymentPlace =
-                paragraph.Range.InlineShapes.AddPicture(
-                    string.Format(configuration["PaymentPlace"].Value<string>(), currentDir)
-                    );
+            paragraph.Range.InlineShapes.AddPicture(
+                string.Format(this.Configuration["PaymentPlace"].Value<string>(), this.CurrentDir));
         }
 
-        protected virtual void SetBusinessURL(Document document)
+        protected virtual void SetBusinessUrl(Document document)
         {
-            Paragraph paragraph = document.Content.Paragraphs.Add();
-            var size = FontSizes.ContainsKey("SetBusinessURL") ? FontSizes["SetTextb4Table"] : 10;
+            var paragraph = document.Content.Paragraphs.Add();
+            var size = this.FontSizes.ContainsKey("SetBusinessURL") ? this.FontSizes["SetTextb4Table"] : 10;
             paragraph.Range.Font.Size = size;
             paragraph.Range.Font.Name = "Candara";
             paragraph.Range.Font.Bold = 1;
             paragraph.Range.Font.Underline = WdUnderline.wdUnderlineSingle;
             paragraph.Range.Font.Color = WdColor.wdColorBlue;
-            paragraph.Range.Text = configuration["BusinessURL"].Value<string>();
+            paragraph.Range.Text = this.Configuration["BusinessURL"].Value<string>();
             paragraph.Range.ParagraphFormat.Alignment = WdParagraphAlignment.wdAlignParagraphCenter;
             paragraph.Range.InsertParagraphAfter();
         }
 
         protected virtual void SetGeneralPaymentInfo(Document document)
         {
-            Paragraph paragraph = document.Content.Paragraphs.Add();
-            var size = FontSizes.ContainsKey("SetGeneralPaymentInfo") ? FontSizes["SetTextb4Table"] : 10;
+            var paragraph = document.Content.Paragraphs.Add();
+            var size = this.FontSizes.ContainsKey("SetGeneralPaymentInfo") ? this.FontSizes["SetTextb4Table"] : 10;
             paragraph.Range.Font.Size = size;
             paragraph.Range.Font.Name = "Candara";
 
-            var text = configuration["GeneralPaymentInfo"].Value<string>();
+            var text = this.Configuration["GeneralPaymentInfo"].Value<string>();
             var start = paragraph.Range.Start + text.IndexOf("$");
             var end = paragraph.Range.Start + text.LastIndexOf("$");
 
-            paragraph.Range.Text = text.Replace("$", "");
+            paragraph.Range.Text = text.Replace("$", string.Empty);
 
             var rng = document.Range(start, end);
             rng.Bold = 1;
@@ -227,31 +227,31 @@ namespace Letters
 
         protected virtual void SetTextAfterTable(Document document)
         {
-            Paragraph paragraph = document.Content.Paragraphs.Add();
-            var size = FontSizes.ContainsKey("SetTextAfterTable") ? FontSizes["SetTextb4Table"] : 10;
+            var paragraph = document.Content.Paragraphs.Add();
+            var size = this.FontSizes.ContainsKey("SetTextAfterTable") ? this.FontSizes["SetTextb4Table"] : 10;
             paragraph.Range.Font.Size = size;
             paragraph.Range.Font.Name = "Candara";
-            paragraph.Range.Text = configuration["TextAfterTable"].Value<string>();
+            paragraph.Range.Text = this.Configuration["TextAfterTable"].Value<string>();
             paragraph.Range.ParagraphFormat.Alignment = WdParagraphAlignment.wdAlignParagraphLeft;
             paragraph.Range.InsertParagraphAfter();
         }
 
         protected virtual void SetTextb4Table(Document document)
         {
-            Paragraph paragraph = document.Content.Paragraphs.Add();
-            var size = FontSizes.ContainsKey("SetTextb4Table") ? FontSizes["SetTextb4Table"] : 10;
+            var paragraph = document.Content.Paragraphs.Add();
+            var size = this.FontSizes.ContainsKey("SetTextb4Table") ? this.FontSizes["SetTextb4Table"] : 10;
             paragraph.Range.Font.Size = size;
             paragraph.Range.Font.Name = "Candara";
-            paragraph.Range.Text = configuration["Textb4Table"].Value<string>();
+            paragraph.Range.Text = this.Configuration["Textb4Table"].Value<string>();
             paragraph.Range.ParagraphFormat.Alignment = WdParagraphAlignment.wdAlignParagraphLeft;
             paragraph.Range.InsertParagraphAfter();
         }
 
         protected virtual void SetTotalDebt(Document document, float totalDebt)
         {
-            Paragraph paragraph = document.Content.Paragraphs.Add();
+            var paragraph = document.Content.Paragraphs.Add();
 
-            Table table = document.Tables.Add(paragraph.Range, 1, 2);
+            var table = document.Tables.Add(paragraph.Range, 1, 2);
             table.Range.Font.Size = 12;
             table.Range.Font.Name = "Candara";
             table.Range.Font.Bold = 1;
@@ -260,9 +260,9 @@ namespace Letters
 
             table.Cell(1, 1).Range.Text = "Deuda Total";
             table.Cell(1, 2).Range.Text = $"S/. {totalDebt}";
-            table.Rows.SetHeight(0.56F * PointsToCM, WdRowHeightRule.wdRowHeightExactly);// = 0.28F * PointsToCM;
+            table.Rows.SetHeight(0.56F * PointsToCm, WdRowHeightRule.wdRowHeightExactly);// = 0.28F * PointsToCM;
 
-            table.Columns.Width = 3.5F * PointsToCM;
+            table.Columns.Width = 3.5F * PointsToCm;
             table.Rows.Alignment = WdRowAlignment.wdAlignRowRight;
 
             table.Cell(1, 1).Range.Borders[WdBorderType.wdBorderRight].LineStyle = WdLineStyle.wdLineStyleNone;
@@ -272,9 +272,9 @@ namespace Letters
 
         protected virtual void SetClientDebts(Document document, Client client)
         {
-            Paragraph paragraph = document.Content.Paragraphs.Add();
+            var paragraph = document.Content.Paragraphs.Add();
 
-            Table table = document.Tables.Add(paragraph.Range, client.DisaggregatedDebts.Count + 1, 6);
+            var table = document.Tables.Add(paragraph.Range, client.DisaggregatedDebts.Count + 1, 6);
             table.Borders.Enable = 1;
             table.Cell(1, 1).Range.Text = "Factura";
             table.Cell(1, 2).Range.Text = "Servicio";
@@ -290,14 +290,14 @@ namespace Letters
             table.Rows[1].Range.Font.Size = 10;
             table.Rows[1].Range.Font.Name = "Candara";
             table.Rows[1].Range.Font.Bold = 1;
-            table.Rows[1].SetHeight(0.44F * PointsToCM, WdRowHeightRule.wdRowHeightExactly);
+            table.Rows[1].SetHeight(0.44F * PointsToCm, WdRowHeightRule.wdRowHeightExactly);
 
-            table.Columns[1].Width = 1.51F * PointsToCM;
-            table.Columns[2].Width = 2.48F * PointsToCM;
-            table.Columns[3].Width = 4.26F * PointsToCM;
-            table.Columns[4].Width = 3.24F * PointsToCM;
-            table.Columns[5].Width = 2.5F * PointsToCM;
-            table.Columns[6].Width = 2F * PointsToCM;
+            table.Columns[1].Width = 1.51F * PointsToCm;
+            table.Columns[2].Width = 2.48F * PointsToCm;
+            table.Columns[3].Width = 4.26F * PointsToCm;
+            table.Columns[4].Width = 3.24F * PointsToCm;
+            table.Columns[5].Width = 2.5F * PointsToCm;
+            table.Columns[6].Width = 2F * PointsToCm;
 
             var r = 2;
             client.DisaggregatedDebts.ForEach(d =>
@@ -314,7 +314,7 @@ namespace Letters
                 .ToList()
                 .ForEach(i => table.Cell(r, i).Range.ParagraphFormat.Alignment = WdParagraphAlignment.wdAlignParagraphCenter);
 
-                table.Rows[r].SetHeight(0.48F * PointsToCM, WdRowHeightRule.wdRowHeightExactly);
+                table.Rows[r].SetHeight(0.48F * PointsToCm, WdRowHeightRule.wdRowHeightExactly);
                 r++;
             });
 
@@ -323,7 +323,7 @@ namespace Letters
 
         protected virtual void SetClient(Document document, Client client)
         {
-            Paragraph paragraph = document.Content.Paragraphs.Add();
+            var paragraph = document.Content.Paragraphs.Add();
             paragraph.Range.Font.Size = 10;
             paragraph.Range.Font.Name = "Candara";
             paragraph.Range.Text = $"Señor(a):\u000B{client.Name}\u000B{client.BaseAddress}";
@@ -333,51 +333,50 @@ namespace Letters
 
         protected virtual void SetTitle(Document document)
         {
-            Paragraph paragraph = document.Content.Paragraphs.Add();
+            var paragraph = document.Content.Paragraphs.Add();
             paragraph.Range.Font.Size = 17;
             paragraph.Range.Font.Name = "Candara";
             paragraph.Range.Font.Bold = 1;
-            paragraph.Range.Text = configuration["Title"].Value<string>();
+            paragraph.Range.Text = this.Configuration["Title"].Value<string>();
             paragraph.Range.ParagraphFormat.Alignment = WdParagraphAlignment.wdAlignParagraphCenter;
             paragraph.Range.InsertParagraphAfter();
         }
 
         protected virtual void SetPseudoHeader(Document document)
         {
-            Paragraph paragraph = document.Content.Paragraphs.Add();
+            var paragraph = document.Content.Paragraphs.Add();
 
-            if (charge != null)
+            if (this.Charge != null)
             {
-                var BusinessLogo =
                 paragraph.Range.InlineShapes.AddPicture(
-                    string.Format(configuration["BusinessLogo"].Value<string>(), currentDir)
-                    );
-                var Logo =
-                    paragraph.Range.InlineShapes.AddPicture(
-                        string.Format(configuration["Logo"].Value<string>(), currentDir)
-                        );
-                var LogoShape = Logo.ConvertToShape();
-                LogoShape.Left = Convert.ToSingle(WdShapePosition.wdShapeRight);
-                LogoShape.Top = Convert.ToSingle(WdShapePosition.wdShapeTop);
+                    string.Format(this.Configuration["BusinessLogo"].Value<string>(), this.CurrentDir));
+
+                var logo = paragraph.Range.InlineShapes.AddPicture(
+                    string.Format(this.Configuration["Logo"].Value<string>(), this.CurrentDir));
+
+                var logoShape = logo.ConvertToShape();
+                logoShape.Left = Convert.ToSingle(WdShapePosition.wdShapeRight);
+                logoShape.Top = Convert.ToSingle(WdShapePosition.wdShapeTop);
             }
             else
             {
                 paragraph.Range.InsertParagraphAfter();
             }
+
             paragraph.SpaceAfter = 0;
         }
 
         protected virtual void SetDate(Document document, DateTime date)
         {
-            Paragraph paragraph = document.Content.Paragraphs.Add();
+            var paragraph = document.Content.Paragraphs.Add();
             paragraph.Range.Font.Size = 10;
             paragraph.Range.Font.Name = "Candara";
-            paragraph.Range.Text = String.Format("{0}, {1} de {2} de {3}",
-                configuration["CurrentCity"], date.Day, date.ToString("MMMM").ToLower(), date.Year);
+            paragraph.Range.Text =
+                $"{this.Configuration["CurrentCity"]}, {date.Day} de {date.ToString("MMMM").ToLower()} de {date.Year}";
             paragraph.Range.ParagraphFormat.Alignment = WdParagraphAlignment.wdAlignParagraphRight;
 
             object charUnit = WdUnits.wdCharacter;
-            object move = -5F * PointsToCM;
+            object move = -5F * PointsToCm;
             var rng = paragraph.Range;
             rng.MoveStart(charUnit, move);
 

@@ -1,24 +1,25 @@
-﻿using LetterCore.Letters;
-using Microsoft.Office.Interop.Word;
-using Newtonsoft.Json.Linq;
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Reactive.Subjects;
-using System.Reflection;
-using System.Runtime.InteropServices;
-
-namespace Letters
+﻿namespace LetterCore.Letters
 {
+    using System;
+    using System.Collections.Generic;
+    using System.IO;
+    using System.Linq;
+    using System.Reactive.Subjects;
+    using System.Reflection;
+    using System.Runtime.InteropServices;
+
+    using Microsoft.Office.Interop.Word;
+
+    using Newtonsoft.Json.Linq;
+
+    using static System.String;
 
     public class AllInOneGenerator
     {
         public static void CreateDocs(List<Format> formats, Subject<object> progress, WdPaperSize paperSize)
         {
-            Application wordApp;
-            wordApp = new Application()
-            {
+            var wordApp = new Application
+                              {
                 ShowAnimation = false,
                 Visible = false
             };
@@ -29,20 +30,20 @@ namespace Letters
 
             formats.ForEach(format =>
             {
-                var configuration = Utils.LoadConfiguration(format.URL);
+                var configuration = Utils.LoadConfiguration(format.Url);
                 var clazz = configuration["classname"].Value<string>();
                 var clients = format.Clients;
 
                 var assembly = Assembly.GetExecutingAssembly();
 
-                var chargeType = format.ChargeClazz != null && format.ChargeClazz.Length != 0
+                var chargeType = !IsNullOrEmpty(format.ChargeClazz)
                 ? assembly.GetTypes().First(t => t.Name == format.ChargeClazz)
                 : null;
 
                 var charge = (chargeType != null ? Activator.CreateInstance(chargeType) : null) as SimpleCharge;
 
                 var type = assembly.GetTypes().First(t => t.Name == clazz);
-                var parameters = new Object[] { configuration, clients, document, progress, charge, paperSize };
+                var parameters = new object[] { configuration, clients, document, progress, charge, paperSize };
                 var letter = Activator.CreateInstance(type, parameters);
                 var method = type.GetMethod("CreatePages");
 
