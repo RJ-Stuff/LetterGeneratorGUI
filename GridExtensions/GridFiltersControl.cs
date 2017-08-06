@@ -570,7 +570,8 @@ namespace GridExtensions
         {
             var result = string.Empty;
 
-            if ((mode & FilterErrorModes.General) == FilterErrorModes.General) result += "Invalid filter specified.";
+            if ((mode & FilterErrorModes.General) == FilterErrorModes.General)
+                result += "Invalid filter specified.";
             if ((mode & FilterErrorModes.ExceptionMessage) == FilterErrorModes.ExceptionMessage)
                 result += (result.Length > 0 ? "\n" : string.Empty) + exc.Message;
             if ((mode & FilterErrorModes.StackTrace) == FilterErrorModes.StackTrace)

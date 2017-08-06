@@ -238,7 +238,10 @@ namespace GridExtensions
             get => this.grid;
             set
             {
-                if (this.grid == value) return;
+                if (this.grid == value)
+                {
+                    return;
+                }
 
                 this.RemoveFilterControl();
                 if (this.grid != null)

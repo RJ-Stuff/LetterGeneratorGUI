@@ -43,7 +43,8 @@
             .ToList()
             .ForEach(o => this.mainWindow.cbPaperSize.Items.Add(o));
 
-            // UpdateFilterTab();
+            mainWindow.tabControl1.Dock = DockStyle.Fill;
+
             LoadConfiguration();
 
             CreateEvents();
@@ -89,6 +90,8 @@
                 // var query = (mainWindow.ckLbFormats.Items[index] as Format).
                 // cargar el query....
                 mainWindow.dgClients.DataSource = DataHelper.SampleData.Tables[0].DefaultView;
+                this.mainWindow.dgClients.ReadOnly = true;
+              //  this.mainWindow.dgClients.DataGrid.
             }
         }
 

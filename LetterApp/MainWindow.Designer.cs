@@ -4,7 +4,6 @@
     using System.Windows.Forms;
 
     using GridExtensions;
-    using GridExtensions.GridFilterFactories;
 
     partial class MainWindow
     {
@@ -43,12 +42,14 @@
             this.ckLbFormats = new System.Windows.Forms.CheckedListBox();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabEditor = new System.Windows.Forms.TabPage();
+            this.panel4 = new System.Windows.Forms.Panel();
             this.ckbEditEditor = new System.Windows.Forms.CheckBox();
             this.ckbLineWrap = new System.Windows.Forms.CheckBox();
             this.btSaveEditorChanges = new System.Windows.Forms.Button();
             this.rtEditor = new System.Windows.Forms.RichTextBox();
             this.tabData = new System.Windows.Forms.TabPage();
             this.btLoadData = new System.Windows.Forms.Button();
+            this.dgClients = new GridExtensions.ExtendedDataGrid();
             this.tabNotifications = new System.Windows.Forms.TabPage();
             this.groupBox4 = new System.Windows.Forms.GroupBox();
             this.rbOnlyMail = new System.Windows.Forms.RadioButton();
@@ -80,11 +81,18 @@
             this.cbCharge = new System.Windows.Forms.ComboBox();
             this.label5 = new System.Windows.Forms.Label();
             this._extender = new GridExtensions.DataGridFilterExtender(this.components);
-            this.dgClients = new GridExtensions.ExtendedDataGrid();
+            this.panel1 = new System.Windows.Forms.Panel();
+            this.panel2 = new System.Windows.Forms.Panel();
+            this.panel3 = new System.Windows.Forms.Panel();
+            this.panel5 = new System.Windows.Forms.Panel();
+            this.panel6 = new System.Windows.Forms.Panel();
+            this.panel7 = new System.Windows.Forms.Panel();
             ((System.ComponentModel.ISupportInitialize)(this.picLogo)).BeginInit();
             this.tabControl1.SuspendLayout();
             this.tabEditor.SuspendLayout();
+            this.panel4.SuspendLayout();
             this.tabData.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dgClients)).BeginInit();
             this.tabNotifications.SuspendLayout();
             this.groupBox4.SuspendLayout();
             this.groupBox3.SuspendLayout();
@@ -93,13 +101,18 @@
             this.menuStrip1.SuspendLayout();
             this.groupBox5.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this._extender)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.dgClients)).BeginInit();
+            this.panel1.SuspendLayout();
+            this.panel2.SuspendLayout();
+            this.panel3.SuspendLayout();
+            this.panel5.SuspendLayout();
+            this.panel6.SuspendLayout();
+            this.panel7.SuspendLayout();
             this.SuspendLayout();
             // 
             // picLogo
             // 
             this.picLogo.Image = global::LetterApp.Properties.Resources.logo;
-            this.picLogo.Location = new System.Drawing.Point(12, 23);
+            this.picLogo.Location = new System.Drawing.Point(3, 0);
             this.picLogo.Name = "picLogo";
             this.picLogo.Size = new System.Drawing.Size(295, 88);
             this.picLogo.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
@@ -108,9 +121,10 @@
             // 
             // btGenerateWords
             // 
+            this.btGenerateWords.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.btGenerateWords.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.btGenerateWords.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btGenerateWords.Location = new System.Drawing.Point(1147, 23);
+            this.btGenerateWords.Location = new System.Drawing.Point(1137, 3);
             this.btGenerateWords.Name = "btGenerateWords";
             this.btGenerateWords.Size = new System.Drawing.Size(172, 41);
             this.btGenerateWords.TabIndex = 1;
@@ -119,10 +133,12 @@
             // 
             // ckLbFormats
             // 
+            this.ckLbFormats.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left)));
             this.ckLbFormats.FormattingEnabled = true;
-            this.ckLbFormats.Location = new System.Drawing.Point(12, 117);
+            this.ckLbFormats.Location = new System.Drawing.Point(3, 3);
             this.ckLbFormats.Name = "ckLbFormats";
-            this.ckLbFormats.Size = new System.Drawing.Size(201, 589);
+            this.ckLbFormats.Size = new System.Drawing.Size(201, 604);
             this.ckLbFormats.TabIndex = 2;
             // 
             // tabControl1
@@ -130,32 +146,41 @@
             this.tabControl1.Controls.Add(this.tabEditor);
             this.tabControl1.Controls.Add(this.tabData);
             this.tabControl1.Controls.Add(this.tabNotifications);
+            this.tabControl1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tabControl1.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.tabControl1.Location = new System.Drawing.Point(219, 117);
+            this.tabControl1.Location = new System.Drawing.Point(0, 0);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
-            this.tabControl1.Size = new System.Drawing.Size(1100, 528);
+            this.tabControl1.Size = new System.Drawing.Size(1106, 544);
             this.tabControl1.TabIndex = 3;
             // 
             // tabEditor
             // 
-            this.tabEditor.Controls.Add(this.ckbEditEditor);
-            this.tabEditor.Controls.Add(this.ckbLineWrap);
-            this.tabEditor.Controls.Add(this.btSaveEditorChanges);
+            this.tabEditor.Controls.Add(this.panel4);
             this.tabEditor.Controls.Add(this.rtEditor);
             this.tabEditor.Location = new System.Drawing.Point(4, 25);
             this.tabEditor.Name = "tabEditor";
             this.tabEditor.Padding = new System.Windows.Forms.Padding(3);
-            this.tabEditor.Size = new System.Drawing.Size(1092, 499);
+            this.tabEditor.Size = new System.Drawing.Size(1098, 515);
             this.tabEditor.TabIndex = 0;
             this.tabEditor.Text = "Editor";
             this.tabEditor.UseVisualStyleBackColor = true;
+            // 
+            // panel4
+            // 
+            this.panel4.Controls.Add(this.panel5);
+            this.panel4.Controls.Add(this.ckbEditEditor);
+            this.panel4.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.panel4.Location = new System.Drawing.Point(3, 472);
+            this.panel4.Name = "panel4";
+            this.panel4.Size = new System.Drawing.Size(1092, 40);
+            this.panel4.TabIndex = 4;
             // 
             // ckbEditEditor
             // 
             this.ckbEditEditor.AutoSize = true;
             this.ckbEditEditor.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.ckbEditEditor.Location = new System.Drawing.Point(6, 473);
+            this.ckbEditEditor.Location = new System.Drawing.Point(3, 12);
             this.ckbEditEditor.Name = "ckbEditEditor";
             this.ckbEditEditor.Size = new System.Drawing.Size(78, 21);
             this.ckbEditEditor.TabIndex = 3;
@@ -164,10 +189,11 @@
             // 
             // ckbLineWrap
             // 
+            this.ckbLineWrap.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.ckbLineWrap.AutoSize = true;
             this.ckbLineWrap.Enabled = false;
             this.ckbLineWrap.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.ckbLineWrap.Location = new System.Drawing.Point(828, 473);
+            this.ckbLineWrap.Location = new System.Drawing.Point(26, 12);
             this.ckbLineWrap.Name = "ckbLineWrap";
             this.ckbLineWrap.Size = new System.Drawing.Size(120, 21);
             this.ckbLineWrap.TabIndex = 2;
@@ -176,9 +202,10 @@
             // 
             // btSaveEditorChanges
             // 
+            this.btSaveEditorChanges.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.btSaveEditorChanges.Enabled = false;
             this.btSaveEditorChanges.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btSaveEditorChanges.Location = new System.Drawing.Point(954, 468);
+            this.btSaveEditorChanges.Location = new System.Drawing.Point(147, 7);
             this.btSaveEditorChanges.Name = "btSaveEditorChanges";
             this.btSaveEditorChanges.Size = new System.Drawing.Size(132, 28);
             this.btSaveEditorChanges.TabIndex = 1;
@@ -187,33 +214,46 @@
             // 
             // rtEditor
             // 
+            this.rtEditor.Dock = System.Windows.Forms.DockStyle.Fill;
             this.rtEditor.Enabled = false;
             this.rtEditor.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.rtEditor.Location = new System.Drawing.Point(6, 6);
+            this.rtEditor.Location = new System.Drawing.Point(3, 3);
             this.rtEditor.Name = "rtEditor";
-            this.rtEditor.Size = new System.Drawing.Size(1080, 456);
+            this.rtEditor.Size = new System.Drawing.Size(1092, 509);
             this.rtEditor.TabIndex = 0;
             this.rtEditor.Text = "";
             // 
             // tabData
             // 
-            this.tabData.Controls.Add(this.btLoadData);
+            this.tabData.Controls.Add(this.panel6);
             this.tabData.Controls.Add(this.dgClients);
             this.tabData.Location = new System.Drawing.Point(4, 25);
             this.tabData.Name = "tabData";
-            this.tabData.Size = new System.Drawing.Size(1092, 499);
+            this.tabData.Size = new System.Drawing.Size(1098, 515);
             this.tabData.TabIndex = 3;
             this.tabData.Text = "Datos";
             this.tabData.UseVisualStyleBackColor = true;
             // 
             // btLoadData
             // 
-            this.btLoadData.Location = new System.Drawing.Point(985, 471);
+            this.btLoadData.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.btLoadData.Location = new System.Drawing.Point(991, 6);
             this.btLoadData.Name = "btLoadData";
-            this.btLoadData.Size = new System.Drawing.Size(104, 25);
+            this.btLoadData.Size = new System.Drawing.Size(104, 28);
             this.btLoadData.TabIndex = 1;
             this.btLoadData.Text = "Cargar datos";
             this.btLoadData.UseVisualStyleBackColor = true;
+            // 
+            // dgClients
+            // 
+            this.dgClients.AutoCreateTableStyles = true;
+            this.dgClients.DataMember = "";
+            this.dgClients.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.dgClients.HeaderForeColor = System.Drawing.SystemColors.ControlText;
+            this.dgClients.Location = new System.Drawing.Point(0, 0);
+            this.dgClients.Name = "dgClients";
+            this.dgClients.Size = new System.Drawing.Size(1098, 515);
+            this.dgClients.TabIndex = 0;
             // 
             // tabNotifications
             // 
@@ -224,19 +264,21 @@
             this.tabNotifications.Location = new System.Drawing.Point(4, 25);
             this.tabNotifications.Name = "tabNotifications";
             this.tabNotifications.Padding = new System.Windows.Forms.Padding(3);
-            this.tabNotifications.Size = new System.Drawing.Size(1092, 499);
+            this.tabNotifications.Size = new System.Drawing.Size(1098, 515);
             this.tabNotifications.TabIndex = 2;
             this.tabNotifications.Text = "Notificaciones";
             this.tabNotifications.UseVisualStyleBackColor = true;
             // 
             // groupBox4
             // 
+            this.groupBox4.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left)));
             this.groupBox4.Controls.Add(this.rbOnlyMail);
             this.groupBox4.Controls.Add(this.rbMailWithAtt);
             this.groupBox4.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.groupBox4.Location = new System.Drawing.Point(315, 207);
+            this.groupBox4.Location = new System.Drawing.Point(315, 204);
             this.groupBox4.Name = "groupBox4";
-            this.groupBox4.Size = new System.Drawing.Size(444, 289);
+            this.groupBox4.Size = new System.Drawing.Size(444, 305);
             this.groupBox4.TabIndex = 14;
             this.groupBox4.TabStop = false;
             this.groupBox4.Text = "Opciones";
@@ -269,7 +311,7 @@
             this.groupBox3.Controls.Add(this.label3);
             this.groupBox3.Controls.Add(this.btAddMail);
             this.groupBox3.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.groupBox3.Location = new System.Drawing.Point(315, 6);
+            this.groupBox3.Location = new System.Drawing.Point(315, 3);
             this.groupBox3.Name = "groupBox3";
             this.groupBox3.Size = new System.Drawing.Size(444, 101);
             this.groupBox3.TabIndex = 11;
@@ -305,19 +347,22 @@
             // 
             // groupBox2
             // 
-            this.groupBox2.Controls.Add(this.btRemoveMail);
+            this.groupBox2.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left)));
+            this.groupBox2.Controls.Add(this.panel7);
             this.groupBox2.Controls.Add(this.lbMails);
             this.groupBox2.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.groupBox2.Location = new System.Drawing.Point(6, 6);
+            this.groupBox2.Location = new System.Drawing.Point(3, 3);
             this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(303, 490);
+            this.groupBox2.Size = new System.Drawing.Size(303, 506);
             this.groupBox2.TabIndex = 7;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Lista de personas a notificar";
             // 
             // btRemoveMail
             // 
-            this.btRemoveMail.Location = new System.Drawing.Point(181, 456);
+            this.btRemoveMail.Dock = System.Windows.Forms.DockStyle.Right;
+            this.btRemoveMail.Location = new System.Drawing.Point(181, 0);
             this.btRemoveMail.Name = "btRemoveMail";
             this.btRemoveMail.Size = new System.Drawing.Size(116, 28);
             this.btRemoveMail.TabIndex = 5;
@@ -326,11 +371,13 @@
             // 
             // lbMails
             // 
+            this.lbMails.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left)));
             this.lbMails.FormattingEnabled = true;
             this.lbMails.ItemHeight = 16;
             this.lbMails.Location = new System.Drawing.Point(6, 22);
             this.lbMails.Name = "lbMails";
-            this.lbMails.Size = new System.Drawing.Size(291, 420);
+            this.lbMails.Size = new System.Drawing.Size(291, 436);
             this.lbMails.TabIndex = 4;
             // 
             // groupBox1
@@ -341,7 +388,7 @@
             this.groupBox1.Controls.Add(this.txtbPass);
             this.groupBox1.Controls.Add(this.label2);
             this.groupBox1.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.groupBox1.Location = new System.Drawing.Point(315, 113);
+            this.groupBox1.Location = new System.Drawing.Point(315, 110);
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.Size = new System.Drawing.Size(444, 88);
             this.groupBox1.TabIndex = 6;
@@ -415,8 +462,9 @@
             // 
             // btAddFormat
             // 
+            this.btAddFormat.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.btAddFormat.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btAddFormat.Location = new System.Drawing.Point(12, 723);
+            this.btAddFormat.Location = new System.Drawing.Point(3, 613);
             this.btAddFormat.Name = "btAddFormat";
             this.btAddFormat.Size = new System.Drawing.Size(75, 28);
             this.btAddFormat.TabIndex = 5;
@@ -425,8 +473,9 @@
             // 
             // btRemoveFormat
             // 
+            this.btRemoveFormat.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.btRemoveFormat.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btRemoveFormat.Location = new System.Drawing.Point(138, 723);
+            this.btRemoveFormat.Location = new System.Drawing.Point(129, 613);
             this.btRemoveFormat.Name = "btRemoveFormat";
             this.btRemoveFormat.Size = new System.Drawing.Size(75, 28);
             this.btRemoveFormat.TabIndex = 6;
@@ -441,7 +490,7 @@
             this.toolStripMenuItem1});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(1331, 24);
+            this.menuStrip1.Size = new System.Drawing.Size(1316, 24);
             this.menuStrip1.TabIndex = 7;
             this.menuStrip1.Text = "menuStrip1";
             // 
@@ -480,10 +529,11 @@
             this.groupBox5.Controls.Add(this.label5);
             this.groupBox5.Controls.Add(this.label4);
             this.groupBox5.Controls.Add(this.cbPaperSize);
+            this.groupBox5.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.groupBox5.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.groupBox5.Location = new System.Drawing.Point(219, 651);
+            this.groupBox5.Location = new System.Drawing.Point(0, 544);
             this.groupBox5.Name = "groupBox5";
-            this.groupBox5.Size = new System.Drawing.Size(1100, 100);
+            this.groupBox5.Size = new System.Drawing.Size(1106, 100);
             this.groupBox5.TabIndex = 8;
             this.groupBox5.TabStop = false;
             this.groupBox5.Text = "Opciones del formato";
@@ -524,34 +574,80 @@
             defaultGridFilterFactory1.HandleEnumerationTypes = true;
             defaultGridFilterFactory1.MaximumDistinctValues = 20;
             this._extender.FilterFactory = defaultGridFilterFactory1;
+            this._extender.FilterText = "";
+            this._extender.FilterTextVisible = false;
             this._extender.GridMode = GridExtensions.GridMode.Filter;
             // 
-            // dgClients
+            // panel1
             // 
-            this.dgClients.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            this.panel1.Controls.Add(this.picLogo);
+            this.panel1.Controls.Add(this.btGenerateWords);
+            this.panel1.Dock = System.Windows.Forms.DockStyle.Top;
+            this.panel1.Location = new System.Drawing.Point(0, 24);
+            this.panel1.Name = "panel1";
+            this.panel1.Size = new System.Drawing.Size(1316, 88);
+            this.panel1.TabIndex = 9;
+            // 
+            // panel2
+            // 
+            this.panel2.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.dgClients.AutoCreateTableStyles = true;
-            this.dgClients.DataMember = "";
-            this.dgClients.HeaderForeColor = System.Drawing.SystemColors.ControlText;
-            this.dgClients.Location = new System.Drawing.Point(3, 3);
-            this.dgClients.Name = "dgClients";
-            this.dgClients.Size = new System.Drawing.Size(1086, 462);
-            this.dgClients.TabIndex = 0;
+            this.panel2.Controls.Add(this.tabControl1);
+            this.panel2.Controls.Add(this.groupBox5);
+            this.panel2.Location = new System.Drawing.Point(210, 115);
+            this.panel2.Name = "panel2";
+            this.panel2.Size = new System.Drawing.Size(1106, 644);
+            this.panel2.TabIndex = 10;
+            // 
+            // panel3
+            // 
+            this.panel3.Controls.Add(this.ckLbFormats);
+            this.panel3.Controls.Add(this.btAddFormat);
+            this.panel3.Controls.Add(this.btRemoveFormat);
+            this.panel3.Dock = System.Windows.Forms.DockStyle.Left;
+            this.panel3.Location = new System.Drawing.Point(0, 112);
+            this.panel3.Name = "panel3";
+            this.panel3.Size = new System.Drawing.Size(208, 649);
+            this.panel3.TabIndex = 11;
+            // 
+            // panel5
+            // 
+            this.panel5.Controls.Add(this.ckbLineWrap);
+            this.panel5.Controls.Add(this.btSaveEditorChanges);
+            this.panel5.Dock = System.Windows.Forms.DockStyle.Right;
+            this.panel5.Location = new System.Drawing.Point(809, 0);
+            this.panel5.Name = "panel5";
+            this.panel5.Size = new System.Drawing.Size(283, 40);
+            this.panel5.TabIndex = 4;
+            // 
+            // panel6
+            // 
+            this.panel6.Controls.Add(this.btLoadData);
+            this.panel6.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.panel6.Location = new System.Drawing.Point(0, 475);
+            this.panel6.Name = "panel6";
+            this.panel6.Size = new System.Drawing.Size(1098, 40);
+            this.panel6.TabIndex = 3;
+            // 
+            // panel7
+            // 
+            this.panel7.Controls.Add(this.btRemoveMail);
+            this.panel7.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.panel7.Location = new System.Drawing.Point(3, 475);
+            this.panel7.Name = "panel7";
+            this.panel7.Size = new System.Drawing.Size(297, 28);
+            this.panel7.TabIndex = 6;
             // 
             // MainWindow
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.Control;
-            this.ClientSize = new System.Drawing.Size(1331, 761);
-            this.Controls.Add(this.groupBox5);
-            this.Controls.Add(this.btRemoveFormat);
-            this.Controls.Add(this.btAddFormat);
-            this.Controls.Add(this.tabControl1);
-            this.Controls.Add(this.ckLbFormats);
-            this.Controls.Add(this.btGenerateWords);
-            this.Controls.Add(this.picLogo);
+            this.ClientSize = new System.Drawing.Size(1316, 761);
+            this.Controls.Add(this.panel3);
+            this.Controls.Add(this.panel2);
+            this.Controls.Add(this.panel1);
             this.Controls.Add(this.menuStrip1);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MainMenuStrip = this.menuStrip1;
@@ -560,8 +656,10 @@
             ((System.ComponentModel.ISupportInitialize)(this.picLogo)).EndInit();
             this.tabControl1.ResumeLayout(false);
             this.tabEditor.ResumeLayout(false);
-            this.tabEditor.PerformLayout();
+            this.panel4.ResumeLayout(false);
+            this.panel4.PerformLayout();
             this.tabData.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.dgClients)).EndInit();
             this.tabNotifications.ResumeLayout(false);
             this.groupBox4.ResumeLayout(false);
             this.groupBox4.PerformLayout();
@@ -575,7 +673,13 @@
             this.groupBox5.ResumeLayout(false);
             this.groupBox5.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this._extender)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.dgClients)).EndInit();
+            this.panel1.ResumeLayout(false);
+            this.panel2.ResumeLayout(false);
+            this.panel3.ResumeLayout(false);
+            this.panel5.ResumeLayout(false);
+            this.panel5.PerformLayout();
+            this.panel6.ResumeLayout(false);
+            this.panel7.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -626,6 +730,13 @@
         private DataGridFilterExtender _extender;
         public Button btLoadData;
         public ExtendedDataGrid dgClients;
+        private Panel panel1;
+        private Panel panel2;
+        private Panel panel3;
+        private Panel panel4;
+        private Panel panel5;
+        private Panel panel6;
+        private Panel panel7;
     }
 }
 
