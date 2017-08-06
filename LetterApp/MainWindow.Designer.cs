@@ -87,6 +87,8 @@
             this.panel5 = new System.Windows.Forms.Panel();
             this.panel6 = new System.Windows.Forms.Panel();
             this.panel7 = new System.Windows.Forms.Panel();
+            this.label6 = new System.Windows.Forms.Label();
+            this.lClientCount = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.picLogo)).BeginInit();
             this.tabControl1.SuspendLayout();
             this.tabEditor.SuspendLayout();
@@ -246,13 +248,15 @@
             // 
             // dgClients
             // 
+            this.dgClients.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.dgClients.AutoCreateTableStyles = true;
             this.dgClients.DataMember = "";
-            this.dgClients.Dock = System.Windows.Forms.DockStyle.Fill;
             this.dgClients.HeaderForeColor = System.Drawing.SystemColors.ControlText;
-            this.dgClients.Location = new System.Drawing.Point(0, 0);
+            this.dgClients.Location = new System.Drawing.Point(3, 3);
             this.dgClients.Name = "dgClients";
-            this.dgClients.Size = new System.Drawing.Size(1098, 515);
+            this.dgClients.Size = new System.Drawing.Size(1098, 475);
             this.dgClients.TabIndex = 0;
             // 
             // tabNotifications
@@ -623,6 +627,8 @@
             // 
             // panel6
             // 
+            this.panel6.Controls.Add(this.lClientCount);
+            this.panel6.Controls.Add(this.label6);
             this.panel6.Controls.Add(this.btLoadData);
             this.panel6.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.panel6.Location = new System.Drawing.Point(0, 475);
@@ -638,6 +644,24 @@
             this.panel7.Name = "panel7";
             this.panel7.Size = new System.Drawing.Size(297, 28);
             this.panel7.TabIndex = 6;
+            // 
+            // label6
+            // 
+            this.label6.AutoSize = true;
+            this.label6.Location = new System.Drawing.Point(7, 12);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(140, 17);
+            this.label6.TabIndex = 2;
+            this.label6.Text = "Cantidad de clientes:";
+            // 
+            // lClientCount
+            // 
+            this.lClientCount.AutoSize = true;
+            this.lClientCount.Location = new System.Drawing.Point(153, 12);
+            this.lClientCount.Name = "lClientCount";
+            this.lClientCount.Size = new System.Drawing.Size(16, 17);
+            this.lClientCount.TabIndex = 3;
+            this.lClientCount.Text = "0";
             // 
             // MainWindow
             // 
@@ -679,6 +703,7 @@
             this.panel5.ResumeLayout(false);
             this.panel5.PerformLayout();
             this.panel6.ResumeLayout(false);
+            this.panel6.PerformLayout();
             this.panel7.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
@@ -737,6 +762,8 @@
         private Panel panel5;
         private Panel panel6;
         private Panel panel7;
+        private Label label6;
+        public Label lClientCount;
     }
 }
 

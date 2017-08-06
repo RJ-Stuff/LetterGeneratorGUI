@@ -12,10 +12,15 @@
                 new List<Charge> { Charge.DefaultCharge });
 
         public WdPaperSize Papersize { get; set; }
+
         public string DisplayName { get; set; }
+
         public List<Charge> Charges { get; set; }
 
-        public PaperSize() { }
+        public PaperSize()
+        {
+            
+        }
 
         public PaperSize(string paperSize, string displayName, List<Charge> charges)
         {

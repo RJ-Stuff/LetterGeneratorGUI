@@ -5,6 +5,7 @@
         public static readonly Charge DefaultCharge = new Charge(string.Empty, "Sin cargo");
 
         public string ChargeClazz { get; set; }
+
         public string DisplayName { get; set; }
 
         public Charge() { }
