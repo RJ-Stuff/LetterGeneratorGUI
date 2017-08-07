@@ -8,9 +8,7 @@
     using System.Text;
     using System.Text.RegularExpressions;
     using System.Windows.Forms;
-
-    using GridExtensions;
-
+    
     using LetterApp.model;
 
     using Newtonsoft.Json;
@@ -22,13 +20,14 @@
 
         private Configuration configuration;
         private bool notSavedChanges;
-        //private Dictionary<object, >
 
         public MainWindowPresenter(MainWindow mainWindow)
         {
             this.mainWindow = mainWindow;
 
             notSavedChanges = false;
+
+            this.mainWindow.dgClients.DataSource = this.mainWindow.bsMain;
 
             var guiConfiguration = JToken.Parse(File.ReadAllText(Path.Combine(Directory.GetCurrentDirectory(), "GUIConfiguration.json"), Encoding.Default));
 
@@ -83,33 +82,43 @@
             mainWindow.btChargesHelp.Click += ChargesHelp;
             mainWindow.acercaDeToolStripMenuItem.Click += AboutHelp;
             mainWindow.btLoadData.Click += LoadData;
+            this.mainWindow.bsMain.ListChanged += DataSourceChange;
+            this.mainWindow.dgClients.FilterStringChanged += FilterStringChanged;
+            this.mainWindow.dgClients.SortStringChanged += SortStringChanged;
         }
 
-        private void DataListChanged(object sender, ListChangedEventArgs e)
+        private void SortStringChanged(object sender, EventArgs e)
         {
-            var index = mainWindow.ckLbFormats.SelectedIndex;
-            if (index == -1) return;
-            var format = (Format)mainWindow.ckLbFormats.Items[index];
+            this.mainWindow.bsMain.Sort = this.mainWindow.dgClients.SortString;
+        }
 
-            mainWindow.lClientCount.Text = Convert.ToString(format.DataSource?.Count ?? 0);
+        private void FilterStringChanged(object sender, EventArgs e)
+        {
+            this.mainWindow.bsMain.Filter = this.mainWindow.dgClients.FilterString;
+        }
+
+        private void DataSourceChange(object sender, ListChangedEventArgs e)
+        {
+            this.mainWindow.lClientCount.Text = this.mainWindow.bsMain.List.Count.ToString();
         }
 
         private void LoadData(object sender, EventArgs e)
         {
             var index = mainWindow.ckLbFormats.SelectedIndex;
-            if (index == -1) return;
+            if (index == -1)
+            {
+                return;
+            }
 
             // var query = (mainWindow.ckLbFormats.Items[index] as Format).
             // cargar el query....
+
             var format = (Format)mainWindow.ckLbFormats.Items[index];
 
-            format.DataSource = DataHelper.SampleData.Tables[0].DefaultView;
+            format.DataSource = DataHelper.SampleData;
 
-            mainWindow.dgClients.DataSource = format.DataSource;
-            mainWindow.dgClients.ReadOnly = true;
-            mainWindow.lClientCount.Text = format.DataSource.Count.ToString();
-
-            format.DataSource.ListChanged += DataListChanged;
+            this.mainWindow.bsMain.DataSource = format.DataSource;
+            this.mainWindow.bsMain.DataMember = format.DataSource.Tables[0].TableName;
         }
 
         private void SelectedChargeChange(object sender, EventArgs e)
@@ -170,12 +179,12 @@
                 format.PaperSize.Charges.ForEach(c => mainWindow.cbCharge.Items.Add(c));
                 mainWindow.cbCharge.SelectedItem = format.Charge;
 
-                //mainWindow.dgClients.DataSource = format.DataSource;
-                mainWindow.lClientCount.Text = Convert.ToString(format.DataSource?.Count ?? 0);
+                mainWindow.bsMain.DataSource = format.DataSource;
+                mainWindow.bsMain.DataMember = format.DataSource?.Tables[0].TableName;
             }
             catch (Exception)
             {
-                MessageBox.Show("Ocurrió un error al refrescar la aplicación.", "Error");
+                MessageBox.Show("Ocurrió un error al actualizar la aplicación.", "Error");
             }
         }
 
@@ -295,6 +304,7 @@
                     "Direccion de correo incorrecta.\n\n" + "Ejemplo de direcciones correctas:\n"
                     + "titu.cusi.huallpa@rjabogados.com\n" +
                     "joseholguin@hotmail.com", "Información");
+                mainWindow.txtbEmail.Text = string.Empty;
             }
         }
 

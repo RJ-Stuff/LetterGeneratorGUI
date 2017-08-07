@@ -2,9 +2,7 @@
 {
     using System.Data;
     using System.IO;
-
-    using GridExtensions;
-
+    
     using Newtonsoft.Json;
 
     class Format
@@ -18,7 +16,7 @@
         public Charge Charge { get; set; }
 
         [JsonIgnore]
-        public DataView DataSource { get; set; }
+        public DataSet DataSource { get; set; }
 
         public Format()
         {

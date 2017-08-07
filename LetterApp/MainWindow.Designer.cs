@@ -3,8 +3,6 @@
     using System.ComponentModel;
     using System.Windows.Forms;
 
-    using GridExtensions;
-
     partial class MainWindow
     {
         /// <summary>
@@ -35,7 +33,6 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            GridExtensions.GridFilterFactories.DefaultGridFilterFactory defaultGridFilterFactory1 = new GridExtensions.GridFilterFactories.DefaultGridFilterFactory();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainWindow));
             this.picLogo = new System.Windows.Forms.PictureBox();
             this.btGenerateWords = new System.Windows.Forms.Button();
@@ -43,13 +40,17 @@
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabEditor = new System.Windows.Forms.TabPage();
             this.panel4 = new System.Windows.Forms.Panel();
-            this.ckbEditEditor = new System.Windows.Forms.CheckBox();
+            this.panel5 = new System.Windows.Forms.Panel();
             this.ckbLineWrap = new System.Windows.Forms.CheckBox();
             this.btSaveEditorChanges = new System.Windows.Forms.Button();
+            this.ckbEditEditor = new System.Windows.Forms.CheckBox();
             this.rtEditor = new System.Windows.Forms.RichTextBox();
             this.tabData = new System.Windows.Forms.TabPage();
+            this.dgClients = new Zuby.ADGV.AdvancedDataGridView();
+            this.panel6 = new System.Windows.Forms.Panel();
+            this.lClientCount = new System.Windows.Forms.Label();
+            this.label6 = new System.Windows.Forms.Label();
             this.btLoadData = new System.Windows.Forms.Button();
-            this.dgClients = new GridExtensions.ExtendedDataGrid();
             this.tabNotifications = new System.Windows.Forms.TabPage();
             this.groupBox4 = new System.Windows.Forms.GroupBox();
             this.rbOnlyMail = new System.Windows.Forms.RadioButton();
@@ -59,6 +60,7 @@
             this.label3 = new System.Windows.Forms.Label();
             this.btAddMail = new System.Windows.Forms.Button();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.panel7 = new System.Windows.Forms.Panel();
             this.btRemoveMail = new System.Windows.Forms.Button();
             this.lbMails = new System.Windows.Forms.ListBox();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
@@ -80,35 +82,30 @@
             this.btChargesHelp = new System.Windows.Forms.Button();
             this.cbCharge = new System.Windows.Forms.ComboBox();
             this.label5 = new System.Windows.Forms.Label();
-            this._extender = new GridExtensions.DataGridFilterExtender(this.components);
             this.panel1 = new System.Windows.Forms.Panel();
             this.panel2 = new System.Windows.Forms.Panel();
             this.panel3 = new System.Windows.Forms.Panel();
-            this.panel5 = new System.Windows.Forms.Panel();
-            this.panel6 = new System.Windows.Forms.Panel();
-            this.panel7 = new System.Windows.Forms.Panel();
-            this.label6 = new System.Windows.Forms.Label();
-            this.lClientCount = new System.Windows.Forms.Label();
+            this.bsMain = new System.Windows.Forms.BindingSource(this.components);
             ((System.ComponentModel.ISupportInitialize)(this.picLogo)).BeginInit();
             this.tabControl1.SuspendLayout();
             this.tabEditor.SuspendLayout();
             this.panel4.SuspendLayout();
+            this.panel5.SuspendLayout();
             this.tabData.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgClients)).BeginInit();
+            this.panel6.SuspendLayout();
             this.tabNotifications.SuspendLayout();
             this.groupBox4.SuspendLayout();
             this.groupBox3.SuspendLayout();
             this.groupBox2.SuspendLayout();
+            this.panel7.SuspendLayout();
             this.groupBox1.SuspendLayout();
             this.menuStrip1.SuspendLayout();
             this.groupBox5.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this._extender)).BeginInit();
             this.panel1.SuspendLayout();
             this.panel2.SuspendLayout();
             this.panel3.SuspendLayout();
-            this.panel5.SuspendLayout();
-            this.panel6.SuspendLayout();
-            this.panel7.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.bsMain)).BeginInit();
             this.SuspendLayout();
             // 
             // picLogo
@@ -178,16 +175,15 @@
             this.panel4.Size = new System.Drawing.Size(1092, 40);
             this.panel4.TabIndex = 4;
             // 
-            // ckbEditEditor
+            // panel5
             // 
-            this.ckbEditEditor.AutoSize = true;
-            this.ckbEditEditor.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.ckbEditEditor.Location = new System.Drawing.Point(3, 12);
-            this.ckbEditEditor.Name = "ckbEditEditor";
-            this.ckbEditEditor.Size = new System.Drawing.Size(78, 21);
-            this.ckbEditEditor.TabIndex = 3;
-            this.ckbEditEditor.Text = "Editable";
-            this.ckbEditEditor.UseVisualStyleBackColor = true;
+            this.panel5.Controls.Add(this.ckbLineWrap);
+            this.panel5.Controls.Add(this.btSaveEditorChanges);
+            this.panel5.Dock = System.Windows.Forms.DockStyle.Right;
+            this.panel5.Location = new System.Drawing.Point(809, 0);
+            this.panel5.Name = "panel5";
+            this.panel5.Size = new System.Drawing.Size(283, 40);
+            this.panel5.TabIndex = 4;
             // 
             // ckbLineWrap
             // 
@@ -214,6 +210,17 @@
             this.btSaveEditorChanges.Text = "Guardar cambios";
             this.btSaveEditorChanges.UseVisualStyleBackColor = true;
             // 
+            // ckbEditEditor
+            // 
+            this.ckbEditEditor.AutoSize = true;
+            this.ckbEditEditor.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.ckbEditEditor.Location = new System.Drawing.Point(3, 12);
+            this.ckbEditEditor.Name = "ckbEditEditor";
+            this.ckbEditEditor.Size = new System.Drawing.Size(78, 21);
+            this.ckbEditEditor.TabIndex = 3;
+            this.ckbEditEditor.Text = "Editable";
+            this.ckbEditEditor.UseVisualStyleBackColor = true;
+            // 
             // rtEditor
             // 
             this.rtEditor.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -227,14 +234,56 @@
             // 
             // tabData
             // 
-            this.tabData.Controls.Add(this.panel6);
             this.tabData.Controls.Add(this.dgClients);
+            this.tabData.Controls.Add(this.panel6);
             this.tabData.Location = new System.Drawing.Point(4, 25);
             this.tabData.Name = "tabData";
             this.tabData.Size = new System.Drawing.Size(1098, 515);
             this.tabData.TabIndex = 3;
             this.tabData.Text = "Datos";
             this.tabData.UseVisualStyleBackColor = true;
+            // 
+            // dgClients
+            // 
+            this.dgClients.AllowUserToAddRows = false;
+            this.dgClients.AllowUserToDeleteRows = false;
+            this.dgClients.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgClients.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.dgClients.FilterAndSortEnabled = true;
+            this.dgClients.Location = new System.Drawing.Point(0, 0);
+            this.dgClients.Name = "dgClients";
+            this.dgClients.ReadOnly = true;
+            this.dgClients.Size = new System.Drawing.Size(1098, 475);
+            this.dgClients.TabIndex = 4;
+            // 
+            // panel6
+            // 
+            this.panel6.Controls.Add(this.lClientCount);
+            this.panel6.Controls.Add(this.label6);
+            this.panel6.Controls.Add(this.btLoadData);
+            this.panel6.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.panel6.Location = new System.Drawing.Point(0, 475);
+            this.panel6.Name = "panel6";
+            this.panel6.Size = new System.Drawing.Size(1098, 40);
+            this.panel6.TabIndex = 3;
+            // 
+            // lClientCount
+            // 
+            this.lClientCount.AutoSize = true;
+            this.lClientCount.Location = new System.Drawing.Point(153, 12);
+            this.lClientCount.Name = "lClientCount";
+            this.lClientCount.Size = new System.Drawing.Size(16, 17);
+            this.lClientCount.TabIndex = 3;
+            this.lClientCount.Text = "0";
+            // 
+            // label6
+            // 
+            this.label6.AutoSize = true;
+            this.label6.Location = new System.Drawing.Point(7, 12);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(140, 17);
+            this.label6.TabIndex = 2;
+            this.label6.Text = "Cantidad de clientes:";
             // 
             // btLoadData
             // 
@@ -245,19 +294,6 @@
             this.btLoadData.TabIndex = 1;
             this.btLoadData.Text = "Cargar datos";
             this.btLoadData.UseVisualStyleBackColor = true;
-            // 
-            // dgClients
-            // 
-            this.dgClients.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.dgClients.AutoCreateTableStyles = true;
-            this.dgClients.DataMember = "";
-            this.dgClients.HeaderForeColor = System.Drawing.SystemColors.ControlText;
-            this.dgClients.Location = new System.Drawing.Point(3, 3);
-            this.dgClients.Name = "dgClients";
-            this.dgClients.Size = new System.Drawing.Size(1098, 475);
-            this.dgClients.TabIndex = 0;
             // 
             // tabNotifications
             // 
@@ -362,6 +398,15 @@
             this.groupBox2.TabIndex = 7;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Lista de personas a notificar";
+            // 
+            // panel7
+            // 
+            this.panel7.Controls.Add(this.btRemoveMail);
+            this.panel7.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.panel7.Location = new System.Drawing.Point(3, 475);
+            this.panel7.Name = "panel7";
+            this.panel7.Size = new System.Drawing.Size(297, 28);
+            this.panel7.TabIndex = 6;
             // 
             // btRemoveMail
             // 
@@ -568,20 +613,6 @@
             this.label5.TabIndex = 2;
             this.label5.Text = "Cargo:";
             // 
-            // _extender
-            // 
-            this._extender.DataGrid = this.dgClients;
-            defaultGridFilterFactory1.CreateDistinctGridFilters = false;
-            defaultGridFilterFactory1.DefaultGridFilterType = typeof(GridExtensions.GridFilters.TextGridFilter);
-            defaultGridFilterFactory1.DefaultShowDateInBetweenOperator = false;
-            defaultGridFilterFactory1.DefaultShowNumericInBetweenOperator = false;
-            defaultGridFilterFactory1.HandleEnumerationTypes = true;
-            defaultGridFilterFactory1.MaximumDistinctValues = 20;
-            this._extender.FilterFactory = defaultGridFilterFactory1;
-            this._extender.FilterText = "";
-            this._extender.FilterTextVisible = false;
-            this._extender.GridMode = GridExtensions.GridMode.Filter;
-            // 
             // panel1
             // 
             this.panel1.Controls.Add(this.picLogo);
@@ -615,54 +646,6 @@
             this.panel3.Size = new System.Drawing.Size(208, 649);
             this.panel3.TabIndex = 11;
             // 
-            // panel5
-            // 
-            this.panel5.Controls.Add(this.ckbLineWrap);
-            this.panel5.Controls.Add(this.btSaveEditorChanges);
-            this.panel5.Dock = System.Windows.Forms.DockStyle.Right;
-            this.panel5.Location = new System.Drawing.Point(809, 0);
-            this.panel5.Name = "panel5";
-            this.panel5.Size = new System.Drawing.Size(283, 40);
-            this.panel5.TabIndex = 4;
-            // 
-            // panel6
-            // 
-            this.panel6.Controls.Add(this.lClientCount);
-            this.panel6.Controls.Add(this.label6);
-            this.panel6.Controls.Add(this.btLoadData);
-            this.panel6.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.panel6.Location = new System.Drawing.Point(0, 475);
-            this.panel6.Name = "panel6";
-            this.panel6.Size = new System.Drawing.Size(1098, 40);
-            this.panel6.TabIndex = 3;
-            // 
-            // panel7
-            // 
-            this.panel7.Controls.Add(this.btRemoveMail);
-            this.panel7.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.panel7.Location = new System.Drawing.Point(3, 475);
-            this.panel7.Name = "panel7";
-            this.panel7.Size = new System.Drawing.Size(297, 28);
-            this.panel7.TabIndex = 6;
-            // 
-            // label6
-            // 
-            this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(7, 12);
-            this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(140, 17);
-            this.label6.TabIndex = 2;
-            this.label6.Text = "Cantidad de clientes:";
-            // 
-            // lClientCount
-            // 
-            this.lClientCount.AutoSize = true;
-            this.lClientCount.Location = new System.Drawing.Point(153, 12);
-            this.lClientCount.Name = "lClientCount";
-            this.lClientCount.Size = new System.Drawing.Size(16, 17);
-            this.lClientCount.TabIndex = 3;
-            this.lClientCount.Text = "0";
-            // 
             // MainWindow
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -682,29 +665,29 @@
             this.tabEditor.ResumeLayout(false);
             this.panel4.ResumeLayout(false);
             this.panel4.PerformLayout();
+            this.panel5.ResumeLayout(false);
+            this.panel5.PerformLayout();
             this.tabData.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.dgClients)).EndInit();
+            this.panel6.ResumeLayout(false);
+            this.panel6.PerformLayout();
             this.tabNotifications.ResumeLayout(false);
             this.groupBox4.ResumeLayout(false);
             this.groupBox4.PerformLayout();
             this.groupBox3.ResumeLayout(false);
             this.groupBox3.PerformLayout();
             this.groupBox2.ResumeLayout(false);
+            this.panel7.ResumeLayout(false);
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
             this.groupBox5.ResumeLayout(false);
             this.groupBox5.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this._extender)).EndInit();
             this.panel1.ResumeLayout(false);
             this.panel2.ResumeLayout(false);
             this.panel3.ResumeLayout(false);
-            this.panel5.ResumeLayout(false);
-            this.panel5.PerformLayout();
-            this.panel6.ResumeLayout(false);
-            this.panel6.PerformLayout();
-            this.panel7.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.bsMain)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -752,9 +735,7 @@
         public ComboBox cbCharge;
         public Button btChargesHelp;
         private TabPage tabData;
-        public DataGridFilterExtender _extender;
         public Button btLoadData;
-        public ExtendedDataGrid dgClients;
         private Panel panel1;
         private Panel panel2;
         private Panel panel3;
@@ -764,6 +745,8 @@
         private Panel panel7;
         private Label label6;
         public Label lClientCount;
+        public Zuby.ADGV.AdvancedDataGridView dgClients;
+        public BindingSource bsMain;
     }
 }
 

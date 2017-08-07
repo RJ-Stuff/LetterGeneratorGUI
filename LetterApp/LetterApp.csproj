@@ -60,6 +60,7 @@
       <HintPath>..\packages\Newtonsoft.Json.10.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="System" />
+    <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -132,9 +133,9 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\GridExtensions\GridExtensions.csproj">
-      <Project>{d87a363f-c131-4108-8149-e993f15aaaaf}</Project>
-      <Name>GridExtensions</Name>
+    <ProjectReference Include="..\AdvancedDataGridView\AdvancedDataGridView.csproj">
+      <Project>{7055810c-59cb-4fcf-8a1e-e1680087ee41}</Project>
+      <Name>AdvancedDataGridView</Name>
     </ProjectReference>
     <ProjectReference Include="..\LetterCore\LetterCore.csproj">
       <Project>{6542ee75-261e-4e2d-b85d-75fa5f09c4c8}</Project>
