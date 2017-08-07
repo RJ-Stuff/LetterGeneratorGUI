@@ -12,8 +12,8 @@
 
         public Charge(string chargeClazz, string displayName)
         {
-            this.ChargeClazz = chargeClazz;
-            this.DisplayName = displayName;
+            ChargeClazz = chargeClazz;
+            DisplayName = displayName;
         }
 
         public override string ToString()

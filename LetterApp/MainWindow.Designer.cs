@@ -752,7 +752,7 @@
         public ComboBox cbCharge;
         public Button btChargesHelp;
         private TabPage tabData;
-        private DataGridFilterExtender _extender;
+        public DataGridFilterExtender _extender;
         public Button btLoadData;
         public ExtendedDataGrid dgClients;
         private Panel panel1;

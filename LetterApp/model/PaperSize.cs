@@ -26,7 +26,7 @@
         {
             Papersize = (WdPaperSize)Enum.Parse(typeof(WdPaperSize), paperSize);
             DisplayName = displayName;
-            this.Charges = charges;
+            Charges = charges;
         }
 
         public PaperSize(int paperSize, string displayName, List<Charge> charges)
@@ -41,7 +41,7 @@
             }
 
             DisplayName = displayName;
-            this.Charges = charges;
+            Charges = charges;
         }
 
         public override string ToString()

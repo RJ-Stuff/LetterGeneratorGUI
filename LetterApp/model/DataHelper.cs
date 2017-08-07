@@ -11,7 +11,7 @@
         {
         }
 
-        public static DataSet SampleData => dataSet ?? (dataSet = CreateDataSet());
+        public static DataSet SampleData => CreateDataSet();//dataSet ?? (dataSet = CreateDataSet());
 
         private static DataSet CreateDataSet()
         {

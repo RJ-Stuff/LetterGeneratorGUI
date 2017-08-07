@@ -9,6 +9,8 @@
     using System.Text.RegularExpressions;
     using System.Windows.Forms;
 
+    using GridExtensions;
+
     using LetterApp.model;
 
     using Newtonsoft.Json;
@@ -64,7 +66,7 @@
 
         private void CreateEvents()
         {
-            mainWindow.btGenerateWords.Click += this.GenerateLetter;
+            mainWindow.btGenerateWords.Click += GenerateLetter;
             mainWindow.btAddFormat.Click += AddFormat;
             mainWindow.btRemoveFormat.Click += RemoveFormat;
             mainWindow.btSaveEditorChanges.Click += SaveEditorChanges;
@@ -73,7 +75,7 @@
             mainWindow.btRemoveMail.Click += RemoveMail;
             mainWindow.btAddMail.Click += AddMail;
             mainWindow.ckbEditEditor.Click += EditEditor;
-            mainWindow.ckLbFormats.SelectedIndexChanged += (s, e) => this.RefreshGui();
+            mainWindow.ckLbFormats.SelectedIndexChanged += (s, e) => RefreshGui();
             mainWindow.cbPaperSize.SelectedIndexChanged += SelectedPaperSizeChange;
             mainWindow.ckLbFormats.ItemCheck += FormatCheck;
             mainWindow.btMailHelp.Click += MailHelp;
@@ -85,23 +87,29 @@
 
         private void DataListChanged(object sender, ListChangedEventArgs e)
         {
-            mainWindow.lClientCount.Text = ((DataView)this.mainWindow.dgClients.DataSource).Count.ToString();
+            var index = mainWindow.ckLbFormats.SelectedIndex;
+            if (index == -1) return;
+            var format = (Format)mainWindow.ckLbFormats.Items[index];
+
+            mainWindow.lClientCount.Text = Convert.ToString(format.DataSource?.Count ?? 0);
         }
 
         private void LoadData(object sender, EventArgs e)
         {
             var index = mainWindow.ckLbFormats.SelectedIndex;
             if (index == -1) return;
+
             // var query = (mainWindow.ckLbFormats.Items[index] as Format).
             // cargar el query....
-            var format = (Format)this.mainWindow.ckLbFormats.Items[index];
-            this.mainWindow.dgClients.DataSource = DataHelper.SampleData.Tables[0].DefaultView;
-            this.mainWindow.dgClients.ReadOnly = true;
+            var format = (Format)mainWindow.ckLbFormats.Items[index];
 
             format.DataSource = DataHelper.SampleData.Tables[0].DefaultView;
-            mainWindow.lClientCount.Text = ((DataView)mainWindow.dgClients.DataSource).Count.ToString();
 
-            ((DataView)mainWindow.dgClients.DataSource).ListChanged += DataListChanged;
+            mainWindow.dgClients.DataSource = format.DataSource;
+            mainWindow.dgClients.ReadOnly = true;
+            mainWindow.lClientCount.Text = format.DataSource.Count.ToString();
+
+            format.DataSource.ListChanged += DataListChanged;
         }
 
         private void SelectedChargeChange(object sender, EventArgs e)
@@ -162,8 +170,8 @@
                 format.PaperSize.Charges.ForEach(c => mainWindow.cbCharge.Items.Add(c));
                 mainWindow.cbCharge.SelectedItem = format.Charge;
 
-                mainWindow.dgClients.DataSource = format.DataSource;
-                mainWindow.lClientCount.Text = Convert.ToString(((DataView)format.DataSource)?.Count ?? 0);
+                //mainWindow.dgClients.DataSource = format.DataSource;
+                mainWindow.lClientCount.Text = Convert.ToString(format.DataSource?.Count ?? 0);
             }
             catch (Exception)
             {
@@ -228,7 +236,7 @@
                     mainWindow.ckLbFormats.SetSelected(0, true);
                 }
 
-                this.RefreshGui();
+                RefreshGui();
             }
             catch (Exception)
             {
@@ -360,7 +368,7 @@
                                     File.WriteAllText(format.Url, mainWindow.rtEditor.Text, currentEncoding);
                                 }
 
-                                this.RefreshGui();
+                                RefreshGui();
 
                                 MessageBox.Show("Cambios guardados correctamente.", "Información");
                             }
@@ -412,7 +420,7 @@
                         mainWindow.ckLbFormats.SetSelected(0, true);
                     }
 
-                    this.RefreshGui();
+                    RefreshGui();
                 }
             }
         }
@@ -436,15 +444,18 @@
                 mainWindow.ckLbFormats.SetItemChecked(mainWindow.ckLbFormats.Items.Count - 1, true);
             }
 
-            this.RefreshGui();
+            RefreshGui();
         }
 
         private void GenerateLetter(object sender, EventArgs e)
         {
-            mainWindow.ckLbFormats.CheckedItems.Cast<Format>().ToList().ForEach(f =>
+            mainWindow.ckLbFormats
+                .CheckedItems.Cast<Format>()
+                .ToList()
+                .ForEach(f =>
                 {
-                    var count = ((DataView)f.DataSource)?.Count ?? 0;
-                    Console.WriteLine($"formato={f} count={count}");
+                    //   var count = f.DataSource?.Count ?? 0;
+                    // Console.WriteLine($"formato={f} count={count}");
                 });
         }
     }

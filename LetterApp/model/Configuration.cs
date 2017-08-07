@@ -32,13 +32,13 @@
 
         public void SetFormats(List<Format> formats)
         {
-            this.Formats = formats;
+            Formats = formats;
             Persist();
         }
 
         public void SetNotifications(List<string> notifications)
         {
-            this.Notifications = notifications;
+            Notifications = notifications;
             Persist();
         }
 

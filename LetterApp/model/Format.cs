@@ -1,6 +1,9 @@
 ﻿namespace LetterApp.model
 {
+    using System.Data;
     using System.IO;
+
+    using GridExtensions;
 
     using Newtonsoft.Json;
 
@@ -15,11 +18,10 @@
         public Charge Charge { get; set; }
 
         [JsonIgnore]
-        public object DataSource { get; set; }
+        public DataView DataSource { get; set; }
 
         public Format()
         {
-
         }
 
         public Format(string url) : this(url, true, PaperSize.DefaultSize, Charge.DefaultCharge)
@@ -28,10 +30,10 @@
 
         private Format(string url, bool Checked, PaperSize paperSize, Charge charge)
         {
-            this.Url = url;
+            Url = url;
             this.Checked = Checked;
-            this.PaperSize = paperSize;
-            this.Charge = charge;
+            PaperSize = paperSize;
+            Charge = charge;
         }
 
         public override int GetHashCode()
@@ -40,7 +42,7 @@
             {
                 var hash = 17;
 
-                hash = hash * 23 + this.Url.GetHashCode();
+                hash = hash * 23 + Url.GetHashCode();
                 hash = hash * 23 + Checked.GetHashCode();
                 hash = hash * 23 + PaperSize.GetHashCode();
 
@@ -50,7 +52,7 @@
 
         public override string ToString()
         {
-            return Path.GetFileNameWithoutExtension(this.Url);
+            return Path.GetFileNameWithoutExtension(Url);
         }
     }
 }
