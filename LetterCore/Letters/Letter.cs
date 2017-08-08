@@ -23,11 +23,12 @@
         protected Document Document;
         protected Subject<object> Progress;
         protected int ProgressCount;
-        protected SimpleCharge Charge;
+        protected Charge Charge;
         protected string CurrentDir;
+        protected WdPaperSize paperSize;
 
         public Letter(JToken configuration, List<Client> clients,
-            Document document, Subject<object> progress, SimpleCharge charge,
+            Document document, Subject<object> progress, Charge charge,
             WdPaperSize paperSize)
         {
             Document = document;
@@ -36,7 +37,10 @@
             Progress = progress;
             Charge = charge;
             LetterKind = configuration["letterKind"].Value<string>();
+            BusinessName = configuration["BusinessName"].Value<string>();
             CurrentDir = Directory.GetCurrentDirectory();
+
+            this.paperSize = paperSize;
 
             SetPage(Document, configuration, paperSize);
 
@@ -100,7 +104,10 @@
             SetPaymentPlace(document);
             SetSignature(document);
             SetFinalInfo(document);
-            if (Charge != null) SetPseudoFooter(document, client);
+            if (paperSize == WdPaperSize.wdPaperLegal)
+                SetPseudoFooter(document, client);
+            if (paperSize == WdPaperSize.wdPaperA4)
+                Charge?.CreateDocument(document, client, BusinessName);
         }
 
         protected virtual void SetPseudoFooter(Document document, Client client)
@@ -346,7 +353,7 @@
         {
             var paragraph = document.Content.Paragraphs.Add();
 
-            if (Charge != null)
+            if (paperSize == WdPaperSize.wdPaperLegal)
             {
                 paragraph.Range.InlineShapes.AddPicture(
                     string.Format(Configuration["BusinessLogo"].Value<string>(), CurrentDir));

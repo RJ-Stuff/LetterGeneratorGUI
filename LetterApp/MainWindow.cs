@@ -1,6 +1,5 @@
 ﻿namespace LetterApp
 {
-    using System;
     using System.Windows.Forms;
 
     public partial class MainWindow : Form

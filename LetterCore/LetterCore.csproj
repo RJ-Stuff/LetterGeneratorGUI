@@ -66,12 +66,14 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Letters\AllInOneGenerator.cs" />
+    <Compile Include="Letters\Charge.cs" />
     <Compile Include="Letters\SimpleCharge.cs" />
     <Compile Include="Letters\Client.cs" />
     <Compile Include="Letters\Format.cs" />
     <Compile Include="Letters\InputData.cs" />
     <Compile Include="Letters\Letter.cs" />
     <Compile Include="Letters\NonComplianceLetter.cs" />
+    <Compile Include="Letters\SpecialCharge.cs" />
     <Compile Include="Letters\UrgentLetter.cs" />
     <Compile Include="Letters\Utils.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

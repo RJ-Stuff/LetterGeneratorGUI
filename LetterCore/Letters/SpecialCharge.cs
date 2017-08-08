@@ -1,23 +1,25 @@
 ﻿namespace LetterCore.Letters
 {
+    using System;
     using System.IO;
     using System.Linq;
     using System.Reflection;
 
     using Microsoft.Office.Interop.Word;
 
-    public class SimpleCharge : Charge
+    public class SpecialCharge : Charge
     {
         public override void CreateDocument(Document document, Client client, string businessName)
         {
+            document.Words.Last.InsertBreak(WdBreakType.wdPageBreak);
             var parCount = document.Paragraphs.Count;
             var offset = document.Paragraphs[parCount - 1].Range.End;
 
             var fullPath = Assembly.GetAssembly(typeof(SimpleCharge)).Location;
             var currentDir = Path.GetDirectoryName(fullPath);
 
-            var path = $@"{currentDir}\charges\simplecharge.txt";
-            
+            var path = $@"{currentDir}\charges\specialcharge.txt";
+
             var text = File.ReadAllText(path);
             text = string.Format(
                 text,
@@ -44,8 +46,7 @@
                 .Where(pair => pair != null && pair.pos % 2 == 0)
                 .Select(p => new { p.start, end = text.IndexOf('$', p.start), count = Inc(ref count) })
                 .Select(p => new { start = p.start - p.count, end = p.end - p.count })
-                .Select(p => document.Range(p.start + offset, p.end + offset))
-                .ToList()
+                .Select(p => document.Range(p.start + offset, p.end + offset)).ToList()
                 .ForEach(r => r.Bold = 1);
 
             paragraph.Range.InsertParagraphAfter();

@@ -12,8 +12,6 @@
 
     using Newtonsoft.Json.Linq;
 
-    using static System.String;
-
     public class AllInOneGenerator
     {
         public static string CreateDocs(List<Format> formats, Subject<object> progress, WdPaperSize paperSize)
@@ -36,11 +34,11 @@
 
                 var assembly = Assembly.GetExecutingAssembly();
 
-                var chargeType = !IsNullOrEmpty(format.ChargeClazz)
+                var chargeType = !string.IsNullOrEmpty(format.ChargeClazz)
                 ? assembly.GetTypes().First(t => t.Name == format.ChargeClazz)
                 : null;
 
-                var charge = (chargeType != null ? Activator.CreateInstance(chargeType) : null) as SimpleCharge;
+                var charge = (chargeType != null ? Activator.CreateInstance(chargeType) : null) as Charge;
 
                 var type = assembly.GetTypes().First(t => t.Name == clazz);
                 var parameters = new object[] { configuration, clients, document, progress, charge, paperSize };

@@ -46,7 +46,7 @@
             {
                 var chargesTokens = p["charges"] ?? new JArray();
                 var charges = chargesTokens
-                .Select(t => new Charge(t["ChargeClazz"].Value<string>(), t["DisplayName"].Value<string>()))
+                .Select(t => new model.Charge(t["ChargeClazz"].Value<string>(), t["DisplayName"].Value<string>()))
                 .ToList();
 
                 return new PaperSize(p["name"].Value<string>(), p["displayname"].Value<string>(), charges);
@@ -89,7 +89,8 @@
             mainWindow.btChargesHelp.Click += ChargesHelp;
             mainWindow.acercaDeToolStripMenuItem.Click += AboutHelp;
             mainWindow.btLoadData.Click += LoadData;
-            //mainWindow.bsMain.ListChanged += DataSourceChange;
+
+            // mainWindow.bsMain.ListChanged += DataSourceChange;
             mainWindow.dgClients.FilterStringChanged += FilterStringChanged;
             mainWindow.dgClients.SortStringChanged += SortStringChanged;
         }
@@ -106,7 +107,13 @@
 
         private void DataSourceChange(object sender, ListChangedEventArgs e)
         {
-            mainWindow.lClientCount.Text = mainWindow.bsMain.List.Count.ToString();
+            var index = mainWindow.ckLbFormats.SelectedIndex;
+            if (index == -1) return;
+            var format = (Format)mainWindow.ckLbFormats.Items[index];
+            mainWindow.lClientCount.Text = ViewUtils
+                .GroupBy(format.BindingSource.List.Cast<DataRowView>(), "codluna")
+                .Count()
+                .ToString();
         }
 
         private void LoadData(object sender, EventArgs e)
@@ -114,10 +121,9 @@
             var index = mainWindow.ckLbFormats.SelectedIndex;
             if (index == -1) return;
 
-            //todo
+            // todo
             // var query = (mainWindow.ckLbFormats.Items[index] as Format).
             // cargar el query....
-
             var format = (Format)mainWindow.ckLbFormats.Items[index];
 
             format.BindingSource = new BindingSource
@@ -130,12 +136,15 @@
             mainWindow.bsMain = format.BindingSource;
             mainWindow.dgClients.DataSource = format.BindingSource;
             mainWindow.dgClients.CleanFilterAndSort();
-            mainWindow.lClientCount.Text = mainWindow.bsMain.List.Count.ToString();
+            mainWindow.lClientCount.Text = ViewUtils
+                .GroupBy(format.BindingSource.List.Cast<DataRowView>(), "codluna")
+                .Count()
+                .ToString();
         }
 
         private void SelectedChargeChange(object sender, EventArgs e)
         {
-            var charge = (mainWindow.cbCharge.SelectedItem as Charge) ?? Charge.DefaultCharge;
+            var charge = (mainWindow.cbCharge.SelectedItem as model.Charge) ?? model.Charge.DefaultCharge;
 
             mainWindow.ckLbFormats
                 .Items
@@ -203,7 +212,9 @@
                         mainWindow.dgClients.CleanFilterAndSort();
                 }
 
-                mainWindow.lClientCount.Text = Convert.ToString(this.mainWindow.bsMain?.List.Count ?? 0);
+                mainWindow.lClientCount.Text = ViewUtils.GroupBy(
+                    format.BindingSource?.List.Cast<DataRowView>() ?? new List<DataRowView>(),
+                    "codluna").Count().ToString();
             }
             catch (Exception)
             {
@@ -288,7 +299,7 @@
                 mainWindow.cbCharge.SelectedItem = mainWindow.cbCharge.Items[0];
             }
 
-            var charge = (mainWindow.cbCharge.SelectedItem as Charge) ?? Charge.DefaultCharge;
+            var charge = (mainWindow.cbCharge.SelectedItem as model.Charge) ?? model.Charge.DefaultCharge;
 
             mainWindow.ckLbFormats
                 .Items
@@ -487,31 +498,31 @@
                 var formats = mainWindow.ckLbFormats.CheckedItems.Cast<Format>()
                     .Where(f => f.BindingSource != null)
                     .Select(f =>
+                    {
+                        var groups = ViewUtils.GroupBy(f.BindingSource.List.Cast<DataRowView>(), "codluna");
+                        var clients = groups.Select(g =>
                         {
-                            var groups = ViewUtils.GroupBy(f.BindingSource.List.Cast<DataRowView>(), "codluna");
-                            var clients = groups.Select(g =>
-                                {
-                                    var client = ViewUtils.GetClient(g[0]);
-                                    var debts = g.Select(ViewUtils.GetDebt).ToList();
-                                    client.DisaggregatedDebts = debts;
+                            var client = ViewUtils.GetClient(g[0]);
+                            var debts = g.Select(ViewUtils.GetDebt).ToList();
+                            client.DisaggregatedDebts = debts;
 
-                                    return client;
-                                }).ToList();
-
-                            return new LetterCore.Letters.Format(f.Url, clients, f.Charge.ChargeClazz);
+                            return client;
                         }).ToList();
+
+                        return new LetterCore.Letters.Format(f.Url, clients, f.Charge.ChargeClazz);
+                    }).ToList();
 
                 var progress = new Subject<object>();
                 var docName = AllInOneGenerator.CreateDocs(formats, progress, ((PaperSize)mainWindow.cbPaperSize.SelectedItem).Papersize);
 
                 MessageBox.Show("Cartas generadas correctamente", "Información");
 
-                if(!mainWindow.rbNoNotification.Checked)
+                if (!mainWindow.rbNoNotification.Checked)
                 {
                     ViewUtils.SendNotification(
-                    mainWindow.lbMails.Items.Cast<string>().ToList(), 
-                    mainWindow.txtbUser.Text, 
-                    mainWindow.txtbPass.Text, 
+                    mainWindow.lbMails.Items.Cast<string>().ToList(),
+                    mainWindow.txtbUser.Text,
+                    mainWindow.txtbPass.Text,
                     mainWindow.rbMailWithAtt.Checked ? docName : string.Empty);
                 }
             }
