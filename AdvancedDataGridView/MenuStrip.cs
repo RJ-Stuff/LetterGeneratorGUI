@@ -80,22 +80,22 @@ namespace Zuby.ADGV
         public MenuStrip(Type dataType)
         {
             // set localization strings
-            _textStrings.Add("SORTDATETIMEASC", "Sort Oldest to Newest");
-            _textStrings.Add("SORTDATETIMEDESC", "Sort Newest to Oldest");
-            _textStrings.Add("SORTBOOLASC", "Sort by False/True");
-            _textStrings.Add("SORTBOOLDESC", "Sort by True/False");
-            _textStrings.Add("SORTNUMASC", "Sort Smallest to Largest");
-            _textStrings.Add("SORTNUMDESC", "Sort Largest to Smallest");
-            _textStrings.Add("SORTTEXTASC", "Sort А to Z");
-            _textStrings.Add("SORTTEXTDESC", "Sort Z to A");
-            _textStrings.Add("ADDCUSTOMFILTER", "Add a Custom Filter");
-            _textStrings.Add("CUSTOMFILTER", "Custom Filter");
-            _textStrings.Add("CLEARFILTER", "Clear Filter");
-            _textStrings.Add("CLEARSORT", "Clear Sort");
-            _textStrings.Add("BUTTONOK", "Filter");
-            _textStrings.Add("BUTTONCANCEL", "Cancel");
-            _textStrings.Add("NODESELECTALL", "(Select All)");
-            _textStrings.Add("NODESELECTEMPTY", "(Blanks)");
+            _textStrings.Add("SORTDATETIMEASC", "Ordenar de más antiguo a más reciente");
+            _textStrings.Add("SORTDATETIMEDESC", "Ordenar de más reciente a más antiguo");
+            _textStrings.Add("SORTBOOLASC", "Ordenar por Falso/Verdadero");
+            _textStrings.Add("SORTBOOLDESC", "Ordenar por Verdadero/Falso");
+            _textStrings.Add("SORTNUMASC", "Ordenar de menor a mayor");
+            _textStrings.Add("SORTNUMDESC", "Ordenar de mayor a menor");
+            _textStrings.Add("SORTTEXTASC", "Ordenar А a Z");
+            _textStrings.Add("SORTTEXTDESC", "Ordenar Z a A");
+            _textStrings.Add("ADDCUSTOMFILTER", "Añadir filtro personalizado");
+            _textStrings.Add("CUSTOMFILTER", "Filtro personalizado");
+            _textStrings.Add("CLEARFILTER", "Eliminar filtro");
+            _textStrings.Add("CLEARSORT", "Eliminar ordenamiento");
+            _textStrings.Add("BUTTONOK", "Filtro");
+            _textStrings.Add("BUTTONCANCEL", "Cancelar");
+            _textStrings.Add("NODESELECTALL", "(Seleccionar todo)");
+            _textStrings.Add("NODESELECTEMPTY", "(Vacío)");
 
             // initialize components
             InitializeComponent();
