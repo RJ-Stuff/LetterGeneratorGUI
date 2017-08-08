@@ -2,6 +2,7 @@
 {
     using System;
     using System.ComponentModel;
+    using System.Data;
     using System.IO;
     using System.Linq;
     using System.Text;
@@ -12,6 +13,8 @@
 
     using Newtonsoft.Json;
     using Newtonsoft.Json.Linq;
+
+    using static System.String;
 
     public class MainWindowPresenter
     {
@@ -150,7 +153,7 @@
 
             try
             {
-                mainWindow.rtEditor.Text = string.Empty;
+                mainWindow.rtEditor.Text = Empty;
 
                 mainWindow.ckbEditEditor.Checked = false;
                 EditEditor(null, null);
@@ -183,9 +186,15 @@
                 mainWindow.bsMain = format.BindingSource;
                 mainWindow.dgClients.DataSource = format.BindingSource;
 
-                if (!string.IsNullOrEmpty(format.BindingSource?.Filter) ||
-                    !string.IsNullOrEmpty(format.BindingSource?.Sort))
+                if (!IsNullOrEmpty(format.BindingSource?.Filter) || !IsNullOrEmpty(format.BindingSource?.Sort))
+                {
                     mainWindow.dgClients.LoadFilterAndSort(format.BindingSource.Filter, format.BindingSource.Sort);
+                }
+                else
+                {
+                    if (format.BindingSource != null)
+                        mainWindow.dgClients.CleanFilterAndSort();
+                }
 
                 mainWindow.lClientCount.Text = Convert.ToString(this.mainWindow.bsMain?.List.Count ?? 0);
             }
@@ -302,7 +311,7 @@
             if (r.Match(mainWindow.txtbEmail.Text.Trim()).Success)
             {
                 mainWindow.lbMails.Items.Add(mainWindow.txtbEmail.Text.Trim());
-                mainWindow.txtbEmail.Text = string.Empty;
+                mainWindow.txtbEmail.Text = Empty;
                 configuration.SetNotifications(mainWindow.lbMails.Items.Cast<string>().ToList());
             }
             else
@@ -311,7 +320,7 @@
                     "Direccion de correo incorrecta.\n\n" + "Ejemplo de direcciones correctas:\n"
                     + "titu.cusi.huallpa@rjabogados.com\n" +
                     "joseholguin@hotmail.com", "Información");
-                mainWindow.txtbEmail.Text = string.Empty;
+                mainWindow.txtbEmail.Text = Empty;
             }
         }
 
@@ -468,12 +477,17 @@
         {
             mainWindow.ckLbFormats
                 .CheckedItems.Cast<Format>()
+                .Where(f => f.BindingSource != null)
                 .ToList()
                 .ForEach(f =>
-                {
-                    // var count = f.DataSource?.Tables[0].DefaultView.Count ?? 0;
-                    // Console.WriteLine($"formato={f} count={count}");
-                });
+                    {
+                        Console.WriteLine($"---------------------- {f}");
+                        foreach (var o in f.BindingSource.List)
+                        {
+                            Console.WriteLine(((DataRowView)o).Row["id"]);
+                        }
+                        // Console.WriteLine($"formato={f} count={count}");
+                    });
         }
     }
 }

@@ -65,26 +65,26 @@ namespace Zuby.ADGV
             : this()
         {
             // set localization strings
-            _textStrings.Add("EQUALS", "equals");
-            _textStrings.Add("DOES_NOT_EQUAL", "does not equal");
-            _textStrings.Add("EARLIER_THAN", "earlier than");
-            _textStrings.Add("LATER_THAN", "later than");
-            _textStrings.Add("BETWEEN", "between");
-            _textStrings.Add("GREATER_THAN", "greater than");
-            _textStrings.Add("GREATER_THAN_OR_EQUAL_TO", "greater than or equal to");
-            _textStrings.Add("LESS_THAN", "less than");
-            _textStrings.Add("LESS_THAN_OR_EQUAL_TO", "less than or equal to");
-            _textStrings.Add("BEGINS_WITH", "begins with");
-            _textStrings.Add("DOES_NOT_BEGIN_WITH", "does not begin with");
-            _textStrings.Add("ENDS_WITH", "ends with");
-            _textStrings.Add("DOES_NOT_END_WITH", "does not end with");
-            _textStrings.Add("CONTAINS", "contains");
-            _textStrings.Add("DOES_NOT_CONTAIN", "does not contain");
-            _textStrings.Add("INVALID_VALUE", "Invalid Value");
-            _textStrings.Add("FILTER_STRING_DESCRIPTION", "Show rows where value {0} \"{1}\"");
-            _textStrings.Add("FORM_TITLE", "Custom Filter");
-            _textStrings.Add("LABEL_COLUMNNAMETEXT", "Show rows where value");
-            _textStrings.Add("LABEL_AND", "And");
+            _textStrings.Add("EQUALS", "igual");
+            _textStrings.Add("DOES_NOT_EQUAL", "distinto");
+            _textStrings.Add("EARLIER_THAN", "antes de");
+            _textStrings.Add("LATER_THAN", "después de");
+            _textStrings.Add("BETWEEN", "entre");
+            _textStrings.Add("GREATER_THAN", "mayor que");
+            _textStrings.Add("GREATER_THAN_OR_EQUAL_TO", "mayor o igual que");
+            _textStrings.Add("LESS_THAN", "menor que");
+            _textStrings.Add("LESS_THAN_OR_EQUAL_TO", "menor o igual que");
+            _textStrings.Add("BEGINS_WITH", "comienza con");
+            _textStrings.Add("DOES_NOT_BEGIN_WITH", "no comienza con");
+            _textStrings.Add("ENDS_WITH", "termina con");
+            _textStrings.Add("DOES_NOT_END_WITH", "no termina con");
+            _textStrings.Add("CONTAINS", "contiene");
+            _textStrings.Add("DOES_NOT_CONTAIN", "no contiene");
+            _textStrings.Add("INVALID_VALUE", "Valor incorrecto");
+            _textStrings.Add("FILTER_STRING_DESCRIPTION", "Mostrar filas en donde valor {0} \"{1}\"");
+            _textStrings.Add("FORM_TITLE", "Filtro personalizado");
+            _textStrings.Add("LABEL_COLUMNNAMETEXT", "Mostrar filas donde valor");
+            _textStrings.Add("LABEL_AND", "Y");
             _textStrings.Add("BUTTON_OK", "OK");
             _textStrings.Add("BUTTON_CANCEL", "Cancel");
 
