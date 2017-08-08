@@ -7,14 +7,16 @@
 // Please refer to LICENSE file for licensing information.
 #endregion
 
-using System;
-using System.Collections;
-using System.Globalization;
-using System.Linq;
-using System.Windows.Forms;
-
 namespace Zuby.ADGV
 {
+    using System;
+    using System.Collections;
+    using System.Drawing;
+    using System.Globalization;
+    using System.Linq;
+    using System.Threading;
+    using System.Windows.Forms;
+
     internal partial class FormCustomFilter : Form
     {
 
@@ -30,16 +32,16 @@ namespace Zuby.ADGV
             Integer
         }
 
-        private FilterType _filterType = FilterType.Unknown;
-        private Control _valControl1 = null;
-        private Control _valControl2 = null;
+        private readonly FilterType _filterType;
+        private readonly Control _valControl1;
+        private readonly Control _valControl2;
 
-        private bool _filterDateAndTimeEnabled = true;
+        private readonly bool _filterDateAndTimeEnabled;
 
-        private string _filterString = null;
-        private string _filterStringDescription = null;
+        private string _filterString;
+        private string _filterStringDescription;
 
-        private Hashtable _textStrings = new Hashtable();
+        private readonly Hashtable _textStrings = new Hashtable();
 
         #endregion
 
@@ -62,7 +64,7 @@ namespace Zuby.ADGV
         public FormCustomFilter(Type dataType, bool filterDateAndTimeEnabled)
             : this()
         {
-            //set localization strings
+            // set localization strings
             _textStrings.Add("EQUALS", "equals");
             _textStrings.Add("DOES_NOT_EQUAL", "does not equal");
             _textStrings.Add("EARLIER_THAN", "earlier than");
@@ -86,27 +88,21 @@ namespace Zuby.ADGV
             _textStrings.Add("BUTTON_OK", "OK");
             _textStrings.Add("BUTTON_CANCEL", "Cancel");
 
-
-            this.Text = _textStrings["FORM_TITLE"].ToString();
+            Text = _textStrings["FORM_TITLE"].ToString();
             label_columnName.Text = _textStrings["LABEL_COLUMNNAMETEXT"].ToString();
             label_and.Text = _textStrings["LABEL_AND"].ToString();
             button_ok.Text = _textStrings["BUTTON_OK"].ToString();
             button_cancel.Text = _textStrings["BUTTON_CANCEL"].ToString();
 
-            if (dataType == typeof(DateTime))
-                _filterType = FilterType.DateTime;
-            else if (dataType == typeof(TimeSpan))
-                _filterType = FilterType.TimeSpan;
-            else if (dataType == typeof(Int32) || dataType == typeof(Int64) || dataType == typeof(Int16) ||
-                    dataType == typeof(UInt32) || dataType == typeof(UInt64) || dataType == typeof(UInt16) ||
-                    dataType == typeof(Byte) || dataType == typeof(SByte))
-                _filterType = FilterType.Integer;
+            if (dataType == typeof(DateTime)) _filterType = FilterType.DateTime;
+            else if (dataType == typeof(TimeSpan)) _filterType = FilterType.TimeSpan;
+            else if (dataType == typeof(Int32) || dataType == typeof(Int64) || dataType == typeof(Int16)
+                     || dataType == typeof(UInt32) || dataType == typeof(UInt64) || dataType == typeof(UInt16)
+                     || dataType == typeof(Byte) || dataType == typeof(SByte)) _filterType = FilterType.Integer;
             else if (dataType == typeof(Single) || dataType == typeof(Double) || dataType == typeof(Decimal))
                 _filterType = FilterType.Float;
-            else if (dataType == typeof(String))
-                _filterType = FilterType.String;
-            else
-                _filterType = FilterType.Unknown;
+            else if (dataType == typeof(String)) _filterType = FilterType.String;
+            else _filterType = FilterType.Unknown;
 
             _filterDateAndTimeEnabled = filterDateAndTimeEnabled;
 
@@ -117,35 +113,33 @@ namespace Zuby.ADGV
                     _valControl2 = new DateTimePicker();
                     if (_filterDateAndTimeEnabled)
                     {
-                        System.Globalization.DateTimeFormatInfo dt = System.Threading.Thread.CurrentThread.CurrentCulture.DateTimeFormat;
+                        var dt = Thread.CurrentThread.CurrentCulture.DateTimeFormat;
 
-                        (_valControl1 as DateTimePicker).CustomFormat = dt.ShortDatePattern + " " + "HH:mm";
-                        (_valControl2 as DateTimePicker).CustomFormat = dt.ShortDatePattern + " " + "HH:mm";
-                        (_valControl1 as DateTimePicker).Format = DateTimePickerFormat.Custom;
-                        (_valControl2 as DateTimePicker).Format = DateTimePickerFormat.Custom;
+                        ((DateTimePicker)_valControl1).CustomFormat = dt.ShortDatePattern + " " + "HH:mm";
+                        ((DateTimePicker)_valControl2).CustomFormat = dt.ShortDatePattern + " " + "HH:mm";
+                        ((DateTimePicker)_valControl1).Format = DateTimePickerFormat.Custom;
+                        ((DateTimePicker)_valControl2).Format = DateTimePickerFormat.Custom;
                     }
                     else
                     {
-                        (_valControl1 as DateTimePicker).Format = DateTimePickerFormat.Short;
-                        (_valControl2 as DateTimePicker).Format = DateTimePickerFormat.Short;
+                        ((DateTimePicker)_valControl1).Format = DateTimePickerFormat.Short;
+                        ((DateTimePicker)_valControl2).Format = DateTimePickerFormat.Short;
                     }
 
-                    comboBox_filterType.Items.AddRange(new string[] {
-                        _textStrings["EQUALS"].ToString(),
-                        _textStrings["DOES_NOT_EQUAL"].ToString(),
-                        _textStrings["EARLIER_THAN"].ToString(),
-                        _textStrings["LATER_THAN"].ToString(),
-                        _textStrings["BETWEEN"].ToString()
-                    });
+                    comboBox_filterType.Items.AddRange(
+                        new object[]
+                            {
+                                _textStrings["EQUALS"].ToString(), _textStrings["DOES_NOT_EQUAL"].ToString(),
+                                _textStrings["EARLIER_THAN"].ToString(), _textStrings["LATER_THAN"].ToString(),
+                                _textStrings["BETWEEN"].ToString()
+                            });
                     break;
 
                 case FilterType.TimeSpan:
                     _valControl1 = new TextBox();
                     _valControl2 = new TextBox();
-                    comboBox_filterType.Items.AddRange(new string[] {
-                        _textStrings["CONTAINS"].ToString(),
-                        _textStrings["DOES_NOT_CONTAIN"].ToString()
-                    });
+                    comboBox_filterType.Items.AddRange(
+                        new object[] { _textStrings["CONTAINS"].ToString(), _textStrings["DOES_NOT_CONTAIN"].ToString() });
                     break;
 
                 case FilterType.Integer:
@@ -154,15 +148,15 @@ namespace Zuby.ADGV
                     _valControl2 = new TextBox();
                     _valControl1.TextChanged += valControl_TextChanged;
                     _valControl2.TextChanged += valControl_TextChanged;
-                    comboBox_filterType.Items.AddRange(new string[] {
-                        _textStrings["EQUALS"].ToString(),
-                        _textStrings["DOES_NOT_EQUAL"].ToString(),
-                        _textStrings["GREATER_THAN"].ToString(),
-                        _textStrings["GREATER_THAN_OR_EQUAL_TO"].ToString(),
-                        _textStrings["LESS_THAN"].ToString(),
-                        _textStrings["LESS_THAN_OR_EQUAL_TO"].ToString(),
-                        _textStrings["BETWEEN"].ToString()
-                    });
+                    comboBox_filterType.Items.AddRange(
+                        new object[]
+                            {
+                                _textStrings["EQUALS"].ToString(), _textStrings["DOES_NOT_EQUAL"].ToString(),
+                                _textStrings["GREATER_THAN"].ToString(),
+                                _textStrings["GREATER_THAN_OR_EQUAL_TO"].ToString(),
+                                _textStrings["LESS_THAN"].ToString(),
+                                _textStrings["LESS_THAN_OR_EQUAL_TO"].ToString(), _textStrings["BETWEEN"].ToString()
+                            });
                     _valControl1.Tag = true;
                     _valControl2.Tag = true;
                     button_ok.Enabled = false;
@@ -171,33 +165,32 @@ namespace Zuby.ADGV
                 default:
                     _valControl1 = new TextBox();
                     _valControl2 = new TextBox();
-                    comboBox_filterType.Items.AddRange(new string[] {
-                        _textStrings["EQUALS"].ToString(),
-                        _textStrings["DOES_NOT_EQUAL"].ToString(),
-                        _textStrings["BEGINS_WITH"].ToString(),
-                        _textStrings["DOES_NOT_BEGIN_WITH"].ToString(),
-                        _textStrings["ENDS_WITH"].ToString(),
-                        _textStrings["DOES_NOT_END_WITH"].ToString(),
-                        _textStrings["CONTAINS"].ToString(),
-                        _textStrings["DOES_NOT_CONTAIN"].ToString()
-                    });
+                    comboBox_filterType.Items.AddRange(
+                        new object[]
+                            {
+                                _textStrings["EQUALS"].ToString(), _textStrings["DOES_NOT_EQUAL"].ToString(),
+                                _textStrings["BEGINS_WITH"].ToString(),
+                                _textStrings["DOES_NOT_BEGIN_WITH"].ToString(), _textStrings["ENDS_WITH"].ToString(),
+                                _textStrings["DOES_NOT_END_WITH"].ToString(), _textStrings["CONTAINS"].ToString(),
+                                _textStrings["DOES_NOT_CONTAIN"].ToString()
+                            });
                     break;
             }
             comboBox_filterType.SelectedIndex = 0;
 
             _valControl1.Name = "valControl1";
-            _valControl1.Location = new System.Drawing.Point(30, 66);
-            _valControl1.Size = new System.Drawing.Size(166, 20);
+            _valControl1.Location = new Point(30, 66);
+            _valControl1.Size = new Size(166, 20);
             _valControl1.TabIndex = 4;
             _valControl1.Visible = true;
             _valControl1.KeyDown += valControl_KeyDown;
 
             _valControl2.Name = "valControl2";
-            _valControl2.Location = new System.Drawing.Point(30, 108);
-            _valControl2.Size = new System.Drawing.Size(166, 20);
+            _valControl2.Location = new Point(30, 108);
+            _valControl2.Size = new Size(166, 20);
             _valControl2.TabIndex = 5;
             _valControl2.Visible = false;
-            _valControl2.VisibleChanged += new EventHandler(valControl2_VisibleChanged);
+            _valControl2.VisibleChanged += valControl2_VisibleChanged;
             _valControl2.KeyDown += valControl_KeyDown;
 
             Controls.Add(_valControl1);
@@ -225,24 +218,12 @@ namespace Zuby.ADGV
         /// <summary>
         /// Get the Filter string
         /// </summary>
-        public string FilterString
-        {
-            get
-            {
-                return _filterString;
-            }
-        }
+        public string FilterString => _filterString;
 
         /// <summary>
         /// Get the Filter string description
         /// </summary>
-        public string FilterStringDescription
-        {
-            get
-            {
-                return _filterStringDescription;
-            }
-        }
+        public string FilterStringDescription => _filterStringDescription;
 
         #endregion
 
@@ -260,70 +241,70 @@ namespace Zuby.ADGV
         /// <returns></returns>
         private string BuildCustomFilter(FilterType filterType, bool filterDateAndTimeEnabled, string filterTypeConditionText, Control control1, Control control2)
         {
-            string filterString = "";
-
-            string column = "[{0}] ";
+            var column = "[{0}] ";
 
             if (filterType == FilterType.Unknown)
                 column = "Convert([{0}], 'System.String') ";
 
-            filterString = column;
+            var filterString = column;
 
             switch (filterType)
             {
                 case FilterType.DateTime:
-                    DateTime dt = ((DateTimePicker)control1).Value;
+                    var dt = ((DateTimePicker)control1).Value;
                     dt = new DateTime(dt.Year, dt.Month, dt.Day, dt.Hour, dt.Minute, 0);
 
                     if (filterTypeConditionText == _textStrings["EQUALS"].ToString())
                     {
-                        filterString = "Convert([{0}], 'System.String') LIKE '%" + Convert.ToString((filterDateAndTimeEnabled ? dt : dt.Date), CultureInfo.CurrentCulture) + "%'";
+                        filterString = "Convert([{0}], 'System.String') LIKE '%" + Convert.ToString(filterDateAndTimeEnabled ? dt : dt.Date, CultureInfo.CurrentCulture) + "%'";
                     }
                     else if (filterTypeConditionText == _textStrings["EARLIER_THAN"].ToString())
                     {
-                        filterString += "< '" + Convert.ToString((filterDateAndTimeEnabled ? dt : dt.Date), CultureInfo.CurrentCulture) + "'";
+                        filterString += "< '" + Convert.ToString(filterDateAndTimeEnabled ? dt : dt.Date, CultureInfo.CurrentCulture) + "'";
                     }
                     else if (filterTypeConditionText == _textStrings["LATER_THAN"].ToString())
                     {
-                        filterString += "> '" + Convert.ToString((filterDateAndTimeEnabled ? dt : dt.Date), CultureInfo.CurrentCulture) + "'";
+                        filterString += "> '" + Convert.ToString(filterDateAndTimeEnabled ? dt : dt.Date, CultureInfo.CurrentCulture) + "'";
                     }
                     else if (filterTypeConditionText == _textStrings["BETWEEN"].ToString())
                     {
-                        DateTime dt1 = ((DateTimePicker)control2).Value;
+                        var dt1 = ((DateTimePicker)control2).Value;
                         dt1 = new DateTime(dt1.Year, dt1.Month, dt1.Day, dt1.Hour, dt1.Minute, 0);
-                        filterString += ">= '" + Convert.ToString((filterDateAndTimeEnabled ? dt : dt.Date), CultureInfo.CurrentCulture) + "'";
-                        filterString += " AND " + column + "<= '" + Convert.ToString((filterDateAndTimeEnabled ? dt1 : dt1.Date), CultureInfo.CurrentCulture) + "'";
+                        filterString += ">= '" + Convert.ToString(filterDateAndTimeEnabled ? dt : dt.Date, CultureInfo.CurrentCulture) + "'";
+                        filterString += " AND " + column + "<= '" + Convert.ToString(filterDateAndTimeEnabled ? dt1 : dt1.Date, CultureInfo.CurrentCulture) + "'";
                     }
                     else if (filterTypeConditionText == _textStrings["DOES_NOT_EQUAL"].ToString())
                     {
-                        filterString = "Convert([{0}], 'System.String') NOT LIKE '%" + Convert.ToString((filterDateAndTimeEnabled ? dt : dt.Date), CultureInfo.CurrentCulture) + "%'";
+                        filterString = "Convert([{0}], 'System.String') NOT LIKE '%" + Convert.ToString(filterDateAndTimeEnabled ? dt : dt.Date, CultureInfo.CurrentCulture) + "%'";
                     }
+
                     break;
 
                 case FilterType.TimeSpan:
                     try
                     {
-                        TimeSpan ts = TimeSpan.Parse(control1.Text);
+                        var ts = TimeSpan.Parse(control1.Text);
 
                         if (filterTypeConditionText == _textStrings["CONTAINS"].ToString())
                         {
-                            filterString = "(Convert([{0}], 'System.String') LIKE '%P" + ((int)ts.Days > 0 ? (int)ts.Days + "D" : "") + (ts.TotalHours > 0 ? "T" : "") + ((int)ts.Hours > 0 ? (int)ts.Hours + "H" : "") + ((int)ts.Minutes > 0 ? (int)ts.Minutes + "M" : "") + ((int)ts.Seconds > 0 ? (int)ts.Seconds + "S" : "") + "%')";
+                            filterString = "(Convert([{0}], 'System.String') LIKE '%P" + (ts.Days > 0 ? ts.Days + "D" : string.Empty) + (ts.TotalHours > 0 ? "T" : string.Empty) + (ts.Hours > 0 ? ts.Hours + "H" : string.Empty) + (ts.Minutes > 0 ? ts.Minutes + "M" : string.Empty) + (ts.Seconds > 0 ? ts.Seconds + "S" : string.Empty) + "%')";
                         }
                         else if (filterTypeConditionText == _textStrings["DOES_NOT_CONTAIN"].ToString())
                         {
-                            filterString = "(Convert([{0}], 'System.String') NOT LIKE '%P" + ((int)ts.Days > 0 ? (int)ts.Days + "D" : "") + (ts.TotalHours > 0 ? "T" : "") + ((int)ts.Hours > 0 ? (int)ts.Hours + "H" : "") + ((int)ts.Minutes > 0 ? (int)ts.Minutes + "M" : "") + ((int)ts.Seconds > 0 ? (int)ts.Seconds + "S" : "") + "%')";
+                            filterString = "(Convert([{0}], 'System.String') NOT LIKE '%P" + (ts.Days > 0 ? ts.Days + "D" : string.Empty) + (ts.TotalHours > 0 ? "T" : string.Empty) + (ts.Hours > 0 ? ts.Hours + "H" : string.Empty) + (ts.Minutes > 0 ? ts.Minutes + "M" : string.Empty) + (ts.Seconds > 0 ? ts.Seconds + "S" : string.Empty) + "%')";
                         }
                     }
                     catch (FormatException)
                     {
                         filterString = null;
                     }
+
                     break;
 
                 case FilterType.Integer:
                 case FilterType.Float:
 
-                    string num = control1.Text;
+                    var num = control1.Text;
 
                     if (filterType == FilterType.Float)
                         num = num.Replace(",", ".");
@@ -343,9 +324,12 @@ namespace Zuby.ADGV
                     else if (filterTypeConditionText == _textStrings["LESS_THAN_OR_EQUAL_TO"].ToString())
                         filterString += "<= " + num;
                     break;
-
+                case FilterType.Unknown:
+                    break;
+                case FilterType.String:
+                    break;
                 default:
-                    string txt = FormatFilterString(control1.Text);
+                    var txt = FormatFilterString(control1.Text);
                     if (filterTypeConditionText == _textStrings["EQUALS"].ToString())
                         filterString += "LIKE '" + txt + "'";
                     else if (filterTypeConditionText == _textStrings["DOES_NOT_EQUAL"].ToString())
@@ -375,13 +359,12 @@ namespace Zuby.ADGV
         /// <returns></returns>
         private string FormatFilterString(string text)
         {
-            string result = "";
-            string s;
+            var result = string.Empty;
             string[] replace = { "%", "[", "]", "*", "\"", "\\" };
 
-            for (int i = 0; i < text.Length; i++)
+            foreach (var t in text)
             {
-                s = text[i].ToString();
+                var s = t.ToString();
                 if (replace.Contains(s))
                     result += "[" + s + "]";
                 else
@@ -423,21 +406,21 @@ namespace Zuby.ADGV
                 return;
             }
 
-            string filterString = BuildCustomFilter(_filterType, _filterDateAndTimeEnabled, comboBox_filterType.Text, _valControl1, _valControl2);
+            var filterString = BuildCustomFilter(_filterType, _filterDateAndTimeEnabled, comboBox_filterType.Text, _valControl1, _valControl2);
 
-            if (!String.IsNullOrEmpty(filterString))
+            if (!string.IsNullOrEmpty(filterString))
             {
                 _filterString = filterString;
-                _filterStringDescription = String.Format(_textStrings["FILTER_STRING_DESCRIPTION"].ToString(), comboBox_filterType.Text, _valControl1.Text);
+                _filterStringDescription = string.Format(_textStrings["FILTER_STRING_DESCRIPTION"].ToString(), comboBox_filterType.Text, _valControl1.Text);
                 if (_valControl2.Visible)
                     _filterStringDescription += " " + label_and.Text + " \"" + _valControl2.Text + "\"";
-                DialogResult = System.Windows.Forms.DialogResult.OK;
+                DialogResult = DialogResult.OK;
             }
             else
             {
                 _filterString = null;
                 _filterStringDescription = null;
-                DialogResult = System.Windows.Forms.DialogResult.Cancel;
+                DialogResult = DialogResult.Cancel;
             }
 
             Close();
@@ -477,26 +460,26 @@ namespace Zuby.ADGV
         /// <param name="e"></param>
         private void valControl_TextChanged(object sender, EventArgs e)
         {
-            bool hasErrors = false;
+            var hasErrors = false;
             switch (_filterType)
             {
                 case FilterType.Integer:
-                    Int64 val;
-                    hasErrors = !(Int64.TryParse((sender as TextBox).Text, out val));
+                    long val;
+                    hasErrors = !long.TryParse((sender as TextBox).Text, out val);
                     break;
 
                 case FilterType.Float:
-                    Double val1;
-                    hasErrors = !(Double.TryParse((sender as TextBox).Text, out val1));
+                    double val1;
+                    hasErrors = !double.TryParse((sender as TextBox).Text, out val1);
                     break;
             }
 
             (sender as Control).Tag = hasErrors || (sender as TextBox).Text.Length == 0;
 
             if (hasErrors && (sender as TextBox).Text.Length > 0)
-                errorProvider.SetError((sender as Control), _textStrings["INVALID_VALUE"].ToString());
+                errorProvider.SetError(sender as Control, _textStrings["INVALID_VALUE"].ToString());
             else
-                errorProvider.SetError((sender as Control), "");
+                errorProvider.SetError(sender as Control, string.Empty);
 
             button_ok.Enabled = !(_valControl1.Visible && _valControl1.Tag != null && ((bool)_valControl1.Tag)) ||
                 (_valControl2.Visible && _valControl2.Tag != null && ((bool)_valControl2.Tag));

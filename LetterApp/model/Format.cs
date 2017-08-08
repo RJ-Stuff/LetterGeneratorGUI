@@ -2,7 +2,8 @@
 {
     using System.Data;
     using System.IO;
-    
+    using System.Windows.Forms;
+
     using Newtonsoft.Json;
 
     class Format
@@ -16,7 +17,7 @@
         public Charge Charge { get; set; }
 
         [JsonIgnore]
-        public DataSet DataSource { get; set; }
+        public BindingSource BindingSource { get; set; }
 
         public Format()
         {

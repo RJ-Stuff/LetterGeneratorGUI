@@ -7,12 +7,12 @@
 // Please refer to LICENSE file for licensing information.
 #endregion
 
-using System;
-using System.Windows.Forms;
-
 namespace Zuby.ADGV
 {
-    [System.ComponentModel.DesignerCategory("")]
+    using System.ComponentModel;
+    using System.Windows.Forms;
+
+    [DesignerCategory("")]
     internal class TreeNodeItemSelector : TreeNode
     {
 
@@ -46,7 +46,7 @@ namespace Zuby.ADGV
         /// <param name="value"></param>
         /// <param name="state"></param>
         /// <param name="nodeType"></param>
-        private TreeNodeItemSelector(String text, object value, CheckState state, CustomNodeType nodeType)
+        private TreeNodeItemSelector(string text, object value, CheckState state, CustomNodeType nodeType)
             : base(text)
         {
             CheckState = state;
@@ -65,14 +65,13 @@ namespace Zuby.ADGV
         /// <returns></returns>
         public new TreeNodeItemSelector Clone()
         {
-            TreeNodeItemSelector n = new TreeNodeItemSelector(Text, Value, _checkState, NodeType);
+            var n =
+                new TreeNodeItemSelector(Text, Value, _checkState, NodeType) { NodeFont = NodeFont };
 
-            n.NodeFont = NodeFont;
-
-            if (GetNodeCount(false) > 0)
+            if (GetNodeCount(false) <= 0) return n;
+            foreach (TreeNodeItemSelector child in Nodes)
             {
-                foreach (TreeNodeItemSelector child in Nodes)
-                    n.AddChild(child.Clone());
+                n.AddChild(child.Clone());
             }
 
             return n;
@@ -86,44 +85,30 @@ namespace Zuby.ADGV
         /// <summary>
         /// Get Node NodeType
         /// </summary>
-        public CustomNodeType NodeType { get; private set; }
+        public CustomNodeType NodeType { get; }
 
         /// <summary>
         /// Get Node value
         /// </summary>
-        public object Value { get; private set; }
+        public object Value { get; }
 
         /// <summary>
         /// Get Node parent
         /// </summary>
-        new public TreeNodeItemSelector Parent
+        public new TreeNodeItemSelector Parent
         {
-            get
-            {
-                if (_parent is TreeNodeItemSelector)
-                    return _parent;
-                else
-                    return null;
-            }
-            set
-            {
-                _parent = value;
-            }
+            get => _parent;
+
+            set => _parent = value;
         }
 
         /// <summary>
         /// Node is Checked
         /// </summary>
-        new public bool Checked
+        public new bool Checked
         {
-            get
-            {
-                return _checkState == CheckState.Checked;
-            }
-            set
-            {
-                CheckState = (value == true ? CheckState.Checked : CheckState.Unchecked);
-            }
+            get => _checkState == CheckState.Checked;
+            set => CheckState = value ? CheckState.Checked : CheckState.Unchecked;
         }
 
         /// <summary>
@@ -131,10 +116,7 @@ namespace Zuby.ADGV
         /// </summary>
         public CheckState CheckState
         {
-            get
-            {
-                return _checkState;
-            }
+            get => _checkState;
             set
             {
                 _checkState = value;
@@ -184,7 +166,7 @@ namespace Zuby.ADGV
         {
             TreeNodeItemSelector n = null;
 
-            //specific method for datetimenode
+            // specific method for datetimenode
             if (NodeType == CustomNodeType.DateTimeNode)
             {
                 n = new TreeNodeItemSelector(text, value, state, CustomNodeType.DateTimeNode);
@@ -195,6 +177,7 @@ namespace Zuby.ADGV
 
             return n;
         }
+
         public TreeNodeItemSelector CreateChildNode(string text, object value)
         {
             return CreateChildNode(text, value, _checkState);

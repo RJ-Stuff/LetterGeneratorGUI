@@ -1,13 +1,17 @@
 ﻿
 namespace Zuby.ADGV
 {
+    using System.ComponentModel;
+    using System.Windows.Forms;
+
     partial class FormCustomFilter
     {
         /// <summary>
         /// Required designer variable.
         /// </summary>
-        private System.ComponentModel.IContainer components = null;
+        private IContainer components = null;
         
+
         /// <summary>
         /// Clean up any resources being used.
         /// </summary>
@@ -18,6 +22,7 @@ namespace Zuby.ADGV
             {
                 components.Dispose();
             }
+
             base.Dispose(disposing);
         }
 
@@ -36,11 +41,10 @@ namespace Zuby.ADGV
             this.comboBox_filterType = new System.Windows.Forms.ComboBox();
             this.label_and = new System.Windows.Forms.Label();
             this.errorProvider = new System.Windows.Forms.ErrorProvider(this.components);
-            ((System.ComponentModel.ISupportInitialize)(this.errorProvider)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)this.errorProvider).BeginInit();
             this.SuspendLayout();
-            // 
+
             // button_ok
-            // 
             this.button_ok.DialogResult = System.Windows.Forms.DialogResult.OK;
             this.button_ok.Location = new System.Drawing.Point(40, 139);
             this.button_ok.Name = "button_ok";
@@ -49,9 +53,8 @@ namespace Zuby.ADGV
             this.button_ok.Text = "OK";
             this.button_ok.UseVisualStyleBackColor = true;
             this.button_ok.Click += new System.EventHandler(this.button_ok_Click);
-            // 
+
             // button_cancel
-            // 
             this.button_cancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
             this.button_cancel.Location = new System.Drawing.Point(121, 139);
             this.button_cancel.Name = "button_cancel";
@@ -60,28 +63,26 @@ namespace Zuby.ADGV
             this.button_cancel.Text = "Cancel";
             this.button_cancel.UseVisualStyleBackColor = true;
             this.button_cancel.Click += new System.EventHandler(this.button_cancel_Click);
-            // 
+
             // label_columnName
-            // 
             this.label_columnName.AutoSize = true;
             this.label_columnName.Location = new System.Drawing.Point(4, 9);
             this.label_columnName.Name = "label_columnName";
             this.label_columnName.Size = new System.Drawing.Size(120, 13);
             this.label_columnName.TabIndex = 2;
             this.label_columnName.Text = "Show rows where value";
-            // 
+
             // comboBox_filterType
-            // 
             this.comboBox_filterType.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.comboBox_filterType.FormattingEnabled = true;
             this.comboBox_filterType.Location = new System.Drawing.Point(7, 25);
             this.comboBox_filterType.Name = "comboBox_filterType";
             this.comboBox_filterType.Size = new System.Drawing.Size(189, 21);
             this.comboBox_filterType.TabIndex = 3;
-            this.comboBox_filterType.SelectedIndexChanged += new System.EventHandler(this.comboBox_filterType_SelectedIndexChanged);
-            // 
+            this.comboBox_filterType.SelectedIndexChanged +=
+                new System.EventHandler(this.comboBox_filterType_SelectedIndexChanged);
+
             // label_and
-            // 
             this.label_and.AutoSize = true;
             this.label_and.Location = new System.Drawing.Point(7, 89);
             this.label_and.Name = "label_and";
@@ -89,14 +90,12 @@ namespace Zuby.ADGV
             this.label_and.TabIndex = 6;
             this.label_and.Text = "And";
             this.label_and.Visible = false;
-            // 
+
             // errorProvider
-            // 
             this.errorProvider.BlinkStyle = System.Windows.Forms.ErrorBlinkStyle.NeverBlink;
             this.errorProvider.ContainerControl = this;
-            // 
+
             // FormCustomFilter
-            // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CancelButton = this.button_cancel;
@@ -116,19 +115,18 @@ namespace Zuby.ADGV
             this.Text = "Custom Filter";
             this.TopMost = true;
             this.Load += new System.EventHandler(this.FormCustomFilter_Load);
-            ((System.ComponentModel.ISupportInitialize)(this.errorProvider)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)this.errorProvider).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
-
         }
 
         #endregion
 
-        private System.Windows.Forms.Button button_ok;
-        private System.Windows.Forms.Button button_cancel;
-        private System.Windows.Forms.Label label_columnName;
-        private System.Windows.Forms.ComboBox comboBox_filterType;
-        private System.Windows.Forms.Label label_and;
-        private System.Windows.Forms.ErrorProvider errorProvider;
+        private Button button_ok;
+        private Button button_cancel;
+        private Label label_columnName;
+        private ComboBox comboBox_filterType;
+        private Label label_and;
+        private ErrorProvider errorProvider;
     }
 }

@@ -9,9 +9,15 @@
 //------------------------------------------------------------------------------
 
 namespace Zuby.Properties {
-    using System;
-    
-    
+    using System.CodeDom.Compiler;
+    using System.ComponentModel;
+    using System.Diagnostics;
+    using System.Diagnostics.CodeAnalysis;
+    using System.Drawing;
+    using System.Globalization;
+    using System.Resources;
+    using System.Runtime.CompilerServices;
+
     /// <summary>
     ///   A strongly-typed resource class, for looking up localized strings, etc.
     /// </summary>
@@ -19,234 +25,257 @@ namespace Zuby.Properties {
     // class via a tool like ResGen or Visual Studio.
     // To add or remove a member, edit your .ResX file then rerun ResGen
     // with the /str option, or rebuild your VS project.
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "4.0.0.0")]
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-    [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
+    [GeneratedCode("System.Resources.Tools.StronglyTypedResourceBuilder", "4.0.0.0")]
+    [DebuggerNonUserCode()]
+    [CompilerGenerated()]
     internal class Resources {
         
-        private static global::System.Resources.ResourceManager resourceMan;
+        private static ResourceManager resourceMan;
         
-        private static global::System.Globalization.CultureInfo resourceCulture;
+        private static CultureInfo resourceCulture;
         
-        [global::System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
+        [SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
         internal Resources() {
         }
         
+
         /// <summary>
         ///   Returns the cached ResourceManager instance used by this class.
         /// </summary>
-        [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Advanced)]
-        internal static global::System.Resources.ResourceManager ResourceManager {
+        [EditorBrowsable(EditorBrowsableState.Advanced)]
+        internal static ResourceManager ResourceManager {
             get {
-                if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("Zuby.Properties.Resources", typeof(Resources).Assembly);
+                if (ReferenceEquals(resourceMan, null)) {
+                    var temp = new ResourceManager("Zuby.Properties.Resources", typeof(Resources).Assembly);
                     resourceMan = temp;
                 }
+
                 return resourceMan;
             }
         }
         
+
         /// <summary>
         ///   Overrides the current thread's CurrentUICulture property for all
         ///   resource lookups using this strongly typed resource class.
         /// </summary>
-        [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Advanced)]
-        internal static global::System.Globalization.CultureInfo Culture {
+        [EditorBrowsable(EditorBrowsableState.Advanced)]
+        internal static CultureInfo Culture {
             get {
                 return resourceCulture;
             }
+
             set {
                 resourceCulture = value;
             }
         }
         
+
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap ColumnHeader_Filtered {
+        internal static Bitmap ColumnHeader_Filtered {
             get {
-                object obj = ResourceManager.GetObject("ColumnHeader_Filtered", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
+                var obj = ResourceManager.GetObject("ColumnHeader_Filtered", resourceCulture);
+                return (Bitmap)obj;
             }
         }
         
+
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap ColumnHeader_FilteredAndOrderedASC {
+        internal static Bitmap ColumnHeader_FilteredAndOrderedASC {
             get {
-                object obj = ResourceManager.GetObject("ColumnHeader_FilteredAndOrderedASC", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
+                var obj = ResourceManager.GetObject("ColumnHeader_FilteredAndOrderedASC", resourceCulture);
+                return (Bitmap)obj;
             }
         }
         
+
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap ColumnHeader_FilteredAndOrderedDESC {
+        internal static Bitmap ColumnHeader_FilteredAndOrderedDESC {
             get {
-                object obj = ResourceManager.GetObject("ColumnHeader_FilteredAndOrderedDESC", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
+                var obj = ResourceManager.GetObject("ColumnHeader_FilteredAndOrderedDESC", resourceCulture);
+                return (Bitmap)obj;
             }
         }
         
+
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap ColumnHeader_OrderedASC {
+        internal static Bitmap ColumnHeader_OrderedASC {
             get {
-                object obj = ResourceManager.GetObject("ColumnHeader_OrderedASC", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
+                var obj = ResourceManager.GetObject("ColumnHeader_OrderedASC", resourceCulture);
+                return (Bitmap)obj;
             }
         }
         
+
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap ColumnHeader_OrderedDESC {
+        internal static Bitmap ColumnHeader_OrderedDESC {
             get {
-                object obj = ResourceManager.GetObject("ColumnHeader_OrderedDESC", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
+                var obj = ResourceManager.GetObject("ColumnHeader_OrderedDESC", resourceCulture);
+                return (Bitmap)obj;
             }
         }
         
+
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap ColumnHeader_SavedFilters {
+        internal static Bitmap ColumnHeader_SavedFilters {
             get {
-                object obj = ResourceManager.GetObject("ColumnHeader_SavedFilters", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
+                var obj = ResourceManager.GetObject("ColumnHeader_SavedFilters", resourceCulture);
+                return (Bitmap)obj;
             }
         }
         
+
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap ColumnHeader_UnFiltered {
+        internal static Bitmap ColumnHeader_UnFiltered {
             get {
-                object obj = ResourceManager.GetObject("ColumnHeader_UnFiltered", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
+                var obj = ResourceManager.GetObject("ColumnHeader_UnFiltered", resourceCulture);
+                return (Bitmap)obj;
             }
         }
         
+
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap MenuStrip_OrderASCbool {
+        internal static Bitmap MenuStrip_OrderASCbool {
             get {
-                object obj = ResourceManager.GetObject("MenuStrip_OrderASCbool", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
+                var obj = ResourceManager.GetObject("MenuStrip_OrderASCbool", resourceCulture);
+                return (Bitmap)obj;
             }
         }
         
+
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap MenuStrip_OrderASCnum {
+        internal static Bitmap MenuStrip_OrderASCnum {
             get {
-                object obj = ResourceManager.GetObject("MenuStrip_OrderASCnum", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
+                var obj = ResourceManager.GetObject("MenuStrip_OrderASCnum", resourceCulture);
+                return (Bitmap)obj;
             }
         }
         
+
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap MenuStrip_OrderASCtxt {
+        internal static Bitmap MenuStrip_OrderASCtxt {
             get {
-                object obj = ResourceManager.GetObject("MenuStrip_OrderASCtxt", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
+                var obj = ResourceManager.GetObject("MenuStrip_OrderASCtxt", resourceCulture);
+                return (Bitmap)obj;
             }
         }
         
+
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap MenuStrip_OrderDESCbool {
+        internal static Bitmap MenuStrip_OrderDESCbool {
             get {
-                object obj = ResourceManager.GetObject("MenuStrip_OrderDESCbool", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
+                var obj = ResourceManager.GetObject("MenuStrip_OrderDESCbool", resourceCulture);
+                return (Bitmap)obj;
             }
         }
         
+
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap MenuStrip_OrderDESCnum {
+        internal static Bitmap MenuStrip_OrderDESCnum {
             get {
-                object obj = ResourceManager.GetObject("MenuStrip_OrderDESCnum", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
+                var obj = ResourceManager.GetObject("MenuStrip_OrderDESCnum", resourceCulture);
+                return (Bitmap)obj;
             }
         }
         
+
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap MenuStrip_OrderDESCtxt {
+        internal static Bitmap MenuStrip_OrderDESCtxt {
             get {
-                object obj = ResourceManager.GetObject("MenuStrip_OrderDESCtxt", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
+                var obj = ResourceManager.GetObject("MenuStrip_OrderDESCtxt", resourceCulture);
+                return (Bitmap)obj;
             }
         }
         
+
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap MenuStrip_ResizeGrip {
+        internal static Bitmap MenuStrip_ResizeGrip {
             get {
-                object obj = ResourceManager.GetObject("MenuStrip_ResizeGrip", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
+                var obj = ResourceManager.GetObject("MenuStrip_ResizeGrip", resourceCulture);
+                return (Bitmap)obj;
             }
         }
         
+
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap SearchToolBar_ButtonCaseSensitive {
+        internal static Bitmap SearchToolBar_ButtonCaseSensitive {
             get {
-                object obj = ResourceManager.GetObject("SearchToolBar_ButtonCaseSensitive", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
+                var obj = ResourceManager.GetObject("SearchToolBar_ButtonCaseSensitive", resourceCulture);
+                return (Bitmap)obj;
             }
         }
         
+
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap SearchToolBar_ButtonClose {
+        internal static Bitmap SearchToolBar_ButtonClose {
             get {
-                object obj = ResourceManager.GetObject("SearchToolBar_ButtonClose", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
+                var obj = ResourceManager.GetObject("SearchToolBar_ButtonClose", resourceCulture);
+                return (Bitmap)obj;
             }
         }
         
+
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap SearchToolBar_ButtonFromBegin {
+        internal static Bitmap SearchToolBar_ButtonFromBegin {
             get {
-                object obj = ResourceManager.GetObject("SearchToolBar_ButtonFromBegin", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
+                var obj = ResourceManager.GetObject("SearchToolBar_ButtonFromBegin", resourceCulture);
+                return (Bitmap)obj;
             }
         }
         
+
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap SearchToolBar_ButtonSearch {
+        internal static Bitmap SearchToolBar_ButtonSearch {
             get {
-                object obj = ResourceManager.GetObject("SearchToolBar_ButtonSearch", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
+                var obj = ResourceManager.GetObject("SearchToolBar_ButtonSearch", resourceCulture);
+                return (Bitmap)obj;
             }
         }
         
+
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap SearchToolBar_ButtonWholeWord {
+        internal static Bitmap SearchToolBar_ButtonWholeWord {
             get {
-                object obj = ResourceManager.GetObject("SearchToolBar_ButtonWholeWord", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
+                var obj = ResourceManager.GetObject("SearchToolBar_ButtonWholeWord", resourceCulture);
+                return (Bitmap)obj;
             }
         }
     }

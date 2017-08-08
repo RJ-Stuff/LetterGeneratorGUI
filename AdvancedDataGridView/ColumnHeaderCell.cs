@@ -7,14 +7,16 @@
 // Please refer to LICENSE file for licensing information.
 #endregion
 
-using System;
-using System.Drawing;
-using System.Windows.Forms;
-
 namespace Zuby.ADGV
 {
+    using System;
+    using System.ComponentModel;
+    using System.Drawing;
+    using System.Windows.Forms;
 
-    [System.ComponentModel.DesignerCategory("")]
+    using Zuby.Properties;
+
+    [DesignerCategory("")]
     internal class ColumnHeaderCell : DataGridViewColumnHeaderCell
     {
 
@@ -29,14 +31,14 @@ namespace Zuby.ADGV
 
         #region class properties
 
-        private Image _filterImage = Properties.Resources.ColumnHeader_UnFiltered;
+        private Image _filterImage = Resources.ColumnHeader_UnFiltered;
         private Size _filterButtonImageSize = new Size(16, 16);
-        private bool _filterButtonPressed = false;
-        private bool _filterButtonOver = false;
+        private bool _filterButtonPressed;
+        private bool _filterButtonOver;
         private Rectangle _filterButtonOffsetBounds = Rectangle.Empty;
         private Rectangle _filterButtonImageBounds = Rectangle.Empty;
         private Padding _filterButtonMargin = new Padding(3, 4, 3, 4);
-        private bool _filterEnabled = false;
+        private bool _filterEnabled;
 
         private const bool FilterDateAndTimeDefaultEnabled = false;
 
@@ -61,9 +63,9 @@ namespace Zuby.ADGV
             Style = oldCell.Style;
             _filterEnabled = filterEnabled;
 
-            ColumnHeaderCell oldCellt = oldCell as ColumnHeaderCell;
+            var oldCellt = oldCell as ColumnHeaderCell;
 
-            if (oldCellt != null && oldCellt.MenuStrip != null)
+            if (oldCellt?.MenuStrip != null)
             {
                 MenuStrip = oldCellt.MenuStrip;
                 _filterImage = oldCellt._filterImage;
@@ -71,20 +73,21 @@ namespace Zuby.ADGV
                 _filterButtonOver = oldCellt._filterButtonOver;
                 _filterButtonOffsetBounds = oldCellt._filterButtonOffsetBounds;
                 _filterButtonImageBounds = oldCellt._filterButtonImageBounds;
-                MenuStrip.FilterChanged += new EventHandler(menuStrip_FilterChanged);
-                MenuStrip.SortChanged += new EventHandler(menuStrip_SortChanged);
+                MenuStrip.FilterChanged += menuStrip_FilterChanged;
+                MenuStrip.SortChanged += menuStrip_SortChanged;
             }
             else
             {
                 MenuStrip = new MenuStrip(oldCell.OwningColumn.ValueType);
-                MenuStrip.FilterChanged += new EventHandler(menuStrip_FilterChanged);
-                MenuStrip.SortChanged += new EventHandler(menuStrip_SortChanged);
+                MenuStrip.FilterChanged += menuStrip_FilterChanged;
+                MenuStrip.SortChanged += menuStrip_SortChanged;
             }
 
             IsFilterDateAndTimeEnabled = FilterDateAndTimeDefaultEnabled;
             IsSortEnabled = true;
             IsFilterEnabled = true;
         }
+
         ~ColumnHeaderCell()
         {
             if (MenuStrip != null)
@@ -118,10 +121,7 @@ namespace Zuby.ADGV
         /// </summary>
         public bool FilterAndSortEnabled
         {
-            get
-            {
-                return _filterEnabled;
-            }
+            get => _filterEnabled;
             set
             {
                 if (!value)
@@ -133,17 +133,19 @@ namespace Zuby.ADGV
                 if (value != _filterEnabled)
                 {
                     _filterEnabled = value;
-                    bool refreshed = false;
+                    var refreshed = false;
                     if (MenuStrip.FilterString.Length > 0)
                     {
                         menuStrip_FilterChanged(this, new EventArgs());
                         refreshed = true;
                     }
+
                     if (MenuStrip.SortString.Length > 0)
                     {
                         menuStrip_SortChanged(this, new EventArgs());
                         refreshed = true;
                     }
+
                     if (!refreshed)
                         RepaintCell();
                 }
@@ -212,7 +214,7 @@ namespace Zuby.ADGV
         /// <summary>
         /// Get the MenuStrip for this ColumnHeaderCell
         /// </summary>
-        public MenuStrip MenuStrip { get; private set; }
+        public MenuStrip MenuStrip { get; }
 
         /// <summary>
         /// Get the MenuStrip SortType
@@ -223,8 +225,7 @@ namespace Zuby.ADGV
             {
                 if (MenuStrip != null && FilterAndSortEnabled)
                     return MenuStrip.ActiveSortType;
-                else
-                    return MenuStrip.SortType.None;
+                return MenuStrip.SortType.None;
             }
         }
 
@@ -237,8 +238,7 @@ namespace Zuby.ADGV
             {
                 if (MenuStrip != null && FilterAndSortEnabled)
                     return MenuStrip.ActiveFilterType;
-                else
-                    return MenuStrip.FilterType.None;
+                return MenuStrip.FilterType.None;
             }
         }
 
@@ -251,8 +251,7 @@ namespace Zuby.ADGV
             {
                 if (MenuStrip != null && FilterAndSortEnabled)
                     return MenuStrip.SortString;
-                else
-                    return "";
+                return string.Empty;
             }
         }
 
@@ -265,36 +264,23 @@ namespace Zuby.ADGV
             {
                 if (MenuStrip != null && FilterAndSortEnabled)
                     return MenuStrip.FilterString;
-                else
-                    return "";
+                return string.Empty;
             }
         }
 
         /// <summary>
         /// Get the Minimum size
         /// </summary>
-        public Size MinimumSize
-        {
-            get
-            {
-                return new Size(_filterButtonImageSize.Width + _filterButtonMargin.Left + _filterButtonMargin.Right,
-                    _filterButtonImageSize.Height + _filterButtonMargin.Bottom + _filterButtonMargin.Top);
-            }
-        }
+        public Size MinimumSize => new Size(_filterButtonImageSize.Width + _filterButtonMargin.Left + _filterButtonMargin.Right,
+            _filterButtonImageSize.Height + _filterButtonMargin.Bottom + _filterButtonMargin.Top);
 
         /// <summary>
         /// Get or Set the Sort enabled status
         /// </summary>
         public bool IsSortEnabled
         {
-            get
-            {
-                return MenuStrip.IsSortEnabled;
-            }
-            set
-            {
-                MenuStrip.IsSortEnabled = value;
-            }
+            get => MenuStrip.IsSortEnabled;
+            set => MenuStrip.IsSortEnabled = value;
         }
 
         /// <summary>
@@ -302,14 +288,8 @@ namespace Zuby.ADGV
         /// </summary>
         public bool IsFilterEnabled
         {
-            get
-            {
-                return MenuStrip.IsFilterEnabled;
-            }
-            set
-            {
-                MenuStrip.IsFilterEnabled = value;
-            }
+            get => MenuStrip.IsFilterEnabled;
+            set => MenuStrip.IsFilterEnabled = value;
         }
 
         /// <summary>
@@ -317,14 +297,8 @@ namespace Zuby.ADGV
         /// </summary>
         public bool IsFilterDateAndTimeEnabled
         {
-            get
-            {
-                return MenuStrip.IsFilterDateAndTimeEnabled;
-            }
-            set
-            {
-                MenuStrip.IsFilterDateAndTimeEnabled = value;
-            }
+            get => MenuStrip.IsFilterDateAndTimeEnabled;
+            set => MenuStrip.IsFilterDateAndTimeEnabled = value;
         }
 
         /// <summary>
@@ -332,14 +306,8 @@ namespace Zuby.ADGV
         /// </summary>
         public bool IsMenuStripFilterNOTINLogicEnabled
         {
-            get
-            {
-                return MenuStrip.IsFilterNOTINLogicEnabled;
-            }
-            set
-            {
-                MenuStrip.IsFilterNOTINLogicEnabled = value;
-            }
+            get => MenuStrip.IsFilterNOTINLogicEnabled;
+            set => MenuStrip.IsFilterNOTINLogicEnabled = value;
         }
 
         /// <summary>
@@ -382,8 +350,8 @@ namespace Zuby.ADGV
         {
             RefreshImage();
             RepaintCell();
-            if (FilterAndSortEnabled && FilterChanged != null)
-                FilterChanged(this, new ColumnHeaderCellEventArgs(MenuStrip, OwningColumn));
+            if (FilterAndSortEnabled)
+                FilterChanged?.Invoke(this, new ColumnHeaderCellEventArgs(MenuStrip, OwningColumn));
         }
 
         /// <summary>
@@ -395,8 +363,8 @@ namespace Zuby.ADGV
         {
             RefreshImage();
             RepaintCell();
-            if (FilterAndSortEnabled && SortChanged != null)
-                SortChanged(this, new ColumnHeaderCellEventArgs(MenuStrip, OwningColumn));
+            if (FilterAndSortEnabled)
+                SortChanged?.Invoke(this, new ColumnHeaderCellEventArgs(MenuStrip, OwningColumn));
         }
 
         #endregion
@@ -409,8 +377,8 @@ namespace Zuby.ADGV
         /// </summary>
         private void RepaintCell()
         {
-            if (Displayed && DataGridView != null)
-                DataGridView.InvalidateCell(this);
+            if (Displayed)
+                DataGridView?.InvalidateCell(this);
         }
 
         /// <summary>
@@ -420,27 +388,27 @@ namespace Zuby.ADGV
         {
             if (ActiveFilterType == MenuStrip.FilterType.Loaded)
             {
-                _filterImage = Properties.Resources.ColumnHeader_SavedFilters;
+                _filterImage = Resources.ColumnHeader_SavedFilters;
             }
             else
             {
                 if (ActiveFilterType == MenuStrip.FilterType.None)
                 {
                     if (ActiveSortType == MenuStrip.SortType.None)
-                        _filterImage = Properties.Resources.ColumnHeader_UnFiltered;
+                        _filterImage = Resources.ColumnHeader_UnFiltered;
                     else if (ActiveSortType == MenuStrip.SortType.ASC)
-                        _filterImage = Properties.Resources.ColumnHeader_OrderedASC;
+                        _filterImage = Resources.ColumnHeader_OrderedASC;
                     else
-                        _filterImage = Properties.Resources.ColumnHeader_OrderedDESC;
+                        _filterImage = Resources.ColumnHeader_OrderedDESC;
                 }
                 else
                 {
                     if (ActiveSortType == MenuStrip.SortType.None)
-                        _filterImage = Properties.Resources.ColumnHeader_Filtered;
+                        _filterImage = Resources.ColumnHeader_Filtered;
                     else if (ActiveSortType == MenuStrip.SortType.ASC)
-                        _filterImage = Properties.Resources.ColumnHeader_FilteredAndOrderedASC;
+                        _filterImage = Resources.ColumnHeader_FilteredAndOrderedASC;
                     else
-                        _filterImage = Properties.Resources.ColumnHeader_FilteredAndOrderedDESC;
+                        _filterImage = Resources.ColumnHeader_FilteredAndOrderedDESC;
                 }
             }
         }
@@ -480,14 +448,14 @@ namespace Zuby.ADGV
                 errorText, cellStyle, advancedBorderStyle, paintParts);
 
             // Don't display a dropdown for Image columns
-            if (this.OwningColumn.ValueType == typeof(System.Drawing.Bitmap))
+            if (OwningColumn.ValueType == typeof(Bitmap))
                 return;
 
             if (FilterAndSortEnabled && paintParts.HasFlag(DataGridViewPaintParts.ContentBackground))
             {
-                _filterButtonOffsetBounds = GetFilterBounds(true);
+                _filterButtonOffsetBounds = GetFilterBounds();
                 _filterButtonImageBounds = GetFilterBounds(false);
-                Rectangle buttonBounds = _filterButtonOffsetBounds;
+                var buttonBounds = _filterButtonOffsetBounds;
                 if (buttonBounds != null && clipBounds.IntersectsWith(buttonBounds))
                 {
                     ControlPaint.DrawBorder(graphics, buttonBounds, Color.Gray, ButtonBorderStyle.Solid);
@@ -506,9 +474,9 @@ namespace Zuby.ADGV
         /// <returns></returns>
         private Rectangle GetFilterBounds(bool withOffset = true)
         {
-            Rectangle cell = DataGridView.GetCellDisplayRectangle(ColumnIndex, -1, false);
+            var cell = DataGridView.GetCellDisplayRectangle(ColumnIndex, -1, false);
 
-            Point p = new Point(
+            var p = new Point(
                 (withOffset ? cell.Right : cell.Width) - _filterButtonImageSize.Width - _filterButtonMargin.Right,
                 (withOffset ? cell.Bottom : cell.Height) - _filterButtonImageSize.Height - _filterButtonMargin.Bottom);
 
@@ -539,6 +507,7 @@ namespace Zuby.ADGV
                     RepaintCell();
                 }
             }
+
             base.OnMouseMove(e);
         }
 
@@ -572,11 +541,12 @@ namespace Zuby.ADGV
                 _filterButtonPressed = false;
                 _filterButtonOver = false;
                 RepaintCell();
-                if (_filterButtonImageBounds.Contains(e.X, e.Y) && FilterPopup != null)
+                if (_filterButtonImageBounds.Contains(e.X, e.Y))
                 {
-                    FilterPopup(this, new ColumnHeaderCellEventArgs(MenuStrip, OwningColumn));
+                    FilterPopup?.Invoke(this, new ColumnHeaderCellEventArgs(MenuStrip, OwningColumn));
                 }
             }
+
             base.OnMouseUp(e);
         }
 
@@ -602,9 +572,9 @@ namespace Zuby.ADGV
     internal delegate void ColumnHeaderCellEventHandler(object sender, ColumnHeaderCellEventArgs e);
     internal class ColumnHeaderCellEventArgs : EventArgs
     {
-        public MenuStrip FilterMenu { get; private set; }
+        public MenuStrip FilterMenu { get; }
 
-        public DataGridViewColumn Column { get; private set; }
+        public DataGridViewColumn Column { get; }
 
         public ColumnHeaderCellEventArgs(MenuStrip filterMenu, DataGridViewColumn column)
         {

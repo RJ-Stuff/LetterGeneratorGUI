@@ -21,10 +21,10 @@
         protected override void SetTextAfterTable(Document document)
         {
             var paragraph = document.Content.Paragraphs.Add();
-            paragraph.Range.Font.Size = this.FontSizes["SetTextAfterTable"];
+            paragraph.Range.Font.Size = FontSizes["SetTextAfterTable"];
             paragraph.Range.Font.Name = "Candara";
 
-            var text = this.Configuration["TextAfterTable"].Value<string>();
+            var text = Configuration["TextAfterTable"].Value<string>();
             var start = paragraph.Range.Start + text.IndexOf("$");
             var end = paragraph.Range.Start + text.LastIndexOf("$");
 
@@ -40,7 +40,7 @@
             paragraph.Range.Font.Size = 9;
             paragraph.Range.Font.Name = "Candara";
             paragraph.Range.Font.Bold = 1;
-            paragraph.Range.Text = this.Configuration["AfterTableItems"]
+            paragraph.Range.Text = Configuration["AfterTableItems"]
                 .Values()
                 .Select(it => it.Value<string>())
                 .Select(s => $"•        {s}\u000B")
@@ -55,7 +55,7 @@
 
             var paymentPlace =
                 paragraph.Range.InlineShapes.AddPicture(
-                    string.Format(this.Configuration["PaymentPlace"].Value<string>(), this.CurrentDir)
+                    string.Format(Configuration["PaymentPlace"].Value<string>(), CurrentDir)
                     );
             var paymentPlaceShape = paymentPlace.ConvertToShape();
             paymentPlaceShape.Left = Convert.ToSingle(WdShapePosition.wdShapeCenter);
@@ -68,7 +68,7 @@
             paragraph = document.Content.Paragraphs.Add();
             paragraph.Range.Font.Size = 9;
             paragraph.Range.Font.Name = "Candara";
-            paragraph.Range.Text = this.Configuration["TextAfterPaymentPlace"].Value<string>();
+            paragraph.Range.Text = Configuration["TextAfterPaymentPlace"].Value<string>();
             paragraph.Range.InsertParagraphAfter();
         }
 
@@ -79,10 +79,10 @@
         protected override void SetGeneralPaymentInfo(Document document)
         {
             var paragraph = document.Content.Paragraphs.Add();
-            paragraph.Range.Font.Size = this.FontSizes["SetGeneralPaymentInfo"];
+            paragraph.Range.Font.Size = FontSizes["SetGeneralPaymentInfo"];
             paragraph.Range.Font.Name = "Candara";
 
-            var text = this.Configuration["GeneralPaymentInfo"].Value<string>();
+            var text = Configuration["GeneralPaymentInfo"].Value<string>();
             var start = paragraph.Range.Start + text.IndexOf("$");
             var end = paragraph.Range.Start + text.LastIndexOf("$");
 
@@ -109,7 +109,7 @@
             var paragraph = document.Content.Paragraphs.Add();
             var lawyerSignature =
                 paragraph.Range.InlineShapes.AddPicture(
-                    string.Format(this.Configuration["LawyerSignature"].Value<string>(), this.CurrentDir)
+                    string.Format(Configuration["LawyerSignature"].Value<string>(), CurrentDir)
                     );
             var lawyerSignatureShape = lawyerSignature.ConvertToShape();
             lawyerSignatureShape.Left = Convert.ToSingle(WdShapePosition.wdShapeLeft);
@@ -118,7 +118,7 @@
             paragraph = document.Content.Paragraphs.Add();
             paragraph.Range.Font.Size = 10;
             paragraph.Range.Font.Name = "Candara";
-            paragraph.Range.Text = $"\v{this.Configuration["LawyerName"].Value<string>()}";
+            paragraph.Range.Text = $"\v{Configuration["LawyerName"].Value<string>()}";
             paragraph.Range.ParagraphFormat.Alignment = WdParagraphAlignment.wdAlignParagraphLeft;
 
             paragraph.Range.InsertParagraphAfter();

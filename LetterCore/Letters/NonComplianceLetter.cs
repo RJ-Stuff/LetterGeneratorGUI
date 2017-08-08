@@ -20,10 +20,10 @@
         protected override void SetTextb4Table(Document document)
         {
             var paragraph = document.Content.Paragraphs.Add();
-            var size = this.FontSizes["SetTextb4Table"];
+            var size = FontSizes["SetTextb4Table"];
             paragraph.Range.Font.Size = size;
             paragraph.Range.Font.Name = "Candara";
-            paragraph.Range.Text = this.Configuration["Textb4Table"].Value<string>()
+            paragraph.Range.Text = Configuration["Textb4Table"].Value<string>()
                 .Replace("$$$", DateTime.Now.ToString("dd/MM/yyyy"));
             paragraph.Range.ParagraphFormat.Alignment = WdParagraphAlignment.wdAlignParagraphLeft;
             paragraph.Range.InsertParagraphAfter();
@@ -36,10 +36,10 @@
         protected override void SetGeneralPaymentInfo(Document document)
         {
             var paragraph = document.Content.Paragraphs.Add();
-            paragraph.Range.Font.Size = this.FontSizes["SetGeneralPaymentInfo"];
+            paragraph.Range.Font.Size = FontSizes["SetGeneralPaymentInfo"];
             paragraph.Range.Font.Name = "Candara";
 
-            var text = this.Configuration["GeneralPaymentInfo"].Value<string>();
+            var text = Configuration["GeneralPaymentInfo"].Value<string>();
 
             var start2 = paragraph.Range.Start + text.IndexOf("%");
             var end2 = paragraph.Range.Start + text.LastIndexOf("%") - 1;
@@ -62,7 +62,7 @@
 
             var paymentPlace =
                 paragraph.Range.InlineShapes.AddPicture(
-                    string.Format(this.Configuration["PaymentPlace"].Value<string>(), this.CurrentDir)
+                    string.Format(Configuration["PaymentPlace"].Value<string>(), CurrentDir)
                     );
 
             var paymentPlaceShape = paymentPlace.ConvertToShape();
