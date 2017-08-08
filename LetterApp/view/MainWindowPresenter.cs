@@ -1,20 +1,27 @@
 ﻿namespace LetterApp.view
 {
     using System;
+    using System.Collections;
+    using System.Collections.Generic;
     using System.ComponentModel;
     using System.Data;
     using System.IO;
     using System.Linq;
+    using System.Reactive.Subjects;
     using System.Text;
     using System.Text.RegularExpressions;
     using System.Windows.Forms;
 
     using LetterApp.model;
 
+    using LetterCore.Letters;
+
     using Newtonsoft.Json;
     using Newtonsoft.Json.Linq;
 
     using static System.String;
+
+    using Format = LetterApp.model.Format;
 
     public class MainWindowPresenter
     {
@@ -472,22 +479,37 @@
 
             RefreshGui();
         }
-
+        
         private void GenerateLetter(object sender, EventArgs e)
         {
-            mainWindow.ckLbFormats
-                .CheckedItems.Cast<Format>()
-                .Where(f => f.BindingSource != null)
-                .ToList()
-                .ForEach(f =>
-                    {
-                        Console.WriteLine($"---------------------- {f}");
-                        foreach (var o in f.BindingSource.List)
+            try
+            {
+                var formats = mainWindow.ckLbFormats.CheckedItems.Cast<Format>()
+                    .Where(f => f.BindingSource != null)
+                    .Select(f =>
                         {
-                            Console.WriteLine(((DataRowView)o).Row["id"]);
-                        }
-                        // Console.WriteLine($"formato={f} count={count}");
-                    });
+                            var groups = ViewUtils.GroupBy(f.BindingSource.List.Cast<DataRowView>(), "codluna");
+                            var clients = groups.Select(g =>
+                                {
+                                    var client = ViewUtils.GetClient(g[0]);
+                                    var debts = g.Select(ViewUtils.GetDebt).ToList();
+                                    client.DisaggregatedDebts = debts;
+
+                                    return client;
+                                }).ToList();
+
+                            return new LetterCore.Letters.Format(f.Url, clients, f.Charge.ChargeClazz);
+                        }).ToList();
+
+                var progress = new Subject<object>();
+                AllInOneGenerator.CreateDocs(formats, progress, ((PaperSize)mainWindow.cbPaperSize.SelectedItem).Papersize);
+
+                MessageBox.Show("Cartas generadas correctamente", "Información");
+            }
+            catch (Exception)
+            {
+                MessageBox.Show("Ocurrió un problema en la generación de cartas", "Error");                
+            }
         }
     }
 }

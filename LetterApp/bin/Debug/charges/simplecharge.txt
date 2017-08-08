@@ -1,0 +1,10 @@
+$ASESCOM RJ ABOGADOS$
+$NOMBRE DEL GESTOR:$				$SECTOR:$		$NEGOCIO:$ {0}		
+$FECHA GESTIÓN:$		$HORA GESTIÓN:$
+$DNI:$ {1}	$CÓDIGO CLIENTE:$ {2}	$NOMBRE:$ {3}	$IMPORTE DEUDA:$ S/. {4}
+$CORREO ELECTRÓNICO:$				$TELÉFONO MÓVIL:$			$TELÉFONO FIJO:$
+$DIRECCIÓN BASE:$ {5}	
+$DIRECCIÓN NUEVA:$ {6}	$DIRECCIÓN ALTERNATIVA:$
+$EVENTO:$			$MOTIVO DE ATRASO:$				$CÓDIGO DE RESPUESTA:$
+$OBSERVACIONES:$ ____________________________________________________________________________________________
+_____________________________________________________________________________________________________________

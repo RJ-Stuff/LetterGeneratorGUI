@@ -1,0 +1,76 @@
+{
+  "filters": [
+    {
+      "kind": "Negocio",
+      "internalname": "negocio",
+      "box": "true"
+    },
+    {
+      "kind": "Rango deuda 91-120 días",
+      "internalname": "deuda91-120",
+      "box": "false"
+    },
+    {
+      "kind": "Rango deuda 120-150 días",
+      "internalname": "deuda120-150",
+      "box": "false"
+    },
+    {
+      "kind": "Rango deuda 151-180 días",
+      "internalname": "deuda-151-180",
+      "box": "false"
+    },
+    {
+      "kind": "Zonales",
+      "internalname": "zonales",
+      "box": "true"
+    },
+    {
+      "kind": "Sector",
+      "internalname": "sector",
+      "box": "true"
+    },
+    {
+      "kind": "Distrito",
+      "internalname": "distrito",
+      "box": "true"
+    },
+    {
+      "kind": "Tipo de gestión",
+      "internalname": "gestion",
+      "box": "true"
+    },
+    {
+      "kind": "Monto",
+      "internalname": "monto",
+      "box": "true"
+    },
+    {
+      "kind": "Cliente especial",
+      "internalname": "especial",
+      "box": "false"
+    }
+  ],
+  "papersizes": [
+    {
+      "name": "wdPaperLegal",
+      "displayname": "Papel Oficio",
+      "charges": [
+        {
+          "ChargeClazz": "SimpleCharge",
+          "DisplayName": "Cargo simple"
+        }
+      ]
+    },
+    {
+      "name": "wdPaperA4",
+      "displayname": "Papel A4",
+      "charges": [
+        {
+          "ChargeClazz": "",
+          "DisplayName": "Sin cargo"
+        }
+      ]
+    }
+  ]
+}

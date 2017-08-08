@@ -5,12 +5,12 @@
 
     public class DisaggregatedDebt
     {
-        public int Bill { get; }
-        public string Service { get; }
-        public string PhoneNumber { get; }
-        public DateTime DueDate { get; }
-        public short DaysPastDue { get; }
-        public float Debt { get; }
+        public int Bill { get; set; }
+        public string Service { get; set; }
+        public string PhoneNumber { get; set; }
+        public DateTime DueDate { get; set; }
+        public short DaysPastDue { get; set; }
+        public float Debt { get; set; }
     }
 
     public class Client

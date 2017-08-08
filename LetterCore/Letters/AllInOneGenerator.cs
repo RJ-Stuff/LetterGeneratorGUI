@@ -51,7 +51,7 @@
             });
 
             document.Paragraphs.LineSpacingRule = WdLineSpacing.wdLineSpaceSingle;
-            document.SaveAs2(Path.Combine(Directory.GetCurrentDirectory(), "TodoEnUno.docx"));
+            document.SaveAs2(Path.Combine(Directory.GetCurrentDirectory(), $"TodoEnUno-{DateTime.Now.ToString("dd-MM-yyyy-hh-mm-ss")}.docx"));
 
             progress.OnCompleted();
 

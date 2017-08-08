@@ -1,0 +1,97 @@
+{
+  "Formats": [
+    {
+      "Url": "C:\\Users\\rigo\\OneDrive - ASESCOM RJ ABOGADOS EIRL\\git\\LetterGeneratorGUI\\LetterApp\\bin\\Debug\\formats\\tdp-48.rjf",
+      "Checked": false,
+      "PaperSize": {
+        "Papersize": 7,
+        "DisplayName": "Papel A4",
+        "Charges": [
+          {
+            "ChargeClazz": "",
+            "DisplayName": "Sin cargo"
+          }
+        ]
+      },
+      "Charge": {
+        "ChargeClazz": "",
+        "DisplayName": "Sin cargo"
+      }
+    },
+    {
+      "Url": "C:\\Users\\rigo\\OneDrive - ASESCOM RJ ABOGADOS EIRL\\git\\LetterGeneratorGUI\\LetterApp\\bin\\Debug\\formats\\tdp-72.rjf",
+      "Checked": true,
+      "PaperSize": {
+        "Papersize": 7,
+        "DisplayName": "Papel A4",
+        "Charges": [
+          {
+            "ChargeClazz": "",
+            "DisplayName": "Sin cargo"
+          }
+        ]
+      },
+      "Charge": {
+        "ChargeClazz": "",
+        "DisplayName": "Sin cargo"
+      }
+    },
+    {
+      "Url": "C:\\Users\\rigo\\OneDrive - ASESCOM RJ ABOGADOS EIRL\\git\\LetterGeneratorGUI\\LetterApp\\bin\\Debug\\formats\\tdp-lastchance.rjf",
+      "Checked": false,
+      "PaperSize": {
+        "Papersize": 7,
+        "DisplayName": "Papel A4",
+        "Charges": [
+          {
+            "ChargeClazz": "",
+            "DisplayName": "Sin cargo"
+          }
+        ]
+      },
+      "Charge": {
+        "ChargeClazz": "",
+        "DisplayName": "Sin cargo"
+      }
+    },
+    {
+      "Url": "C:\\Users\\rigo\\OneDrive - ASESCOM RJ ABOGADOS EIRL\\git\\LetterGeneratorGUI\\LetterApp\\bin\\Debug\\formats\\tdp-non-compliance.rjf",
+      "Checked": false,
+      "PaperSize": {
+        "Papersize": 7,
+        "DisplayName": "Papel A4",
+        "Charges": [
+          {
+            "ChargeClazz": "",
+            "DisplayName": "Sin cargo"
+          }
+        ]
+      },
+      "Charge": {
+        "ChargeClazz": "",
+        "DisplayName": "Sin cargo"
+      }
+    },
+    {
+      "Url": "C:\\Users\\rigo\\OneDrive - ASESCOM RJ ABOGADOS EIRL\\git\\LetterGeneratorGUI\\LetterApp\\bin\\Debug\\formats\\tdp-urgent.rjf",
+      "Checked": true,
+      "PaperSize": {
+        "Papersize": 7,
+        "DisplayName": "Papel A4",
+        "Charges": [
+          {
+            "ChargeClazz": "",
+            "DisplayName": "Sin cargo"
+          }
+        ]
+      },
+      "Charge": {
+        "ChargeClazz": "",
+        "DisplayName": "Sin cargo"
+      }
+    }
+  ],
+  "Notifications": [
+    "rlsalgado2006@gmail.com"
+  ]
+}
