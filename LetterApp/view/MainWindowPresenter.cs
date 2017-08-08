@@ -479,7 +479,7 @@
 
             RefreshGui();
         }
-        
+
         private void GenerateLetter(object sender, EventArgs e)
         {
             try
@@ -502,13 +502,23 @@
                         }).ToList();
 
                 var progress = new Subject<object>();
-                AllInOneGenerator.CreateDocs(formats, progress, ((PaperSize)mainWindow.cbPaperSize.SelectedItem).Papersize);
+                var docName = AllInOneGenerator.CreateDocs(formats, progress, ((PaperSize)mainWindow.cbPaperSize.SelectedItem).Papersize);
 
                 MessageBox.Show("Cartas generadas correctamente", "Información");
+
+                if(!mainWindow.rbNoNotification.Checked)
+                {
+                    ViewUtils.SendNotification(
+                    mainWindow.lbMails.Items.Cast<string>().ToList(), 
+                    mainWindow.txtbUser.Text, 
+                    mainWindow.txtbPass.Text, 
+                    mainWindow.rbMailWithAtt.Checked ? docName : string.Empty);
+                }
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                MessageBox.Show("Ocurrió un problema en la generación de cartas", "Error");                
+                var msg = $"Ocurrió un problema en la generación de cartas\n\nDescripción:\n{ex.Message}";
+                MessageBox.Show(msg, "Error");
             }
         }
     }

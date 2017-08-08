@@ -56,7 +56,7 @@
     },
     {
       "Url": "C:\\Users\\rigo\\OneDrive - ASESCOM RJ ABOGADOS EIRL\\git\\LetterGeneratorGUI\\LetterApp\\bin\\Debug\\formats\\tdp-non-compliance.rjf",
-      "Checked": false,
+      "Checked": true,
       "PaperSize": {
         "Papersize": 7,
         "DisplayName": "Papel A4",
@@ -92,6 +92,7 @@
     }
   ],
   "Notifications": [
-    "rlsalgado2006@gmail.com"
+    "rlsalgado2006@gmail.com",
+    "miguel.geldres@rjabogados.com"
   ]
 }

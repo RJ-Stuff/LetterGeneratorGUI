@@ -5,10 +5,6 @@
 
     partial class MainWindow
     {
-        /// <summary>
-        /// Required designer variable.
-        /// </summary>
-        public IContainer components = null;
 
         /// <summary>
         /// Clean up any resources being used.
@@ -86,6 +82,7 @@
             this.panel2 = new System.Windows.Forms.Panel();
             this.panel3 = new System.Windows.Forms.Panel();
             this.bsMain = new System.Windows.Forms.BindingSource(this.components);
+            this.rbNoNotification = new System.Windows.Forms.RadioButton();
             ((System.ComponentModel.ISupportInitialize)(this.picLogo)).BeginInit();
             this.tabControl1.SuspendLayout();
             this.tabEditor.SuspendLayout();
@@ -132,7 +129,7 @@
             // 
             // ckLbFormats
             // 
-            this.ckLbFormats.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+            this.ckLbFormats.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left)));
             this.ckLbFormats.FormattingEnabled = true;
             this.ckLbFormats.Location = new System.Drawing.Point(3, 3);
@@ -311,8 +308,9 @@
             // 
             // groupBox4
             // 
-            this.groupBox4.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+            this.groupBox4.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left)));
+            this.groupBox4.Controls.Add(this.rbNoNotification);
             this.groupBox4.Controls.Add(this.rbOnlyMail);
             this.groupBox4.Controls.Add(this.rbMailWithAtt);
             this.groupBox4.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -326,19 +324,17 @@
             // rbOnlyMail
             // 
             this.rbOnlyMail.AutoSize = true;
-            this.rbOnlyMail.Checked = true;
-            this.rbOnlyMail.Location = new System.Drawing.Point(6, 33);
+            this.rbOnlyMail.Location = new System.Drawing.Point(6, 54);
             this.rbOnlyMail.Name = "rbOnlyMail";
             this.rbOnlyMail.Size = new System.Drawing.Size(133, 21);
             this.rbOnlyMail.TabIndex = 12;
-            this.rbOnlyMail.TabStop = true;
             this.rbOnlyMail.Text = "Solo notificación.";
             this.rbOnlyMail.UseVisualStyleBackColor = true;
             // 
             // rbMailWithAtt
             // 
             this.rbMailWithAtt.AutoSize = true;
-            this.rbMailWithAtt.Location = new System.Drawing.Point(6, 60);
+            this.rbMailWithAtt.Location = new System.Drawing.Point(6, 81);
             this.rbMailWithAtt.Name = "rbMailWithAtt";
             this.rbMailWithAtt.Size = new System.Drawing.Size(192, 21);
             this.rbMailWithAtt.TabIndex = 13;
@@ -387,7 +383,7 @@
             // 
             // groupBox2
             // 
-            this.groupBox2.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+            this.groupBox2.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left)));
             this.groupBox2.Controls.Add(this.panel7);
             this.groupBox2.Controls.Add(this.lbMails);
@@ -420,7 +416,7 @@
             // 
             // lbMails
             // 
-            this.lbMails.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+            this.lbMails.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left)));
             this.lbMails.FormattingEnabled = true;
             this.lbMails.ItemHeight = 16;
@@ -625,8 +621,8 @@
             // 
             // panel2
             // 
-            this.panel2.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-            | System.Windows.Forms.AnchorStyles.Left)
+            this.panel2.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.panel2.Controls.Add(this.tabControl1);
             this.panel2.Controls.Add(this.groupBox5);
@@ -645,6 +641,18 @@
             this.panel3.Name = "panel3";
             this.panel3.Size = new System.Drawing.Size(208, 649);
             this.panel3.TabIndex = 11;
+            // 
+            // rbNoNotification
+            // 
+            this.rbNoNotification.AutoSize = true;
+            this.rbNoNotification.Checked = true;
+            this.rbNoNotification.Location = new System.Drawing.Point(6, 27);
+            this.rbNoNotification.Name = "rbNoNotification";
+            this.rbNoNotification.Size = new System.Drawing.Size(121, 21);
+            this.rbNoNotification.TabIndex = 14;
+            this.rbNoNotification.TabStop = true;
+            this.rbNoNotification.Text = "Sin notificación";
+            this.rbNoNotification.UseVisualStyleBackColor = true;
             // 
             // MainWindow
             // 
@@ -747,6 +755,8 @@
         public Label lClientCount;
         public Zuby.ADGV.AdvancedDataGridView dgClients;
         public BindingSource bsMain;
+        public RadioButton rbNoNotification;
+        private IContainer components;
     }
 }
 

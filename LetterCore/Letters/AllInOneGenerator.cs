@@ -16,7 +16,7 @@
 
     public class AllInOneGenerator
     {
-        public static void CreateDocs(List<Format> formats, Subject<object> progress, WdPaperSize paperSize)
+        public static string CreateDocs(List<Format> formats, Subject<object> progress, WdPaperSize paperSize)
         {
             var wordApp = new Application
                               {
@@ -50,18 +50,23 @@
                 method.Invoke(letter, null);
             });
 
+            var docName = $"TodoEnUno-{DateTime.Now:dd-MM-yyyy-hh-mm-ss}.docx";
+
             document.Paragraphs.LineSpacingRule = WdLineSpacing.wdLineSpaceSingle;
-            document.SaveAs2(Path.Combine(Directory.GetCurrentDirectory(), $"TodoEnUno-{DateTime.Now.ToString("dd-MM-yyyy-hh-mm-ss")}.docx"));
+            document.SaveAs2(Path.Combine(Directory.GetCurrentDirectory(), docName));
 
             progress.OnCompleted();
 
             document.Close();
             Marshal.ReleaseComObject(document);
+            document = null;
             wordApp.Quit();
             Marshal.ReleaseComObject(wordApp);
             wordApp = null;
             GC.Collect();
             GC.WaitForPendingFinalizers();
+
+            return docName;
         }
     }
 }

@@ -24,7 +24,7 @@
             paragraph.Range.Font.Size = FontSizes["SetTextAfterTable"];
             paragraph.Range.Font.Name = "Candara";
 
-            var text = Configuration["TextAfterTable"].Value<string>();
+            var text = Configuration["TextAfterTable"].Value<string>().Replace("\\v", "\v");
             var start = paragraph.Range.Start + text.IndexOf("$");
             var end = paragraph.Range.Start + text.LastIndexOf("$");
 
@@ -43,7 +43,7 @@
             paragraph.Range.Text = Configuration["AfterTableItems"]
                 .Values()
                 .Select(it => it.Value<string>())
-                .Select(s => $"•        {s}\u000B")
+                .Select(s => $"•        {s}\v")
                 .Aggregate((acc, c) => $"{acc}{c}");
             paragraph.Range.ParagraphFormat.Alignment = WdParagraphAlignment.wdAlignParagraphLeft;
             paragraph.Range.InsertParagraphAfter();
@@ -55,8 +55,7 @@
 
             var paymentPlace =
                 paragraph.Range.InlineShapes.AddPicture(
-                    string.Format(Configuration["PaymentPlace"].Value<string>(), CurrentDir)
-                    );
+                    string.Format(Configuration["PaymentPlace"].Value<string>(), CurrentDir));
             var paymentPlaceShape = paymentPlace.ConvertToShape();
             paymentPlaceShape.Left = Convert.ToSingle(WdShapePosition.wdShapeCenter);
             paragraph.Range.InsertParagraphAfter();
@@ -68,7 +67,7 @@
             paragraph = document.Content.Paragraphs.Add();
             paragraph.Range.Font.Size = 9;
             paragraph.Range.Font.Name = "Candara";
-            paragraph.Range.Text = Configuration["TextAfterPaymentPlace"].Value<string>();
+            paragraph.Range.Text = Configuration["TextAfterPaymentPlace"].Value<string>().Replace("\\v", "\v");
             paragraph.Range.InsertParagraphAfter();
         }
 
@@ -82,7 +81,7 @@
             paragraph.Range.Font.Size = FontSizes["SetGeneralPaymentInfo"];
             paragraph.Range.Font.Name = "Candara";
 
-            var text = Configuration["GeneralPaymentInfo"].Value<string>();
+            var text = Configuration["GeneralPaymentInfo"].Value<string>().Replace("\\v", "\v");
             var start = paragraph.Range.Start + text.IndexOf("$");
             var end = paragraph.Range.Start + text.LastIndexOf("$");
 
@@ -109,8 +108,7 @@
             var paragraph = document.Content.Paragraphs.Add();
             var lawyerSignature =
                 paragraph.Range.InlineShapes.AddPicture(
-                    string.Format(Configuration["LawyerSignature"].Value<string>(), CurrentDir)
-                    );
+                    string.Format(Configuration["LawyerSignature"].Value<string>(), CurrentDir));
             var lawyerSignatureShape = lawyerSignature.ConvertToShape();
             lawyerSignatureShape.Left = Convert.ToSingle(WdShapePosition.wdShapeLeft);
             paragraph.SpaceAfter = 2;
@@ -118,7 +116,7 @@
             paragraph = document.Content.Paragraphs.Add();
             paragraph.Range.Font.Size = 10;
             paragraph.Range.Font.Name = "Candara";
-            paragraph.Range.Text = $"\v{Configuration["LawyerName"].Value<string>()}";
+            paragraph.Range.Text = $"\v{Configuration["LawyerName"].Value<string>().Replace("\\v", "\v")}";
             paragraph.Range.ParagraphFormat.Alignment = WdParagraphAlignment.wdAlignParagraphLeft;
 
             paragraph.Range.InsertParagraphAfter();

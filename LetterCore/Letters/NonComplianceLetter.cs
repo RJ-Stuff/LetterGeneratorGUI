@@ -24,6 +24,7 @@
             paragraph.Range.Font.Size = size;
             paragraph.Range.Font.Name = "Candara";
             paragraph.Range.Text = Configuration["Textb4Table"].Value<string>()
+                .Replace("\\v", "\v")
                 .Replace("$$$", DateTime.Now.ToString("dd/MM/yyyy"));
             paragraph.Range.ParagraphFormat.Alignment = WdParagraphAlignment.wdAlignParagraphLeft;
             paragraph.Range.InsertParagraphAfter();
@@ -39,7 +40,7 @@
             paragraph.Range.Font.Size = FontSizes["SetGeneralPaymentInfo"];
             paragraph.Range.Font.Name = "Candara";
 
-            var text = Configuration["GeneralPaymentInfo"].Value<string>();
+            var text = Configuration["GeneralPaymentInfo"].Value<string>().Replace("\\v", "\v");
 
             var start2 = paragraph.Range.Start + text.IndexOf("%");
             var end2 = paragraph.Range.Start + text.LastIndexOf("%") - 1;
@@ -62,8 +63,7 @@
 
             var paymentPlace =
                 paragraph.Range.InlineShapes.AddPicture(
-                    string.Format(Configuration["PaymentPlace"].Value<string>(), CurrentDir)
-                    );
+                    string.Format(Configuration["PaymentPlace"].Value<string>(), CurrentDir));
 
             var paymentPlaceShape = paymentPlace.ConvertToShape();
             paymentPlaceShape.Left = Convert.ToSingle(WdShapePosition.wdShapeCenter);

@@ -116,7 +116,7 @@
             paragraph.SpaceAfter = 0;
 
             paragraph = document.Content.Paragraphs.Add();
-            paragraph.Range.Text = Configuration["FooterInfo"].Value<string>();
+            paragraph.Range.Text = Configuration["FooterInfo"].Value<string>().Replace("\\v", "\v");
             paragraph.Range.Font.Size = 8;
             paragraph.Range.Font.Name = "candara";
             paragraph.Range.ParagraphFormat.Alignment = WdParagraphAlignment.wdAlignParagraphLeft;
@@ -146,6 +146,7 @@
             paragraph.Range.Font.Size = size;
             paragraph.Range.Font.Name = "Candara";
             paragraph.Range.Text = Configuration["FinalInfo"].Value<string>()
+                .Replace("\\v", "\v")
                 .Replace("$$$", DateTime.Now.ToString("dd/MM/yyyy"));
             paragraph.Range.ParagraphFormat.Alignment = WdParagraphAlignment.wdAlignParagraphLeft;
             paragraph.Range.InsertParagraphAfter();
@@ -156,15 +157,14 @@
             var paragraph = document.Content.Paragraphs.Add();
             paragraph.Range.Font.Size = 10;
             paragraph.Range.Font.Name = "Candara";
-            paragraph.Range.Text = "Atentamente,\u000B";
+            paragraph.Range.Text = "Atentamente,\v";
             paragraph.Range.ParagraphFormat.Alignment = WdParagraphAlignment.wdAlignParagraphLeft;
             paragraph.Range.InsertParagraphAfter();
 
             paragraph = document.Content.Paragraphs.Add();
             var lawyerSignature =
                 paragraph.Range.InlineShapes.AddPicture(
-                    string.Format(Configuration["LawyerSignature"].Value<string>(), CurrentDir)
-                    );
+                    string.Format(Configuration["LawyerSignature"].Value<string>(), CurrentDir));
             var lawyerSignatureShape = lawyerSignature.ConvertToShape();
             lawyerSignatureShape.Left = Convert.ToSingle(WdShapePosition.wdShapeLeft);
             paragraph.SpaceAfter = 0;
@@ -172,7 +172,7 @@
             paragraph = document.Content.Paragraphs.Add();
             paragraph.Range.Font.Size = 10;
             paragraph.Range.Font.Name = "Candara";
-            paragraph.Range.Text = $"\v{Configuration["LawyerName"].Value<string>()}";
+            paragraph.Range.Text = $"\v{Configuration["LawyerName"].Value<string>().Replace("\\v", "\v")}";
             paragraph.Range.ParagraphFormat.Alignment = WdParagraphAlignment.wdAlignParagraphLeft;
 
             object charUnit = WdUnits.wdCharacter;
@@ -200,7 +200,7 @@
             paragraph.Range.Font.Bold = 1;
             paragraph.Range.Font.Underline = WdUnderline.wdUnderlineSingle;
             paragraph.Range.Font.Color = WdColor.wdColorBlue;
-            paragraph.Range.Text = Configuration["BusinessURL"].Value<string>();
+            paragraph.Range.Text = Configuration["BusinessURL"].Value<string>().Replace("\\v", "\v");
             paragraph.Range.ParagraphFormat.Alignment = WdParagraphAlignment.wdAlignParagraphCenter;
             paragraph.Range.InsertParagraphAfter();
         }
@@ -212,7 +212,7 @@
             paragraph.Range.Font.Size = size;
             paragraph.Range.Font.Name = "Candara";
 
-            var text = Configuration["GeneralPaymentInfo"].Value<string>();
+            var text = Configuration["GeneralPaymentInfo"].Value<string>().Replace("\\v", "\v");
             var start = paragraph.Range.Start + text.IndexOf("$");
             var end = paragraph.Range.Start + text.LastIndexOf("$");
 
@@ -231,7 +231,7 @@
             var size = FontSizes.ContainsKey("SetTextAfterTable") ? FontSizes["SetTextb4Table"] : 10;
             paragraph.Range.Font.Size = size;
             paragraph.Range.Font.Name = "Candara";
-            paragraph.Range.Text = Configuration["TextAfterTable"].Value<string>();
+            paragraph.Range.Text = Configuration["TextAfterTable"].Value<string>().Replace("\\v", "\v");
             paragraph.Range.ParagraphFormat.Alignment = WdParagraphAlignment.wdAlignParagraphLeft;
             paragraph.Range.InsertParagraphAfter();
         }
@@ -242,7 +242,7 @@
             var size = FontSizes.ContainsKey("SetTextb4Table") ? FontSizes["SetTextb4Table"] : 10;
             paragraph.Range.Font.Size = size;
             paragraph.Range.Font.Name = "Candara";
-            paragraph.Range.Text = Configuration["Textb4Table"].Value<string>();
+            paragraph.Range.Text = Configuration["Textb4Table"].Value<string>().Replace("\\v", "\v");
             paragraph.Range.ParagraphFormat.Alignment = WdParagraphAlignment.wdAlignParagraphLeft;
             paragraph.Range.InsertParagraphAfter();
         }
@@ -259,8 +259,8 @@
             table.Borders.Enable = 1;
 
             table.Cell(1, 1).Range.Text = "Deuda Total";
-            table.Cell(1, 2).Range.Text = $"S/. {totalDebt}";
-            table.Rows.SetHeight(0.56F * PointsToCm, WdRowHeightRule.wdRowHeightExactly);// = 0.28F * PointsToCM;
+            table.Cell(1, 2).Range.Text = $"S/. {totalDebt:0.00}";
+            table.Rows.SetHeight(0.56F * PointsToCm, WdRowHeightRule.wdRowHeightExactly);
 
             table.Columns.Width = 3.5F * PointsToCm;
             table.Rows.Alignment = WdRowAlignment.wdAlignRowRight;
@@ -307,7 +307,7 @@
                 table.Cell(r, 3).Range.Text = d.PhoneNumber;
                 table.Cell(r, 4).Range.Text = d.DueDate.ToString("dd-MM-yyyy");
                 table.Cell(r, 5).Range.Text = d.DaysPastDue.ToString();
-                table.Cell(r, 6).Range.Text = $"S/. {d.Debt}";
+                table.Cell(r, 6).Range.Text = $"S/. {d.Debt:0.00}";
 
                 Enumerable
                 .Range(1, 6)
@@ -326,7 +326,7 @@
             var paragraph = document.Content.Paragraphs.Add();
             paragraph.Range.Font.Size = 10;
             paragraph.Range.Font.Name = "Candara";
-            paragraph.Range.Text = $"Señor(a):\u000B{client.Name}\u000B{client.BaseAddress}";
+            paragraph.Range.Text = $"Señor(a):\v{client.Name}\v{client.BaseAddress}";
             paragraph.Range.ParagraphFormat.Alignment = WdParagraphAlignment.wdAlignParagraphLeft;
             paragraph.Range.InsertParagraphAfter();
         }
@@ -337,7 +337,7 @@
             paragraph.Range.Font.Size = 17;
             paragraph.Range.Font.Name = "Candara";
             paragraph.Range.Font.Bold = 1;
-            paragraph.Range.Text = Configuration["Title"].Value<string>();
+            paragraph.Range.Text = Configuration["Title"].Value<string>().Replace("\\v", "\v");
             paragraph.Range.ParagraphFormat.Alignment = WdParagraphAlignment.wdAlignParagraphCenter;
             paragraph.Range.InsertParagraphAfter();
         }
