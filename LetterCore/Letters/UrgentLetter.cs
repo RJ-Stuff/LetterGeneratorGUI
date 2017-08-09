@@ -2,6 +2,7 @@
 {
     using System;
     using System.Collections.Generic;
+    using System.ComponentModel;
     using System.Linq;
     using System.Reactive.Subjects;
 
@@ -11,10 +12,13 @@
 
     class UrgentLetter : Letter
     {
-        public UrgentLetter(JToken configuration, List<Client> clients,
-            Document document, Subject<object> progress, SimpleCharge charge,
-            WdPaperSize paperSize) :
-            base(configuration, clients, document, progress, charge, paperSize)
+        public UrgentLetter(
+            JToken configuration,
+            List<Client> clients,
+            Document document,
+            Charge charge,
+            WdPaperSize paperSize, BackgroundWorker worker, DoWorkEventArgs e) :
+            base(configuration, clients, document, charge, paperSize, worker, e)
         {
         }
 

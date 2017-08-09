@@ -18,13 +18,13 @@
         ]
       },
       "Charge": {
-        "ChargeClazz": "SpecialCharge",
-        "DisplayName": "Cargo especial"
+        "ChargeClazz": "",
+        "DisplayName": "Sin cargo"
       }
     },
     {
       "Url": "C:\\Users\\rigo\\OneDrive - ASESCOM RJ ABOGADOS EIRL\\git\\LetterGeneratorGUI\\LetterApp\\bin\\Debug\\formats\\tdp-72.rjf",
-      "Checked": true,
+      "Checked": false,
       "PaperSize": {
         "Papersize": 7,
         "DisplayName": "Papel A4",
@@ -40,8 +40,8 @@
         ]
       },
       "Charge": {
-        "ChargeClazz": "SpecialCharge",
-        "DisplayName": "Cargo especial"
+        "ChargeClazz": "",
+        "DisplayName": "Sin cargo"
       }
     },
     {
@@ -62,13 +62,13 @@
         ]
       },
       "Charge": {
-        "ChargeClazz": "SpecialCharge",
-        "DisplayName": "Cargo especial"
+        "ChargeClazz": "",
+        "DisplayName": "Sin cargo"
       }
     },
     {
       "Url": "C:\\Users\\rigo\\OneDrive - ASESCOM RJ ABOGADOS EIRL\\git\\LetterGeneratorGUI\\LetterApp\\bin\\Debug\\formats\\tdp-non-compliance.rjf",
-      "Checked": true,
+      "Checked": false,
       "PaperSize": {
         "Papersize": 7,
         "DisplayName": "Papel A4",
@@ -84,8 +84,8 @@
         ]
       },
       "Charge": {
-        "ChargeClazz": "SpecialCharge",
-        "DisplayName": "Cargo especial"
+        "ChargeClazz": "",
+        "DisplayName": "Sin cargo"
       }
     },
     {
@@ -106,8 +106,8 @@
         ]
       },
       "Charge": {
-        "ChargeClazz": "SpecialCharge",
-        "DisplayName": "Cargo especial"
+        "ChargeClazz": "",
+        "DisplayName": "Sin cargo"
       }
     }
   ],

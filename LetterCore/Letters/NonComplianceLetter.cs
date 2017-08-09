@@ -2,6 +2,7 @@
 {
     using System;
     using System.Collections.Generic;
+    using System.ComponentModel;
     using System.Reactive.Subjects;
 
     using Microsoft.Office.Interop.Word;
@@ -11,9 +12,9 @@
     public class NonComplianceLetter : Letter
     {
         public NonComplianceLetter(JToken configuration, List<Client> clients,
-            Document document, Subject<object> progress, SimpleCharge charge,
-            WdPaperSize paperSize) :
-            base(configuration, clients, document, progress, charge, paperSize)
+            Document document, Charge charge,
+            WdPaperSize paperSize, BackgroundWorker worker, DoWorkEventArgs e) :
+            base(configuration, clients, document, charge, paperSize, worker, e)
         {
         }
 

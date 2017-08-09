@@ -82,6 +82,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="LettersGenerationDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="LettersGenerationDialog.Designer.cs">
+      <DependentUpon>LettersGenerationDialog.cs</DependentUpon>
+    </Compile>
     <Compile Include="MainWindow.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -103,6 +109,9 @@
     </Compile>
     <Compile Include="view\MainWindowPresenter.cs" />
     <Compile Include="view\ViewUtils.cs" />
+    <EmbeddedResource Include="LettersGenerationDialog.resx">
+      <DependentUpon>LettersGenerationDialog.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="MainWindow.resx">
       <DependentUpon>MainWindow.cs</DependentUpon>
     </EmbeddedResource>
@@ -111,7 +120,9 @@
       <SubType>Designer</SubType>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <None Include="packages.config" />
+    <None Include="packages.config">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -144,7 +155,7 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\AdvancedDataGridView\AdvancedDataGridView.csproj">
-      <Project>{7055810c-59cb-4fcf-8a1e-e1680087ee41}</Project>
+      <Project>{6eba0a55-b390-4479-a564-58d46094998d}</Project>
       <Name>AdvancedDataGridView</Name>
     </ProjectReference>
     <ProjectReference Include="..\LetterCore\LetterCore.csproj">

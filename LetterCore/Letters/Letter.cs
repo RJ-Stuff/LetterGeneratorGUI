@@ -2,6 +2,7 @@
 {
     using System;
     using System.Collections.Generic;
+    using System.ComponentModel;
     using System.Drawing;
     using System.IO;
     using System.Linq;
@@ -21,20 +22,22 @@
         protected string LetterKind;
         protected Dictionary<string, int> FontSizes;
         protected Document Document;
-        protected Subject<object> Progress;
         protected int ProgressCount;
         protected Charge Charge;
         protected string CurrentDir;
         protected WdPaperSize paperSize;
+        protected BackgroundWorker worker;
+        protected DoWorkEventArgs bgEvent;
 
         public Letter(JToken configuration, List<Client> clients,
-            Document document, Subject<object> progress, Charge charge,
-            WdPaperSize paperSize)
+            Document document, Charge charge,
+            WdPaperSize paperSize, BackgroundWorker worker, DoWorkEventArgs e)
         {
+            this.worker = worker;
+            this.bgEvent = e;
             Document = document;
             Clients = clients;
             Configuration = configuration;
-            Progress = progress;
             Charge = charge;
             LetterKind = configuration["letterKind"].Value<string>();
             BusinessName = configuration["BusinessName"].Value<string>();
@@ -72,20 +75,27 @@
             document.PageSetup.RightMargin = configuration["RightMargin"].Value<float>() * PointsToCm;
             document.PageSetup.BottomMargin = configuration["BottomMargin"].Value<float>() * PointsToCm;
         }
-
-        protected virtual void UpdateProgress()
-        {
-            Progress.OnNext(new { count = Clients.Count, progress = ++ProgressCount, information = $"Creando cartas del tipo: {LetterKind}" });
-        }
-
+        
         public virtual void CreatePages()
         {
             ProgressCount = 0;
             Clients.ForEach(c =>
             {
-                CreatePage(Document, c);
-                Document.Words.Last.InsertBreak(WdBreakType.wdPageBreak);
-                UpdateProgress();
+                if (worker.CancellationPending)
+                {
+                    bgEvent.Cancel = true;
+                }
+                else
+                {
+                    CreatePage(Document, c);
+                    Document.Words.Last.InsertBreak(WdBreakType.wdPageBreak);
+                    worker.ReportProgress(0, new ProgressIncrement()
+                    {
+                        Count = Clients.Count,
+                        Progress = ++ProgressCount,
+                        Information = $"Cartas del tipo {LetterKind}: {ProgressCount} de {Clients.Count}"
+                    });
+                }
             });
         }
 

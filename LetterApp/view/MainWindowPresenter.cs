@@ -16,6 +16,8 @@
 
     using LetterCore.Letters;
 
+    using Microsoft.Office.Interop.Word;
+
     using Newtonsoft.Json;
     using Newtonsoft.Json.Linq;
 
@@ -30,9 +32,20 @@
         private Configuration configuration;
         private bool notSavedChanges;
 
+        private readonly LettersGenerationDialog progressDialog;
+
+        private int maxProgress;
+
+        private int totalProgress;
+
         public MainWindowPresenter(MainWindow mainWindow)
         {
             this.mainWindow = mainWindow;
+
+            maxProgress = 0;
+            totalProgress = 0;
+
+            progressDialog = new LettersGenerationDialog();
 
             notSavedChanges = false;
 
@@ -72,7 +85,7 @@
 
         private void CreateEvents()
         {
-            mainWindow.btGenerateWords.Click += GenerateLetter;
+            mainWindow.btGenerateWords.Click += GenerateLetterEvent;
             mainWindow.btAddFormat.Click += AddFormat;
             mainWindow.btRemoveFormat.Click += RemoveFormat;
             mainWindow.btSaveEditorChanges.Click += SaveEditorChanges;
@@ -89,10 +102,137 @@
             mainWindow.btChargesHelp.Click += ChargesHelp;
             mainWindow.acercaDeToolStripMenuItem.Click += AboutHelp;
             mainWindow.btLoadData.Click += LoadData;
-
-            // mainWindow.bsMain.ListChanged += DataSourceChange;
             mainWindow.dgClients.FilterStringChanged += FilterStringChanged;
             mainWindow.dgClients.SortStringChanged += SortStringChanged;
+            mainWindow.bwCreateLetters.DoWork += BwCreateLettersOnDoWork;
+            mainWindow.bwCreateLetters.RunWorkerCompleted += BwCreateLettersOnRunWorkerCompleted;
+            mainWindow.bwCreateLetters.ProgressChanged += BwCreateLettersOnProgressChanged;
+            progressDialog.Closing += ProgressDialogOnClosing;
+            mainWindow.Closing += MainWindowOnClosing;
+            mainWindow.cerrarToolStripMenuItem.Click += CerrarToolStripMenuItemOnClick;
+        }
+
+        private void CerrarToolStripMenuItemOnClick(object sender, EventArgs eventArgs)
+        {
+            var option = MessageBox.Show(
+                "¿Está seguro de que desea salir?",
+                "Cerrar aplicación",
+                MessageBoxButtons.YesNo,
+                MessageBoxIcon.Question);
+
+            if (option == DialogResult.Yes) mainWindow.Dispose();
+        }
+
+        private void MainWindowOnClosing(object sender, CancelEventArgs cancelEventArgs)
+        {
+            var option = MessageBox.Show(
+                "¿Está seguro de que desea salir?", 
+                "Cerrar aplicación", 
+                MessageBoxButtons.YesNo, 
+                MessageBoxIcon.Question);
+
+            if (option == DialogResult.No) cancelEventArgs.Cancel = true;
+        }
+        
+        private void ProgressDialogOnClosing(object sender, CancelEventArgs e)
+        {
+            e.Cancel = true;
+            progressDialog.Visible = false;
+            mainWindow.bwCreateLetters.CancelAsync();
+
+            mainWindow.btGenerateWords.Enabled = true;
+        }
+
+        private void BwCreateLettersOnProgressChanged(object sender, ProgressChangedEventArgs e)
+        {
+            var pi = (ProgressIncrement)e.UserState;
+
+            progressDialog.lProgressInfo.Text = pi.Information;
+
+            progressDialog.pbPart.Maximum = pi.Count;
+            progressDialog.pbPart.Minimum = 0;
+            progressDialog.pbPart.Value = pi.Progress;
+
+            progressDialog.pbTotal.Maximum = maxProgress;
+            progressDialog.pbTotal.Minimum = 0;
+            progressDialog.pbTotal.Value = ++totalProgress;
+        }
+
+        private void BwCreateLettersOnRunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
+        {
+            if (e.Error != null)
+            {
+                var msg = $"Ocurrió un error en la creación de cartas.\n\nDescripción:\n{e.Error.Message}";
+                MessageBox.Show(msg, "Error");
+            }
+            else if (e.Cancelled)
+            {
+                MessageBox.Show("La creación de cartas fue cancelada.", "Advertencia");
+            }
+            else
+            {
+                MessageBox.Show("Cartas generadas correctamente.", "Información");
+            }
+
+            mainWindow.btGenerateWords.Enabled = true;
+            ClearProgressDialog();
+            progressDialog.Visible = false;
+        }
+
+        private void ClearProgressDialog()
+        {
+            progressDialog.lProgressInfo.Text = Empty;
+            progressDialog.pbPart.Value = 0;
+            progressDialog.pbPart.Maximum = 0;
+            progressDialog.pbPart.Minimum = 0;
+            progressDialog.pbTotal.Value = 0;
+            progressDialog.pbTotal.Maximum = 0;
+            progressDialog.pbTotal.Minimum = 0;
+            maxProgress = 0;
+            totalProgress = 0;
+        }
+
+        private void BwCreateLettersOnDoWork(object sender, DoWorkEventArgs e)
+        {
+            var worker = (BackgroundWorker)sender;
+            GenerateLetters(((PaperSize)e.Argument).Papersize, worker, e);
+        }
+
+        private void GenerateLetters(WdPaperSize paperSize, BackgroundWorker worker, DoWorkEventArgs e)
+        {
+            var formats = mainWindow.ckLbFormats.CheckedItems.Cast<Format>()
+                .Where(f => f.BindingSource != null)
+                .Select(f =>
+                    {
+                        var groups = ViewUtils.GroupBy(f.BindingSource.List.Cast<DataRowView>(), "codluna");
+                        var clients = groups.Select(g =>
+                            {
+                                var client = ViewUtils.GetClient(g[0]);
+                                var debts = g.Select(ViewUtils.GetDebt).ToList();
+                                client.DisaggregatedDebts = debts;
+
+                                return client;
+                            }).ToList();
+
+                        return new LetterCore.Letters.Format(f.Url, clients, f.Charge.ChargeClazz);
+                    }).ToList();
+
+            maxProgress = formats.Select(l => l.Clients.Count).Sum();
+
+            var docName = AllInOneGenerator.CreateDocs(
+                formats,
+                paperSize,
+                worker,
+                e);
+
+            if (!mainWindow.rbNoNotification.Checked)
+            {
+                ViewUtils.SendNotification(
+                    mainWindow.lbMails.Items.Cast<string>().ToList(),
+                    mainWindow.txtbUser.Text,
+                    mainWindow.txtbPass.Text,
+                    mainWindow.rbMailWithAtt.Checked ? docName : string.Empty);
+            }
         }
 
         private void SortStringChanged(object sender, EventArgs e)
@@ -491,40 +631,14 @@
             RefreshGui();
         }
 
-        private void GenerateLetter(object sender, EventArgs e)
+        private void GenerateLetterEvent(object sender, EventArgs e)
         {
             try
             {
-                var formats = mainWindow.ckLbFormats.CheckedItems.Cast<Format>()
-                    .Where(f => f.BindingSource != null)
-                    .Select(f =>
-                    {
-                        var groups = ViewUtils.GroupBy(f.BindingSource.List.Cast<DataRowView>(), "codluna");
-                        var clients = groups.Select(g =>
-                        {
-                            var client = ViewUtils.GetClient(g[0]);
-                            var debts = g.Select(ViewUtils.GetDebt).ToList();
-                            client.DisaggregatedDebts = debts;
+                mainWindow.btGenerateWords.Enabled = false;
+                mainWindow.bwCreateLetters.RunWorkerAsync(mainWindow.cbPaperSize.SelectedItem);
 
-                            return client;
-                        }).ToList();
-
-                        return new LetterCore.Letters.Format(f.Url, clients, f.Charge.ChargeClazz);
-                    }).ToList();
-
-                var progress = new Subject<object>();
-                var docName = AllInOneGenerator.CreateDocs(formats, progress, ((PaperSize)mainWindow.cbPaperSize.SelectedItem).Papersize);
-
-                MessageBox.Show("Cartas generadas correctamente", "Información");
-
-                if (!mainWindow.rbNoNotification.Checked)
-                {
-                    ViewUtils.SendNotification(
-                    mainWindow.lbMails.Items.Cast<string>().ToList(),
-                    mainWindow.txtbUser.Text,
-                    mainWindow.txtbPass.Text,
-                    mainWindow.rbMailWithAtt.Checked ? docName : string.Empty);
-                }
+                progressDialog.ShowDialog();
             }
             catch (Exception ex)
             {

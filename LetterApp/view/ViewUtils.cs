@@ -13,7 +13,7 @@
     public class ViewUtils
     {
         public static IEnumerable<List<DataRowView>> GroupBy(IEnumerable<DataRowView> data, string key) =>
-            data.GroupBy(row => row[key], (k, group) => @group.ToList());
+            data.GroupBy(row => row[key], (k, group) => group.ToList());
 
         public static Client GetClient(DataRowView rowView) =>
             new Client()
