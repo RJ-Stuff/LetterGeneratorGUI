@@ -223,6 +223,7 @@
             // 
             // rtEditor
             // 
+            this.rtEditor.DetectUrls = false;
             this.rtEditor.Dock = System.Windows.Forms.DockStyle.Fill;
             this.rtEditor.Enabled = false;
             this.rtEditor.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));

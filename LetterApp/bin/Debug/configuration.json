@@ -2,7 +2,7 @@
   "Formats": [
     {
       "Url": "C:\\Users\\rigo\\OneDrive - ASESCOM RJ ABOGADOS EIRL\\git\\LetterGeneratorGUI\\LetterApp\\bin\\Debug\\formats\\tdp-48.rjf",
-      "Checked": false,
+      "Checked": true,
       "PaperSize": {
         "Papersize": 7,
         "DisplayName": "Papel A4",
@@ -10,10 +10,6 @@
           {
             "ChargeClazz": "",
             "DisplayName": "Sin cargo"
-          },
-          {
-            "ChargeClazz": "SpecialCharge",
-            "DisplayName": "Cargo especial"
           }
         ]
       },
@@ -24,7 +20,7 @@
     },
     {
       "Url": "C:\\Users\\rigo\\OneDrive - ASESCOM RJ ABOGADOS EIRL\\git\\LetterGeneratorGUI\\LetterApp\\bin\\Debug\\formats\\tdp-72.rjf",
-      "Checked": false,
+      "Checked": true,
       "PaperSize": {
         "Papersize": 7,
         "DisplayName": "Papel A4",
@@ -32,10 +28,6 @@
           {
             "ChargeClazz": "",
             "DisplayName": "Sin cargo"
-          },
-          {
-            "ChargeClazz": "SpecialCharge",
-            "DisplayName": "Cargo especial"
           }
         ]
       },
@@ -46,7 +38,7 @@
     },
     {
       "Url": "C:\\Users\\rigo\\OneDrive - ASESCOM RJ ABOGADOS EIRL\\git\\LetterGeneratorGUI\\LetterApp\\bin\\Debug\\formats\\tdp-lastchance.rjf",
-      "Checked": false,
+      "Checked": true,
       "PaperSize": {
         "Papersize": 7,
         "DisplayName": "Papel A4",
@@ -54,10 +46,6 @@
           {
             "ChargeClazz": "",
             "DisplayName": "Sin cargo"
-          },
-          {
-            "ChargeClazz": "SpecialCharge",
-            "DisplayName": "Cargo especial"
           }
         ]
       },
@@ -68,7 +56,7 @@
     },
     {
       "Url": "C:\\Users\\rigo\\OneDrive - ASESCOM RJ ABOGADOS EIRL\\git\\LetterGeneratorGUI\\LetterApp\\bin\\Debug\\formats\\tdp-non-compliance.rjf",
-      "Checked": false,
+      "Checked": true,
       "PaperSize": {
         "Papersize": 7,
         "DisplayName": "Papel A4",
@@ -76,10 +64,6 @@
           {
             "ChargeClazz": "",
             "DisplayName": "Sin cargo"
-          },
-          {
-            "ChargeClazz": "SpecialCharge",
-            "DisplayName": "Cargo especial"
           }
         ]
       },
@@ -98,10 +82,6 @@
           {
             "ChargeClazz": "",
             "DisplayName": "Sin cargo"
-          },
-          {
-            "ChargeClazz": "SpecialCharge",
-            "DisplayName": "Cargo especial"
           }
         ]
       },
@@ -111,8 +91,5 @@
       }
     }
   ],
-  "Notifications": [
-    "rlsalgado2006@gmail.com",
-    "miguel.geldres@rjabogados.com"
-  ]
+  "Notifications": []
 }

@@ -126,14 +126,14 @@
         private void MainWindowOnClosing(object sender, CancelEventArgs cancelEventArgs)
         {
             var option = MessageBox.Show(
-                "¿Está seguro de que desea salir?", 
-                "Cerrar aplicación", 
-                MessageBoxButtons.YesNo, 
+                "¿Está seguro de que desea salir?",
+                "Cerrar aplicación",
+                MessageBoxButtons.YesNo,
                 MessageBoxIcon.Question);
 
             if (option == DialogResult.No) cancelEventArgs.Cancel = true;
         }
-        
+
         private void ProgressDialogOnClosing(object sender, CancelEventArgs e)
         {
             e.Cancel = true;
@@ -382,16 +382,25 @@
         {
             try
             {
-                configuration = JsonConvert.DeserializeObject<Configuration>(File.ReadAllText(Path.Combine(Directory.GetCurrentDirectory(), "configuration.json"), Encoding.Default));
+                var path = Path.Combine(Directory.GetCurrentDirectory(), "configuration.json");
+                if (!File.Exists(path))
+                {
+                    configuration = new Configuration();
+                }
+                else
+                {
+                    configuration = JsonConvert.DeserializeObject<Configuration>(
+                    File.ReadAllText(path, Encoding.Default));
+                }
 
                 configuration.Formats
                     .Select((f, i) => new { format = f, index = i })
                     .ToList()
                     .ForEach(p =>
-                    {
-                        mainWindow.ckLbFormats.Items.Add(p.format);
-                        mainWindow.ckLbFormats.SetItemCheckState(p.index, p.format.Checked ? CheckState.Checked : CheckState.Unchecked);
-                    });
+                        {
+                            mainWindow.ckLbFormats.Items.Add(p.format);
+                            mainWindow.ckLbFormats.SetItemCheckState(p.index, p.format.Checked ? CheckState.Checked : CheckState.Unchecked);
+                        });
 
                 configuration.Notifications.ForEach(n => mainWindow.lbMails.Items.Add(n));
 
@@ -407,10 +416,10 @@
 
                         configuration.SetFormats(stream.Select(o => o.format).ToList());
                         stream.ForEach(o =>
-                        {
-                            mainWindow.ckLbFormats.Items.Add(o.format);
-                            mainWindow.ckLbFormats.SetItemCheckState(o.index, o.format.Checked ? CheckState.Checked : CheckState.Unchecked);
-                        });
+                            {
+                                mainWindow.ckLbFormats.Items.Add(o.format);
+                                mainWindow.ckLbFormats.SetItemCheckState(o.index, o.format.Checked ? CheckState.Checked : CheckState.Unchecked);
+                            });
                     }
                 }
 
