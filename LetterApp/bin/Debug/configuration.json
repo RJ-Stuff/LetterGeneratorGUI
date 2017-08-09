@@ -20,7 +20,7 @@
     },
     {
       "Url": "C:\\Users\\rigo\\OneDrive - ASESCOM RJ ABOGADOS EIRL\\git\\LetterGeneratorGUI\\LetterApp\\bin\\Debug\\formats\\tdp-72.rjf",
-      "Checked": true,
+      "Checked": false,
       "PaperSize": {
         "Papersize": 7,
         "DisplayName": "Papel A4",
@@ -38,7 +38,7 @@
     },
     {
       "Url": "C:\\Users\\rigo\\OneDrive - ASESCOM RJ ABOGADOS EIRL\\git\\LetterGeneratorGUI\\LetterApp\\bin\\Debug\\formats\\tdp-lastchance.rjf",
-      "Checked": true,
+      "Checked": false,
       "PaperSize": {
         "Papersize": 7,
         "DisplayName": "Papel A4",
@@ -56,7 +56,7 @@
     },
     {
       "Url": "C:\\Users\\rigo\\OneDrive - ASESCOM RJ ABOGADOS EIRL\\git\\LetterGeneratorGUI\\LetterApp\\bin\\Debug\\formats\\tdp-non-compliance.rjf",
-      "Checked": true,
+      "Checked": false,
       "PaperSize": {
         "Papersize": 7,
         "DisplayName": "Papel A4",
@@ -74,7 +74,7 @@
     },
     {
       "Url": "C:\\Users\\rigo\\OneDrive - ASESCOM RJ ABOGADOS EIRL\\git\\LetterGeneratorGUI\\LetterApp\\bin\\Debug\\formats\\tdp-urgent.rjf",
-      "Checked": true,
+      "Checked": false,
       "PaperSize": {
         "Papersize": 7,
         "DisplayName": "Papel A4",

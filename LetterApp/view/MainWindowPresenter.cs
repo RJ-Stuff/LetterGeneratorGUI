@@ -28,59 +28,81 @@
     public class MainWindowPresenter
     {
         private readonly MainWindow mainWindow;
-
+        private readonly LettersGenerationDialog progressDialog;
         private Configuration configuration;
         private bool notSavedChanges;
-
-        private readonly LettersGenerationDialog progressDialog;
-
         private int maxProgress;
-
         private int totalProgress;
 
         public MainWindowPresenter(MainWindow mainWindow)
         {
             this.mainWindow = mainWindow;
-
             maxProgress = 0;
             totalProgress = 0;
-
             progressDialog = new LettersGenerationDialog();
-
             notSavedChanges = false;
 
-            var guiConfiguration = JToken.Parse(File.ReadAllText(Path.Combine(Directory.GetCurrentDirectory(), "GUIConfiguration.json"), Encoding.Default));
+            var guiConfiguration = JToken.Parse(File.ReadAllText(
+                    Path.Combine(Directory.GetCurrentDirectory(), "GUIConfiguration.json"),
+                    Encoding.Default));
 
             mainWindow.cbPaperSize.DropDownStyle = ComboBoxStyle.DropDownList;
             mainWindow.cbCharge.DropDownStyle = ComboBoxStyle.DropDownList;
 
             (guiConfiguration["papersizes"] ?? new JArray())
-            .Select(p =>
-            {
-                var chargesTokens = p["charges"] ?? new JArray();
-                var charges = chargesTokens
-                .Select(t => new model.Charge(t["ChargeClazz"].Value<string>(), t["DisplayName"].Value<string>()))
-                .ToList();
-
-                return new PaperSize(p["name"].Value<string>(), p["displayname"].Value<string>(), charges);
-            })
+            .Select(GetPaperSize)
             .ToList()
             .ForEach(o => this.mainWindow.cbPaperSize.Items.Add(o));
 
             LoadConfiguration();
-
             CreateEvents();
+        }
+
+        private static PaperSize GetPaperSize(JToken p)
+        {
+            return new PaperSize(
+                p["name"].Value<string>(),
+                p["displayname"].Value<string>(),
+                (p["charges"] ?? new JArray()).Select(GetCharge).ToList());
+        }
+
+        private static model.Charge GetCharge(JToken t)
+        {
+            return new model.Charge(t["ChargeClazz"].Value<string>(), t["DisplayName"].Value<string>());
         }
 
         private static void AboutHelp(object sender, EventArgs e)
         {
             var year = DateTime.Now.ToString("yyyy");
-            MessageBox.Show($"Aplicación para la generación de cartas.\nVersión 0.1.\n\nAutor: Rigoberto L. Salgado Reyes.\nCorreo: rigoberto.salgado@rjabogados.com.\n\n© {year} RJAbogados.\nTodos los derechos reservados.", "Acerca de", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            MessageBox.Show(
+                "Aplicación para la generación de cartas.\n"
+                            + "Versión 0.1.\n\nAutor: Rigoberto L. Salgado Reyes.\n"
+                            + $"Correo: rigoberto.salgado@rjabogados.com.\n\n© {year} RJAbogados.\n"
+                            + "Todos los derechos reservados.",
+                "Acerca de",
+                MessageBoxButtons.OK,
+                MessageBoxIcon.Information);
         }
 
         private static void ChargesHelp(object sender, EventArgs e)
         {
             MessageBox.Show("El cargo está en relación con el tamaño de la hoja.", "Información");
+        }
+
+        private static void MainWindowOnClosing(object sender, CancelEventArgs cancelEventArgs)
+        {
+            var option = MessageBox.Show(
+                "¿Está seguro de que desea salir?",
+                "Cerrar aplicación",
+                MessageBoxButtons.YesNo,
+                MessageBoxIcon.Question);
+
+            if (option == DialogResult.No) cancelEventArgs.Cancel = true;
+        }
+
+        private static bool HasBindingSource(Format f)
+        {
+            return f.BindingSource != null;
         }
 
         private void CreateEvents()
@@ -121,17 +143,6 @@
                 MessageBoxIcon.Question);
 
             if (option == DialogResult.Yes) mainWindow.Dispose();
-        }
-
-        private void MainWindowOnClosing(object sender, CancelEventArgs cancelEventArgs)
-        {
-            var option = MessageBox.Show(
-                "¿Está seguro de que desea salir?",
-                "Cerrar aplicación",
-                MessageBoxButtons.YesNo,
-                MessageBoxIcon.Question);
-
-            if (option == DialogResult.No) cancelEventArgs.Cancel = true;
         }
 
         private void ProgressDialogOnClosing(object sender, CancelEventArgs e)
@@ -198,24 +209,36 @@
             GenerateLetters(((PaperSize)e.Argument).Papersize, worker, e);
         }
 
+        private Client GetClientFromGroup(List<DataRowView> group)
+        {
+            var client = ViewUtils.GetClient(group[0]);
+            client.DisaggregatedDebts = group.Select(ViewUtils.GetDebt).ToList();
+
+            return client;
+        }
+
+        private List<Client> GetClientsFromBindingSource(Format f)
+        {
+            return ViewUtils
+                .GroupBy(f.BindingSource.List.Cast<DataRowView>(), "codluna")
+                .Select(GetClientFromGroup)
+                .ToList();
+        }
+
+        private LetterCore.Letters.Format GetFormat(model.Format f)
+        {
+            return new LetterCore.Letters.Format(
+                f.Url,
+                GetClientsFromBindingSource(f),
+                f.Charge.ChargeClazz);
+        }
+
         private void GenerateLetters(WdPaperSize paperSize, BackgroundWorker worker, DoWorkEventArgs e)
         {
             var formats = mainWindow.ckLbFormats.CheckedItems.Cast<Format>()
-                .Where(f => f.BindingSource != null)
-                .Select(f =>
-                    {
-                        var groups = ViewUtils.GroupBy(f.BindingSource.List.Cast<DataRowView>(), "codluna");
-                        var clients = groups.Select(g =>
-                            {
-                                var client = ViewUtils.GetClient(g[0]);
-                                var debts = g.Select(ViewUtils.GetDebt).ToList();
-                                client.DisaggregatedDebts = debts;
-
-                                return client;
-                            }).ToList();
-
-                        return new LetterCore.Letters.Format(f.Url, clients, f.Charge.ChargeClazz);
-                    }).ToList();
+                .Where(HasBindingSource)
+                .Select(GetFormat)
+                .ToList();
 
             maxProgress = formats.Select(l => l.Clients.Count).Sum();
 
@@ -225,6 +248,11 @@
                 worker,
                 e);
 
+            MailNotification(docName);
+        }
+
+        private void MailNotification(string docName)
+        {
             if (!mainWindow.rbNoNotification.Checked)
             {
                 ViewUtils.SendNotification(
@@ -284,7 +312,7 @@
 
         private void SelectedChargeChange(object sender, EventArgs e)
         {
-            var charge = (mainWindow.cbCharge.SelectedItem as model.Charge) ?? model.Charge.DefaultCharge;
+            var charge = mainWindow.cbCharge.SelectedItem as model.Charge ?? model.Charge.DefaultCharge;
 
             mainWindow.ckLbFormats
                 .Items
@@ -315,18 +343,12 @@
                 EditEditor(null, null);
 
                 var index = mainWindow.ckLbFormats.SelectedIndex;
-                if (index == -1)
-                {
-                    return;
-                }
+                if (index == -1) return;
 
                 var format = mainWindow.ckLbFormats.Items[index] as Format;
 
                 Encoding currentEncoding;
-                if (format == null)
-                {
-                    return;
-                }
+                if (format == null) return;
 
                 using (var reader = new StreamReader(format.Url, true))
                 {
@@ -404,24 +426,7 @@
 
                 configuration.Notifications.ForEach(n => mainWindow.lbMails.Items.Add(n));
 
-                if (mainWindow.ckLbFormats.Items.Count == 0)
-                {
-                    var dir = Path.Combine(Directory.GetCurrentDirectory(), "formats");
-                    if (Directory.Exists(dir))
-                    {
-                        var stream = Directory
-                            .EnumerateFiles(dir, "*.rjf")
-                            .Select((url, i) => new { format = new Format(url), index = i })
-                            .ToList();
-
-                        configuration.SetFormats(stream.Select(o => o.format).ToList());
-                        stream.ForEach(o =>
-                            {
-                                mainWindow.ckLbFormats.Items.Add(o.format);
-                                mainWindow.ckLbFormats.SetItemCheckState(o.index, o.format.Checked ? CheckState.Checked : CheckState.Unchecked);
-                            });
-                    }
-                }
+                LoadDefaultFormats();
 
                 if (mainWindow.ckLbFormats.Items.Count != 0)
                 {
@@ -434,6 +439,27 @@
             {
                 MessageBox.Show("Ocurrió un problema al cargar la configuración.", "Error");
             }
+        }
+
+        private void LoadDefaultFormats()
+        {
+            if (mainWindow.ckLbFormats.Items.Count != 0) return;
+
+            var dir = Path.Combine(Directory.GetCurrentDirectory(), "formats");
+
+            if (!Directory.Exists(dir)) return;
+
+            var stream = Directory.EnumerateFiles(dir, "*.rjf")
+                .Select((url, i) => new { format = new Format(url), index = i }).ToList();
+
+            configuration.SetFormats(stream.Select(o => o.format).ToList());
+            stream.ForEach(o =>
+                    {
+                        mainWindow.ckLbFormats.Items.Add(o.format);
+                        mainWindow.ckLbFormats.SetItemCheckState(
+                            o.index,
+                            o.format.Checked ? CheckState.Checked : CheckState.Unchecked);
+                    });
         }
 
         private void SelectedPaperSizeChange(object sender, EventArgs e)
@@ -472,8 +498,8 @@
 
         private void AddMail(object sender, EventArgs e)
         {
-            var pattern = @"^\w+([-+.']\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$";
-            var r = new Regex(pattern);
+            const string Pattern = @"^\w+([-+.']\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$";
+            var r = new Regex(Pattern);
 
             if (r.Match(mainWindow.txtbEmail.Text.Trim()).Success)
             {
@@ -569,10 +595,7 @@
                             {
                                 MessageBox.Show("Ocurrió un error al guardar el formato.", "Error");
                             }
-
                         }
-
-
                     }
                 }
 
