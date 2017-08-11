@@ -270,8 +270,6 @@
             e.Cancel = true;
             progressDialog.Visible = false;
             mainWindow.bwCreateLetters.CancelAsync();
-
-            mainWindow.btGenerateWords.Enabled = true;
         }
 
         private void BwCreateLettersOnProgressChanged(object sender, ProgressChangedEventArgs e)

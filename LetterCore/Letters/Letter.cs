@@ -6,7 +6,6 @@
     using System.Drawing;
     using System.IO;
     using System.Linq;
-    using System.Reactive.Subjects;
 
     using Microsoft.Office.Interop.Word;
 
@@ -66,6 +65,14 @@
                 });
         }
 
+        private static void ConfigureRow(Row tableRow, int size, string font, bool bold, float height)
+        {
+            tableRow.Range.Font.Size = size;
+            tableRow.Range.Font.Name = font;
+            tableRow.Range.Font.Bold = bold ? 1 : 0;
+            tableRow.SetHeight(height * PointsToCm, WdRowHeightRule.wdRowHeightExactly);
+        }
+
         private void SetPage(Document document, JToken configuration, WdPaperSize paperSize)
         {
             document.PageSetup.PaperSize = WdPaperSize.wdPaperLegal;
@@ -75,7 +82,7 @@
             document.PageSetup.RightMargin = configuration["RightMargin"].Value<float>() * PointsToCm;
             document.PageSetup.BottomMargin = configuration["BottomMargin"].Value<float>() * PointsToCm;
         }
-        
+
         public virtual void CreatePages()
         {
             ProgressCount = 0;
@@ -303,12 +310,9 @@
                 .Range(1, 6)
                 .ToList()
                 .ForEach(i => table.Cell(1, i).Range.ParagraphFormat.Alignment = WdParagraphAlignment.wdAlignParagraphCenter);
-
-            table.Rows[1].Range.Font.Size = 10;
-            table.Rows[1].Range.Font.Name = "Candara";
-            table.Rows[1].Range.Font.Bold = 1;
-            table.Rows[1].SetHeight(0.44F * PointsToCm, WdRowHeightRule.wdRowHeightExactly);
-
+            
+            ConfigureRow(table.Rows[1], 8, "Candara", true, 0.34F);
+            
             table.Columns[1].Width = 1.51F * PointsToCm;
             table.Columns[2].Width = 2.48F * PointsToCm;
             table.Columns[3].Width = 4.26F * PointsToCm;
@@ -331,12 +335,15 @@
                 .ToList()
                 .ForEach(i => table.Cell(r, i).Range.ParagraphFormat.Alignment = WdParagraphAlignment.wdAlignParagraphCenter);
 
-                table.Rows[r].SetHeight(0.48F * PointsToCm, WdRowHeightRule.wdRowHeightExactly);
+                ConfigureRow(table.Rows[r], 8, "Candara", false, 0.34F);
+
                 r++;
             });
 
             paragraph.Range.InsertParagraphAfter();
         }
+
+
 
         protected virtual void SetClient(Document document, Client client)
         {

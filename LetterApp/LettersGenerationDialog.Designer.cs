@@ -81,7 +81,9 @@
             this.Controls.Add(this.pbPart);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximizeBox = false;
+            this.MaximumSize = new System.Drawing.Size(513, 277);
             this.MinimizeBox = false;
+            this.MinimumSize = new System.Drawing.Size(513, 277);
             this.Name = "LettersGenerationDialog";
             this.ShowIcon = false;
             this.ShowInTaskbar = false;
