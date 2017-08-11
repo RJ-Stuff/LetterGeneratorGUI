@@ -1,33 +1,48 @@
 {
-	"LawyerSignature" : "{0}\\resources\\lawyer_signature.png",
-	"PaymentPlace" : "{0}\\resources\\business_logo.png",
-	"BusinessLogo" : "{0}\\resources\\business_logo.png",
-	"Logo" : "{0}\\resources\\logo.png",
-	"LeftMargin" : 2.5,
-	"TopMargin" : 2.25,
-	"RightMargin" : 2.5,
-	"BottomMargin" : 1.75,
-	"CurrentCity" : "Trujillo",
-	"Title" : "ÚLTIMA OPORTUNIDAD DE PAGO\\vFINANCIAMIENTO",
-	"InitialFee" : 100,
-	"Fee" : 20,
-	"Textb4Table" : "Estimado señor(a):\\v\\vMediante la presente, le reiteramos lo notificado en nuestras tres comunicaciones escritas, donde le informamos que aún no ha hecho efectivo el pago de su deuda pendiente cuyo detalle se puntualiza:",
-	"TextAfterTable" : "A fin de no verse impactado en su crédito financiero, hemos considerado como última posibilidad, brindarle la facilidad de financiar su saldo deudor, considerando un pronto pago con una cuota inicial de S/. xxxx.xx   y el diferencial en xx  cuotas de S/. xxxx.xx, promoción a la cual podrá acogerse en un lapso máximo de 24 horas de recepcionada la presente.\\v\\vComunicarse inmediatamente al teléfono (01) 642-9892 OPCIÓN 5, donde será atendido por un asesor especializado.",
-	"GeneralPaymentInfo" : "Su cuota inicial deberá ser cancelada dentro del período referenciado en párrafos anteriores; únicamente en nuestras tiendas, agentes autorizados o entidades bancarias. Mayor información sobre los Lugares de pago en",
-	"BusinessURL" : "www.movistar.com.pe\\v",
-	"LawyerName" : "\\v_____________________\\vLuis Valdivia Cornelio\\vJEFE DE GESTIÓN\\vRJ ABOGADOS",
-	"FinalInfo" : "La presente comunicación ha sido emitida en base a la información disponible en nuestros sistemas al día $$$. Solo pueden financiar las líneas que no tuvieran mes de dos financiamientos anulados en los últimos 12 meses. De no hacer efectivo el pago de la cuota inicial en el período establecido, queda sin efecto la facilidad de financiamiento.",
-	"FooterInfo" : "Oficina Principal: Jr. Ayacucho N° 590, Of. 309 – 418\\vTelf. 044-252772 / 044-242477\\vTrujillo	   										                  FI-4-RJA",
-	"ChargeFormat" : "{0}\\charges\\charge.txt",
-	"BusinessName" : "TDP",
-	"query" : "{0}\\queries\\tdp-lastchance.sql",
-	"letterKind" : "Última oportunidad de pago",
-	"fontsizes" : [
-	{"SetTextb4Table": 9},
-	{"SetTextAfterTable": 9},
-	{"SetGeneralPaymentInfo": 9},
-	{"SetBusinessURL": 9},
-	{"SetFinalInfo": 9}
-	],
-	"classname" : "Letter"
+  "LawyerSignature": "{0}\\resources\\lawyer_signature.png",
+  "PaymentPlace": "{0}\\resources\\business_logo.png",
+  "BusinessLogo": "{0}\\resources\\business_logo.png",
+  "Logo": "{0}\\resources\\logo.png",
+  "LeftMargin": 2.5,
+  "TopMargin": 2.25,
+  "RightMargin": 2.5,
+  "BottomMargin": 1.75,
+  "CurrentCity": "Trujillo",
+  "Title": "ÚLTIMA OPORTUNIDAD DE PAGO\\vFINANCIAMIENTO",
+  "InitialFee": 100,
+  "Fee": 20,
+  "Textb4Table": "Mediante la presente, le reiteramos lo notificado en nuestras tres comunicaciones escritas, donde le informamos que aún no ha hecho efectivo el pago de su deuda pendiente cuyo detalle se puntualiza:",
+  "TextAfterTable": "A fin de no verse impactado en su crédito financiero, hemos considerado como última posibilidad, brindarle la facilidad de financiar su saldo deudor, considerando un pronto pago con una cuota inicial de S/. xxxx.xx   y el diferencial en xx  cuotas de S/. xxxx.xx, promoción a la cual podrá acogerse en un lapso máximo de 24 horas de recepcionada la presente.\\v\\vComunicarse inmediatamente al teléfono (01) 642-9892 OPCIÓN 5, donde será atendido por un asesor especializado.",
+  "GeneralPaymentInfo": "Su cuota inicial deberá ser cancelada dentro del período referenciado en párrafos anteriores; únicamente en nuestras tiendas, agentes autorizados o entidades bancarias. Mayor información sobre los Lugares de pago en",
+  "BusinessURL": "www.movistar.com.pe\\v",
+  "LawyerName": "\\v_____________________\\vLuis Valdivia Cornelio\\vJEFE DE GESTIÓN\\vRJ ABOGADOS",
+  "FinalInfo": "La presente comunicación ha sido emitida en base a la información disponible en nuestros sistemas al día $$$. Solo pueden financiar las líneas que no tuvieran mes de dos financiamientos anulados en los últimos 12 meses. De no hacer efectivo el pago de la cuota inicial en el período establecido, queda sin efecto la facilidad de financiamiento.",
+  "FooterInfo": "Oficina Principal: Jr. Ayacucho N° 590, Of. 309 – 418\\vTelf. 044-252772 / 044-242477\\vTrujillo	   										                  FI-4-RJA",
+  "ChargeFormat": "{0}\\charges\\charge.txt",
+  "BusinessName": "TDP",
+  "query": "{0}\\queries\\tdp-lastchance.sql",
+  "letterKind": "Última oportunidad de pago",
+  "fontsizes": [
+    {
+      "part": "SetTextb4Table",
+      "size": 9
+    },
+    {
+      "part": "SetTextAfterTable",
+      "size": 9
+    },
+    {
+      "part": "SetGeneralPaymentInfo",
+      "size": 9
+    },
+    {
+      "part": "SetBusinessURL",
+      "size": 9
+    },
+    {
+      "part": "SetFinalInfo",
+      "size": 9
+    }
+  ],
+  "classname": "Letter"
 }

@@ -5,7 +5,6 @@
     using System.ComponentModel;
     using System.IO;
     using System.Linq;
-    using System.Reactive.Subjects;
     using System.Reflection;
     using System.Runtime.InteropServices;
 

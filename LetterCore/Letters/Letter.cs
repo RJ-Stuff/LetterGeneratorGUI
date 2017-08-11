@@ -166,7 +166,7 @@
         protected virtual void SetFinalInfo(Document document)
         {
             var paragraph = document.Content.Paragraphs.Add();
-            var size = FontSizes.ContainsKey("SetFinalInfo") ? FontSizes["SetTextb4Table"] : 9;
+            var size = FontSizes.ContainsKey("SetFinalInfo") ? FontSizes["SetFinalInfo"] : 9;
             paragraph.Range.Font.Size = size;
             paragraph.Range.Font.Name = "Candara";
             paragraph.Range.Text = Configuration["FinalInfo"].Value<string>()
@@ -181,7 +181,7 @@
             var paragraph = document.Content.Paragraphs.Add();
             paragraph.Range.Font.Size = 10;
             paragraph.Range.Font.Name = "Candara";
-            paragraph.Range.Text = "Atentamente,\v";
+            paragraph.Range.Text = "Atentamente,";
             paragraph.Range.ParagraphFormat.Alignment = WdParagraphAlignment.wdAlignParagraphLeft;
             paragraph.Range.InsertParagraphAfter();
 
@@ -194,7 +194,7 @@
             paragraph.SpaceAfter = 0;
 
             paragraph = document.Content.Paragraphs.Add();
-            paragraph.Range.Font.Size = 10;
+            paragraph.Range.Font.Size = 9;
             paragraph.Range.Font.Name = "Candara";
             paragraph.Range.Text = $"\v{Configuration["LawyerName"].Value<string>().Replace("\\v", "\v")}";
             paragraph.Range.ParagraphFormat.Alignment = WdParagraphAlignment.wdAlignParagraphLeft;
@@ -209,16 +209,16 @@
 
         protected virtual void SetPaymentPlace(Document document)
         {
-            var paragraph = document.Content.Paragraphs.Add();
+            //var paragraph = document.Content.Paragraphs.Add();
 
-            paragraph.Range.InlineShapes.AddPicture(
-                string.Format(Configuration["PaymentPlace"].Value<string>(), CurrentDir));
+            //paragraph.Range.InlineShapes.AddPicture(
+            //    string.Format(Configuration["PaymentPlace"].Value<string>(), CurrentDir));
         }
 
         protected virtual void SetBusinessUrl(Document document)
         {
             var paragraph = document.Content.Paragraphs.Add();
-            var size = FontSizes.ContainsKey("SetBusinessURL") ? FontSizes["SetTextb4Table"] : 10;
+            var size = FontSizes.ContainsKey("SetBusinessURL") ? FontSizes["SetBusinessURL"] : 10;
             paragraph.Range.Font.Size = size;
             paragraph.Range.Font.Name = "Candara";
             paragraph.Range.Font.Bold = 1;
@@ -232,7 +232,7 @@
         protected virtual void SetGeneralPaymentInfo(Document document)
         {
             var paragraph = document.Content.Paragraphs.Add();
-            var size = FontSizes.ContainsKey("SetGeneralPaymentInfo") ? FontSizes["SetTextb4Table"] : 10;
+            var size = FontSizes.ContainsKey("SetGeneralPaymentInfo") ? FontSizes["SetGeneralPaymentInfo"] : 10;
             paragraph.Range.Font.Size = size;
             paragraph.Range.Font.Name = "Candara";
 
@@ -252,7 +252,7 @@
         protected virtual void SetTextAfterTable(Document document)
         {
             var paragraph = document.Content.Paragraphs.Add();
-            var size = FontSizes.ContainsKey("SetTextAfterTable") ? FontSizes["SetTextb4Table"] : 10;
+            var size = FontSizes.ContainsKey("SetTextAfterTable") ? FontSizes["SetTextAfterTable"] : 10;
             paragraph.Range.Font.Size = size;
             paragraph.Range.Font.Name = "Candara";
             paragraph.Range.Text = Configuration["TextAfterTable"].Value<string>().Replace("\\v", "\v");
@@ -262,12 +262,20 @@
 
         protected virtual void SetTextb4Table(Document document)
         {
-            var paragraph = document.Content.Paragraphs.Add();
             var size = FontSizes.ContainsKey("SetTextb4Table") ? FontSizes["SetTextb4Table"] : 10;
+
+            var paragraph = document.Content.Paragraphs.Add();
+            paragraph.Range.Font.Size = size;
+            paragraph.Range.Font.Name = "Candara";
+            paragraph.Range.Text = "Estimado señor(a):";
+            paragraph.Range.ParagraphFormat.Alignment = WdParagraphAlignment.wdAlignParagraphLeft;
+            paragraph.Range.InsertParagraphAfter();
+
+            paragraph = document.Content.Paragraphs.Add();
             paragraph.Range.Font.Size = size;
             paragraph.Range.Font.Name = "Candara";
             paragraph.Range.Text = Configuration["Textb4Table"].Value<string>().Replace("\\v", "\v");
-            paragraph.Range.ParagraphFormat.Alignment = WdParagraphAlignment.wdAlignParagraphLeft;
+            paragraph.Range.ParagraphFormat.Alignment = WdParagraphAlignment.wdAlignParagraphJustify;
             paragraph.Range.InsertParagraphAfter();
         }
 
@@ -310,9 +318,9 @@
                 .Range(1, 6)
                 .ToList()
                 .ForEach(i => table.Cell(1, i).Range.ParagraphFormat.Alignment = WdParagraphAlignment.wdAlignParagraphCenter);
-            
+
             ConfigureRow(table.Rows[1], 8, "Candara", true, 0.34F);
-            
+
             table.Columns[1].Width = 1.51F * PointsToCm;
             table.Columns[2].Width = 2.48F * PointsToCm;
             table.Columns[3].Width = 4.26F * PointsToCm;
@@ -343,8 +351,6 @@
             paragraph.Range.InsertParagraphAfter();
         }
 
-
-
         protected virtual void SetClient(Document document, Client client)
         {
             var paragraph = document.Content.Paragraphs.Add();
@@ -358,11 +364,22 @@
         protected virtual void SetTitle(Document document)
         {
             var paragraph = document.Content.Paragraphs.Add();
-            paragraph.Range.Font.Size = 17;
-            paragraph.Range.Font.Name = "Candara";
-            paragraph.Range.Font.Bold = 1;
-            paragraph.Range.Text = Configuration["Title"].Value<string>().Replace("\\v", "\v");
-            paragraph.Range.ParagraphFormat.Alignment = WdParagraphAlignment.wdAlignParagraphCenter;
+
+            var table = document.Tables.Add(paragraph.Range, 1, 2);
+            table.Range.Font.Size = 17;
+            table.Range.Font.Name = "Candara";
+            table.Range.Font.Bold = 1;
+            table.Borders.Enable = 0;
+
+            var businessLogo = table.Cell(1, 1).Range.InlineShapes.AddPicture(
+                    string.Format(Configuration["PaymentPlace"].Value<string>(), CurrentDir));
+
+            table.Cell(1, 1).SetWidth(businessLogo.Width, WdRulerStyle.wdAdjustFirstColumn);
+            table.Cell(1, 1).Range.ParagraphFormat.Alignment = WdParagraphAlignment.wdAlignParagraphLeft;
+            table.Cell(1, 2).Range.Text = Configuration["Title"].Value<string>().Replace("\\v", "\v");
+            table.Cell(1, 2).Range.ParagraphFormat.Alignment = WdParagraphAlignment.wdAlignParagraphRight;
+            table.Cell(1, 1).Range.Borders[WdBorderType.wdBorderRight].LineStyle = WdLineStyle.wdLineStyleNone;
+
             paragraph.Range.InsertParagraphAfter();
         }
 

@@ -3,7 +3,6 @@
     using System;
     using System.Collections.Generic;
     using System.ComponentModel;
-    using System.Reactive.Subjects;
 
     using Microsoft.Office.Interop.Word;
 
@@ -20,14 +19,22 @@
 
         protected override void SetTextb4Table(Document document)
         {
-            var paragraph = document.Content.Paragraphs.Add();
             var size = FontSizes["SetTextb4Table"];
+
+            var paragraph = document.Content.Paragraphs.Add();
+            paragraph.Range.Font.Size = size;
+            paragraph.Range.Font.Name = "Candara";
+            paragraph.Range.Text = "Estimado señor(a):";
+            paragraph.Range.ParagraphFormat.Alignment = WdParagraphAlignment.wdAlignParagraphLeft;
+            paragraph.Range.InsertParagraphAfter();
+
+            paragraph = document.Content.Paragraphs.Add();
             paragraph.Range.Font.Size = size;
             paragraph.Range.Font.Name = "Candara";
             paragraph.Range.Text = Configuration["Textb4Table"].Value<string>()
                 .Replace("\\v", "\v")
                 .Replace("$$$", DateTime.Now.ToString("dd/MM/yyyy"));
-            paragraph.Range.ParagraphFormat.Alignment = WdParagraphAlignment.wdAlignParagraphLeft;
+            paragraph.Range.ParagraphFormat.Alignment = WdParagraphAlignment.wdAlignParagraphJustify;
             paragraph.Range.InsertParagraphAfter();
         }
 
@@ -60,19 +67,19 @@
 
         protected override void SetPaymentPlace(Document document)
         {
-            var paragraph = document.Content.Paragraphs.Add();
+            //var paragraph = document.Content.Paragraphs.Add();
 
-            var paymentPlace =
-                paragraph.Range.InlineShapes.AddPicture(
-                    string.Format(Configuration["PaymentPlace"].Value<string>(), CurrentDir));
+            //var paymentPlace =
+            //    paragraph.Range.InlineShapes.AddPicture(
+            //        string.Format(Configuration["PaymentPlace"].Value<string>(), CurrentDir));
 
-            var paymentPlaceShape = paymentPlace.ConvertToShape();
-            paymentPlaceShape.Left = Convert.ToSingle(WdShapePosition.wdShapeCenter);
-            paragraph.Range.InsertParagraphAfter();
-            paragraph.Range.InsertParagraphAfter();
-            paragraph.Range.InsertParagraphAfter();
-            paragraph.Range.InsertParagraphAfter();
-            paragraph.Range.InsertParagraphAfter();
+            //var paymentPlaceShape = paymentPlace.ConvertToShape();
+            //paymentPlaceShape.Left = Convert.ToSingle(WdShapePosition.wdShapeCenter);
+            //paragraph.Range.InsertParagraphAfter();
+            //paragraph.Range.InsertParagraphAfter();
+            //paragraph.Range.InsertParagraphAfter();
+            //paragraph.Range.InsertParagraphAfter();
+            //paragraph.Range.InsertParagraphAfter();
         }
     }
 }

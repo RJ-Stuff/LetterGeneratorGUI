@@ -4,7 +4,6 @@
     using System.Collections.Generic;
     using System.ComponentModel;
     using System.Linq;
-    using System.Reactive.Subjects;
 
     using Microsoft.Office.Interop.Word;
 
@@ -55,24 +54,24 @@
 
         protected override void SetPaymentPlace(Document document)
         {
-            var paragraph = document.Content.Paragraphs.Add();
+            //var paragraph = document.Content.Paragraphs.Add();
 
-            var paymentPlace =
-                paragraph.Range.InlineShapes.AddPicture(
-                    string.Format(Configuration["PaymentPlace"].Value<string>(), CurrentDir));
-            var paymentPlaceShape = paymentPlace.ConvertToShape();
-            paymentPlaceShape.Left = Convert.ToSingle(WdShapePosition.wdShapeCenter);
-            paragraph.Range.InsertParagraphAfter();
-            paragraph.Range.InsertParagraphAfter();
-            paragraph.Range.InsertParagraphAfter();
-            paragraph.Range.InsertParagraphAfter();
-            paragraph.Range.InsertParagraphAfter();
+            //var paymentPlace =
+            //    paragraph.Range.InlineShapes.AddPicture(
+            //        string.Format(Configuration["PaymentPlace"].Value<string>(), CurrentDir));
+            //var paymentPlaceShape = paymentPlace.ConvertToShape();
+            //paymentPlaceShape.Left = Convert.ToSingle(WdShapePosition.wdShapeCenter);
+            //paragraph.Range.InsertParagraphAfter();
+            //paragraph.Range.InsertParagraphAfter();
+            //paragraph.Range.InsertParagraphAfter();
+            //paragraph.Range.InsertParagraphAfter();
+            //paragraph.Range.InsertParagraphAfter();
 
-            paragraph = document.Content.Paragraphs.Add();
-            paragraph.Range.Font.Size = 9;
-            paragraph.Range.Font.Name = "Candara";
-            paragraph.Range.Text = Configuration["TextAfterPaymentPlace"].Value<string>().Replace("\\v", "\v");
-            paragraph.Range.InsertParagraphAfter();
+            //paragraph = document.Content.Paragraphs.Add();
+            //paragraph.Range.Font.Size = 9;
+            //paragraph.Range.Font.Name = "Candara";
+            //paragraph.Range.Text = Configuration["TextAfterPaymentPlace"].Value<string>().Replace("\\v", "\v");
+            //paragraph.Range.InsertParagraphAfter();
         }
 
         protected override void SetBusinessUrl(Document document)
@@ -127,5 +126,23 @@
             paragraph.Range.InsertParagraphAfter();
         }
 
+        protected override void SetTextb4Table(Document document)
+        {
+            var size = FontSizes.ContainsKey("SetTextb4Table") ? FontSizes["SetTextb4Table"] : 10;
+
+            var paragraph = document.Content.Paragraphs.Add();
+            paragraph.Range.Font.Size = size;
+            paragraph.Range.Font.Name = "Candara";
+            paragraph.Range.Text = "Estimado señor(a):";
+            paragraph.Range.ParagraphFormat.Alignment = WdParagraphAlignment.wdAlignParagraphLeft;
+            paragraph.Range.InsertParagraphAfter();
+
+            paragraph = document.Content.Paragraphs.Add();
+            paragraph.Range.Font.Size = size;
+            paragraph.Range.Font.Name = "Candara";
+            paragraph.Range.Text = Configuration["Textb4Table"].Value<string>().Replace("\\v", "\v");
+            paragraph.Range.ParagraphFormat.Alignment = WdParagraphAlignment.wdAlignParagraphLeft;
+            paragraph.Range.InsertParagraphAfter();
+        }
     }
 }
