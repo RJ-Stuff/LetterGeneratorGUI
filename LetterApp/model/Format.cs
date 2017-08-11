@@ -1,5 +1,6 @@
 ﻿namespace LetterApp.model
 {
+    using System.Collections.Generic;
     using System.IO;
     using System.Windows.Forms;
 
@@ -15,6 +16,8 @@
 
         public Charge Charge { get; set; }
 
+        public List<Filter> Filters { get; set; }
+
         [JsonIgnore]
         public BindingSource BindingSource { get; set; }
 
@@ -22,16 +25,17 @@
         {
         }
 
-        public Format(string url) : this(url, true, PaperSize.DefaultSize, Charge.DefaultCharge)
+        public Format(string url) : this(url, true, new List<Filter>(), PaperSize.DefaultSize, Charge.DefaultCharge)
         {
         }
 
-        private Format(string url, bool Checked, PaperSize paperSize, Charge charge)
+        private Format(string url, bool Checked, List<Filter> Filters, PaperSize paperSize, Charge charge)
         {
             Url = url;
             this.Checked = Checked;
             PaperSize = paperSize;
             Charge = charge;
+            this.Filters = Filters;
         }
 
         public override int GetHashCode()

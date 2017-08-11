@@ -43,6 +43,18 @@
             this.btSaveEditorChanges = new System.Windows.Forms.Button();
             this.ckbEditEditor = new System.Windows.Forms.CheckBox();
             this.rtEditor = new System.Windows.Forms.RichTextBox();
+            this.tabFilters = new System.Windows.Forms.TabPage();
+            this.panel10 = new System.Windows.Forms.Panel();
+            this.gbExtendedOptions = new System.Windows.Forms.GroupBox();
+            this.ckbExtendedOptions = new System.Windows.Forms.CheckBox();
+            this.btAddOption = new System.Windows.Forms.Button();
+            this.btExtendedOptionHelp = new System.Windows.Forms.Button();
+            this.txtbExtendedOption = new System.Windows.Forms.TextBox();
+            this.gbFilters = new System.Windows.Forms.GroupBox();
+            this.panel8 = new System.Windows.Forms.Panel();
+            this.panel9 = new System.Windows.Forms.Panel();
+            this.btRemoveFilter = new System.Windows.Forms.Button();
+            this.lbFilters = new System.Windows.Forms.ListBox();
             this.tabData = new System.Windows.Forms.TabPage();
             this.dgClients = new Zuby.ADGV.AdvancedDataGridView();
             this.panel6 = new System.Windows.Forms.Panel();
@@ -91,6 +103,11 @@
             this.tabEditor.SuspendLayout();
             this.panel4.SuspendLayout();
             this.panel5.SuspendLayout();
+            this.tabFilters.SuspendLayout();
+            this.panel10.SuspendLayout();
+            this.gbExtendedOptions.SuspendLayout();
+            this.panel8.SuspendLayout();
+            this.panel9.SuspendLayout();
             this.tabData.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgClients)).BeginInit();
             this.panel6.SuspendLayout();
@@ -143,6 +160,7 @@
             // tabControl1
             // 
             this.tabControl1.Controls.Add(this.tabEditor);
+            this.tabControl1.Controls.Add(this.tabFilters);
             this.tabControl1.Controls.Add(this.tabData);
             this.tabControl1.Controls.Add(this.tabNotifications);
             this.tabControl1.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -232,6 +250,128 @@
             this.rtEditor.Size = new System.Drawing.Size(1092, 509);
             this.rtEditor.TabIndex = 0;
             this.rtEditor.Text = "";
+            // 
+            // tabFilters
+            // 
+            this.tabFilters.Controls.Add(this.panel10);
+            this.tabFilters.Controls.Add(this.panel8);
+            this.tabFilters.Location = new System.Drawing.Point(4, 25);
+            this.tabFilters.Name = "tabFilters";
+            this.tabFilters.Size = new System.Drawing.Size(1098, 515);
+            this.tabFilters.TabIndex = 4;
+            this.tabFilters.Text = "Filtros";
+            this.tabFilters.UseVisualStyleBackColor = true;
+            // 
+            // panel10
+            // 
+            this.panel10.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left)));
+            this.panel10.Controls.Add(this.gbExtendedOptions);
+            this.panel10.Controls.Add(this.gbFilters);
+            this.panel10.Location = new System.Drawing.Point(336, 0);
+            this.panel10.Name = "panel10";
+            this.panel10.Size = new System.Drawing.Size(762, 515);
+            this.panel10.TabIndex = 1;
+            // 
+            // gbExtendedOptions
+            // 
+            this.gbExtendedOptions.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.gbExtendedOptions.Controls.Add(this.ckbExtendedOptions);
+            this.gbExtendedOptions.Controls.Add(this.btAddOption);
+            this.gbExtendedOptions.Controls.Add(this.btExtendedOptionHelp);
+            this.gbExtendedOptions.Controls.Add(this.txtbExtendedOption);
+            this.gbExtendedOptions.Location = new System.Drawing.Point(3, 416);
+            this.gbExtendedOptions.Name = "gbExtendedOptions";
+            this.gbExtendedOptions.Size = new System.Drawing.Size(401, 96);
+            this.gbExtendedOptions.TabIndex = 1;
+            this.gbExtendedOptions.TabStop = false;
+            // 
+            // ckbExtendedOptions
+            // 
+            this.ckbExtendedOptions.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.ckbExtendedOptions.AutoSize = true;
+            this.ckbExtendedOptions.Location = new System.Drawing.Point(6, 0);
+            this.ckbExtendedOptions.Name = "ckbExtendedOptions";
+            this.ckbExtendedOptions.Size = new System.Drawing.Size(204, 21);
+            this.ckbExtendedOptions.TabIndex = 2;
+            this.ckbExtendedOptions.Text = "Activar opciones avanzadas";
+            this.ckbExtendedOptions.UseVisualStyleBackColor = true;
+            // 
+            // btAddOption
+            // 
+            this.btAddOption.Location = new System.Drawing.Point(269, 57);
+            this.btAddOption.Name = "btAddOption";
+            this.btAddOption.Size = new System.Drawing.Size(125, 28);
+            this.btAddOption.TabIndex = 2;
+            this.btAddOption.Text = "Agregar opción";
+            this.btAddOption.UseVisualStyleBackColor = true;
+            // 
+            // btExtendedOptionHelp
+            // 
+            this.btExtendedOptionHelp.Location = new System.Drawing.Point(369, 27);
+            this.btExtendedOptionHelp.Name = "btExtendedOptionHelp";
+            this.btExtendedOptionHelp.Size = new System.Drawing.Size(25, 24);
+            this.btExtendedOptionHelp.TabIndex = 1;
+            this.btExtendedOptionHelp.Text = "?";
+            this.btExtendedOptionHelp.UseVisualStyleBackColor = true;
+            // 
+            // txtbExtendedOption
+            // 
+            this.txtbExtendedOption.Location = new System.Drawing.Point(6, 27);
+            this.txtbExtendedOption.Name = "txtbExtendedOption";
+            this.txtbExtendedOption.Size = new System.Drawing.Size(357, 23);
+            this.txtbExtendedOption.TabIndex = 0;
+            // 
+            // gbFilters
+            // 
+            this.gbFilters.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left)));
+            this.gbFilters.Location = new System.Drawing.Point(3, 3);
+            this.gbFilters.Name = "gbFilters";
+            this.gbFilters.Size = new System.Drawing.Size(401, 407);
+            this.gbFilters.TabIndex = 0;
+            this.gbFilters.TabStop = false;
+            this.gbFilters.Text = "Filtros";
+            // 
+            // panel8
+            // 
+            this.panel8.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.panel8.Controls.Add(this.panel9);
+            this.panel8.Controls.Add(this.lbFilters);
+            this.panel8.Dock = System.Windows.Forms.DockStyle.Left;
+            this.panel8.Location = new System.Drawing.Point(0, 0);
+            this.panel8.Name = "panel8";
+            this.panel8.Size = new System.Drawing.Size(330, 515);
+            this.panel8.TabIndex = 0;
+            // 
+            // panel9
+            // 
+            this.panel9.Controls.Add(this.btRemoveFilter);
+            this.panel9.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.panel9.Location = new System.Drawing.Point(0, 477);
+            this.panel9.Name = "panel9";
+            this.panel9.Size = new System.Drawing.Size(328, 36);
+            this.panel9.TabIndex = 1;
+            // 
+            // btRemoveFilter
+            // 
+            this.btRemoveFilter.Location = new System.Drawing.Point(253, 3);
+            this.btRemoveFilter.Name = "btRemoveFilter";
+            this.btRemoveFilter.Size = new System.Drawing.Size(75, 28);
+            this.btRemoveFilter.TabIndex = 0;
+            this.btRemoveFilter.Text = "Eliminar";
+            this.btRemoveFilter.UseVisualStyleBackColor = true;
+            // 
+            // lbFilters
+            // 
+            this.lbFilters.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left)));
+            this.lbFilters.FormattingEnabled = true;
+            this.lbFilters.ItemHeight = 16;
+            this.lbFilters.Location = new System.Drawing.Point(0, 0);
+            this.lbFilters.Name = "lbFilters";
+            this.lbFilters.Size = new System.Drawing.Size(330, 468);
+            this.lbFilters.TabIndex = 0;
             // 
             // tabData
             // 
@@ -684,6 +824,12 @@
             this.panel4.PerformLayout();
             this.panel5.ResumeLayout(false);
             this.panel5.PerformLayout();
+            this.tabFilters.ResumeLayout(false);
+            this.panel10.ResumeLayout(false);
+            this.gbExtendedOptions.ResumeLayout(false);
+            this.gbExtendedOptions.PerformLayout();
+            this.panel8.ResumeLayout(false);
+            this.panel9.ResumeLayout(false);
             this.tabData.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.dgClients)).EndInit();
             this.panel6.ResumeLayout(false);
@@ -767,6 +913,18 @@
         public RadioButton rbNoNotification;
         private IContainer components;
         public BackgroundWorker bwCreateLetters;
+        public TabPage tabFilters;
+        private Panel panel8;
+        private Panel panel9;
+        public Button btRemoveFilter;
+        public ListBox lbFilters;
+        private Panel panel10;
+        public CheckBox ckbExtendedOptions;
+        public Button btExtendedOptionHelp;
+        public Button btAddOption;
+        public TextBox txtbExtendedOption;
+        public GroupBox gbFilters;
+        public GroupBox gbExtendedOptions;
     }
 }
 

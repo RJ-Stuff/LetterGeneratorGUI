@@ -97,6 +97,7 @@
     <Compile Include="model\Charge.cs" />
     <Compile Include="model\Configuration.cs" />
     <Compile Include="model\DataHelper.cs" />
+    <Compile Include="model\Filter.cs" />
     <Compile Include="model\Format.cs" />
     <Compile Include="model\PaperSize.cs" />
     <Compile Include="model\Utils.cs" />

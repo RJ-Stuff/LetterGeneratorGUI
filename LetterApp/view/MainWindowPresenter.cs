@@ -1,13 +1,11 @@
 ﻿namespace LetterApp.view
 {
     using System;
-    using System.Collections;
     using System.Collections.Generic;
     using System.ComponentModel;
     using System.Data;
     using System.IO;
     using System.Linq;
-    using System.Reactive.Subjects;
     using System.Text;
     using System.Text.RegularExpressions;
     using System.Windows.Forms;
@@ -21,14 +19,18 @@
     using Newtonsoft.Json;
     using Newtonsoft.Json.Linq;
 
-    using static System.String;
-
-    using Format = LetterApp.model.Format;
+    using CheckBox = System.Windows.Forms.CheckBox;
+    using Format = model.Format;
+    using Point = System.Drawing.Point;
+    using Utils = model.Utils;
 
     public class MainWindowPresenter
     {
         private readonly MainWindow mainWindow;
         private readonly LettersGenerationDialog progressDialog;
+        private readonly JToken guiConfiguration;
+        private readonly Dictionary<CheckBox, Tuple<TextBox, string>> filterPair;
+
         private Configuration configuration;
         private bool notSavedChanges;
         private int maxProgress;
@@ -41,10 +43,11 @@
             totalProgress = 0;
             progressDialog = new LettersGenerationDialog();
             notSavedChanges = false;
+            filterPair = new Dictionary<CheckBox, Tuple<TextBox, string>>();
 
-            var guiConfiguration = JToken.Parse(File.ReadAllText(
-                    Path.Combine(Directory.GetCurrentDirectory(), "GUIConfiguration.json"),
-                    Encoding.Default));
+            guiConfiguration = JToken.Parse(File.ReadAllText(
+                Path.Combine(Directory.GetCurrentDirectory(), "GUIConfiguration.json"),
+                Encoding.UTF8));
 
             mainWindow.cbPaperSize.DropDownStyle = ComboBoxStyle.DropDownList;
             mainWindow.cbCharge.DropDownStyle = ComboBoxStyle.DropDownList;
@@ -54,6 +57,7 @@
             .ToList()
             .ForEach(o => this.mainWindow.cbPaperSize.Items.Add(o));
 
+            UpdateFilterTab();
             LoadConfiguration();
             CreateEvents();
         }
@@ -105,6 +109,30 @@
             return f.BindingSource != null;
         }
 
+        private static CheckBox GetCheckBox(Tuple<JToken, int> tuple, Action<object, EventArgs> filterAction)
+        {
+            var ckb = new CheckBox()
+            {
+                Text = tuple.Item1["kind"].Value<string>(),
+                Location = new Point(5, (tuple.Item2 + 1) * 23),
+                Width = 210
+            };
+            ckb.Click += new EventHandler(filterAction);
+
+            return ckb;
+        }
+
+        private static TextBox GetTextBox(Tuple<JToken, int> t)
+        {
+            var txb = new TextBox()
+            {
+                Location = new Point(215, (t.Item2 + 1) * 23),
+                Width = 150,
+                Height = 23
+            };
+            return txb;
+        }
+
         private void CreateEvents()
         {
             mainWindow.btGenerateWords.Click += GenerateLetterEvent;
@@ -132,6 +160,98 @@
             progressDialog.Closing += ProgressDialogOnClosing;
             mainWindow.Closing += MainWindowOnClosing;
             mainWindow.cerrarToolStripMenuItem.Click += CerrarToolStripMenuItemOnClick;
+            mainWindow.btRemoveFilter.Click += RemoveFilter;
+            mainWindow.btAddOption.Click += AddOption;
+            mainWindow.btExtendedOptionHelp.Click += ExtendedOptionHelp;
+        }
+
+        private void ExtendedOptionHelp(object sender, EventArgs e)
+        {
+            MessageBox.Show(
+                "Mediante esta opción es posible\n" + "agregar filtros especializados o no\n"
+                + "contemplados en las restantes opciones.\n\n" +
+                "Este filtro se usa directamente en la consulta a la base de datos.",
+                "Información");
+        }
+
+        private void UpdateFilterTab()
+        {
+            var filters = guiConfiguration["filters"] ?? new JArray();
+
+            filters
+                .Select((f, i) => new Tuple<JToken, int>(f, i))
+                .ToList()
+                .ForEach(SetFilterPairValue);
+
+            ManageCheckGroupBox(mainWindow.ckbExtendedOptions, mainWindow.gbExtendedOptions);
+        }
+
+        private void SetFilterPairValue(Tuple<JToken, int> t)
+        {
+            var ckb = GetCheckBox(t, FilterAction);
+
+            mainWindow.gbFilters.Controls.Add(ckb);
+
+            TextBox txb = null;
+
+            if (Convert.ToBoolean(t.Item1["box"].Value<string>()))
+            {
+                txb = GetTextBox(t);
+                mainWindow.gbFilters.Controls.Add(txb);
+            }
+
+            filterPair[ckb] = new Tuple<TextBox, string>(txb, t.Item1["internalname"].Value<string>());
+        }
+
+        private void FilterAction(object sender, EventArgs e)
+        {
+            var chk = sender as CheckBox;
+
+            if (filterPair.TryGetValue(chk, out Tuple<TextBox, string> tuple) && Utils.Validate(tuple.Item1))
+            {
+                var functions = new Dictionary<bool, Action<object>>
+                {
+                    [true] = f => mainWindow.lbFilters.Items.Add(f),
+                    [false] = mainWindow.lbFilters.Items.Remove
+                };
+
+                functions[chk.Checked].Invoke(new Filter(chk.Text, tuple.Item2, (tuple.Item1 ?? new TextBox()).Text));
+
+                if (tuple.Item1 != null)
+                {
+                    tuple.Item1.Enabled = !chk.Checked;
+                    tuple.Item1.Text = chk.Checked ? tuple.Item1.Text : string.Empty;
+                }
+
+                FiltersChange();
+            }
+            else
+            {
+                var alt = tuple.Item1.Text.Trim().Length == 0 ? ", comience agregando algún valor al mismo." : ".";
+                MessageBox.Show($"Hay problemas con la validación del valor del filtro{alt}", "Validación");
+                chk.Checked = false;
+            }
+        }
+
+        private void ManageCheckGroupBox(CheckBox chk, GroupBox grp)
+        {
+            if (chk.Parent == grp)
+            {
+                grp.Parent.Controls.Add(chk);
+
+                chk.Location = new Point(
+                    chk.Left + grp.Left,
+                    chk.Top + grp.Top);
+
+                chk.BringToFront();
+            }
+
+            chk.Click += ExtendedOptions;
+        }
+
+        private void ExtendedOptions(object sender, EventArgs e)
+        {
+            mainWindow.gbExtendedOptions.Enabled = mainWindow.ckbExtendedOptions.Checked;
         }
 
         private void CerrarToolStripMenuItemOnClick(object sender, EventArgs eventArgs)
@@ -192,7 +312,7 @@
 
         private void ClearProgressDialog()
         {
-            progressDialog.lProgressInfo.Text = Empty;
+            progressDialog.lProgressInfo.Text = string.Empty;
             progressDialog.pbPart.Value = 0;
             progressDialog.pbPart.Maximum = 0;
             progressDialog.pbPart.Minimum = 0;
@@ -337,18 +457,31 @@
 
             try
             {
-                mainWindow.rtEditor.Text = Empty;
+                mainWindow.lbFilters.Items.Clear();
 
+                filterPair
+                    .Keys
+                    .ToList()
+                    .ForEach(k => UpdateFilter(k, false, string.Empty));
+
+                mainWindow.ckbExtendedOptions.Checked = false;
+                mainWindow.gbExtendedOptions.Enabled = false;
+                mainWindow.txtbExtendedOption.Text = string.Empty;
+                mainWindow.rtEditor.Text = string.Empty;
                 mainWindow.ckbEditEditor.Checked = false;
+
                 EditEditor(null, null);
 
                 var index = mainWindow.ckLbFormats.SelectedIndex;
                 if (index == -1) return;
 
-                var format = mainWindow.ckLbFormats.Items[index] as Format;
+                var format = (Format)mainWindow.ckLbFormats.Items[index];
 
                 Encoding currentEncoding;
                 if (format == null) return;
+
+                //refractorizar esto
+                format.Filters.ForEach(UpdateFilter);
 
                 using (var reader = new StreamReader(format.Url, true))
                 {
@@ -364,7 +497,8 @@
                 mainWindow.bsMain = format.BindingSource;
                 mainWindow.dgClients.DataSource = format.BindingSource;
 
-                if (!IsNullOrEmpty(format.BindingSource?.Filter) || !IsNullOrEmpty(format.BindingSource?.Sort))
+                if (!string.IsNullOrEmpty(format.BindingSource?.Filter) ||
+                    !string.IsNullOrEmpty(format.BindingSource?.Sort))
                 {
                     mainWindow.dgClients.LoadFilterAndSort(format.BindingSource.Filter, format.BindingSource.Sort);
                 }
@@ -381,6 +515,88 @@
             catch (Exception)
             {
                 MessageBox.Show("Ocurrió un error al actualizar la aplicación.", "Error");
+            }
+        }
+
+        private void UpdateFilter(Filter f)
+        {
+            mainWindow.lbFilters.Items.Add(f);
+            var keys = filterPair.Keys.Where(k => k.Text == f.DisplayName).ToList();
+            if (keys.Count == 0) return;
+            var key = keys[0];
+
+            UpdateFilter(key, true, f.Value.ToString());
+        }
+
+        private void UpdateFilter(CheckBox k, bool active, string value)
+        {
+            k.Checked = active;
+            if (filterPair[k].Item1 == null) return;
+            filterPair[k].Item1.Text = value;
+            filterPair[k].Item1.Enabled = !active;
+        }
+
+        private void FiltersChange()
+        {
+            var index = mainWindow.ckLbFormats.SelectedIndex;
+            if (index == -1) return;
+            var format = (Format)mainWindow.ckLbFormats.Items[index];
+            format.Filters = mainWindow.lbFilters.Items.Cast<Filter>().ToList();
+            configuration.SetFormats(mainWindow.ckLbFormats.Items.Cast<Format>().ToList());
+        }
+
+        private void AddOption(object sender, EventArgs e)
+        {
+            if (mainWindow.txtbExtendedOption.Text.Trim().Length == 0)
+            {
+                MessageBox.Show("Debe introducir algún valor como opción.", "Validación");
+            }
+            else
+            {
+                var option = mainWindow.txtbExtendedOption.Text.Trim();
+                mainWindow.lbFilters.Items.Add(new Filter(option, option, string.Empty));
+                mainWindow.txtbExtendedOption.Text = string.Empty;
+                FiltersChange();
+            }
+        }
+
+        private void RemoveFilter(object sender, EventArgs e)
+        {
+            if (mainWindow.lbFilters.Items.Count == 0)
+            {
+                MessageBox.Show("No existen filtros.", "Información");
+            }
+            else
+            {
+                var index = mainWindow.lbFilters.SelectedIndex;
+                if (index == -1)
+                {
+                    MessageBox.Show("Debe seleccionar el filtro a eliminar.", "Información");
+                }
+                else
+                {
+                    var confirmResult = MessageBox.Show(
+                        "¿Está seguro que desea eliminar el filtro?",
+                        "Confirmar eliminación",
+                        MessageBoxButtons.YesNo);
+
+                    if (confirmResult != DialogResult.Yes) return;
+                    var filter = mainWindow.lbFilters.Items[index] as Filter;
+
+                    var chkl = filterPair.Keys.Select(k => k).Where(k => k.Text == filter.DisplayName).ToList();
+
+                    if (chkl.Count != 0)
+                    {
+                        chkl[0].Checked = false;
+                        FilterAction(chkl[0], null);
+                    }
+                    else
+                    {
+                        mainWindow.lbFilters.Items.RemoveAt(index);
+                    }
+
+                    FiltersChange();
+                }
             }
         }
 
@@ -419,10 +635,10 @@
                     .Select((f, i) => new { format = f, index = i })
                     .ToList()
                     .ForEach(p =>
-                        {
-                            mainWindow.ckLbFormats.Items.Add(p.format);
-                            mainWindow.ckLbFormats.SetItemCheckState(p.index, p.format.Checked ? CheckState.Checked : CheckState.Unchecked);
-                        });
+                    {
+                        mainWindow.ckLbFormats.Items.Add(p.format);
+                        mainWindow.ckLbFormats.SetItemCheckState(p.index, p.format.Checked ? CheckState.Checked : CheckState.Unchecked);
+                    });
 
                 configuration.Notifications.ForEach(n => mainWindow.lbMails.Items.Add(n));
 
@@ -504,7 +720,7 @@
             if (r.Match(mainWindow.txtbEmail.Text.Trim()).Success)
             {
                 mainWindow.lbMails.Items.Add(mainWindow.txtbEmail.Text.Trim());
-                mainWindow.txtbEmail.Text = Empty;
+                mainWindow.txtbEmail.Text = string.Empty;
                 configuration.SetNotifications(mainWindow.lbMails.Items.Cast<string>().ToList());
             }
             else
@@ -513,7 +729,7 @@
                     "Direccion de correo incorrecta.\n\n" + "Ejemplo de direcciones correctas:\n"
                     + "titu.cusi.huallpa@rjabogados.com\n" +
                     "joseholguin@hotmail.com", "Información");
-                mainWindow.txtbEmail.Text = Empty;
+                mainWindow.txtbEmail.Text = string.Empty;
             }
         }
 

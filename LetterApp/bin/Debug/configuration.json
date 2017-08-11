@@ -16,11 +16,33 @@
       "Charge": {
         "ChargeClazz": "",
         "DisplayName": "Sin cargo"
-      }
+      },
+      "Filters": [
+        {
+          "DisplayName": "Rango deuda 151-180 días",
+          "InternalName": "deuda-151-180",
+          "Value": ""
+        },
+        {
+          "DisplayName": "Rango deuda 120-150 días",
+          "InternalName": "deuda120-150",
+          "Value": ""
+        },
+        {
+          "DisplayName": "Rango deuda 91-120 días",
+          "InternalName": "deuda91-120",
+          "Value": ""
+        },
+        {
+          "DisplayName": "Negocio",
+          "InternalName": "negocio",
+          "Value": "sdfsdf"
+        }
+      ]
     },
     {
       "Url": "C:\\Users\\rigo\\OneDrive - ASESCOM RJ ABOGADOS EIRL\\git\\LetterGeneratorGUI\\LetterApp\\bin\\Debug\\formats\\tdp-72.rjf",
-      "Checked": false,
+      "Checked": true,
       "PaperSize": {
         "Papersize": 7,
         "DisplayName": "Papel A4",
@@ -34,11 +56,12 @@
       "Charge": {
         "ChargeClazz": "",
         "DisplayName": "Sin cargo"
-      }
+      },
+      "Filters": []
     },
     {
       "Url": "C:\\Users\\rigo\\OneDrive - ASESCOM RJ ABOGADOS EIRL\\git\\LetterGeneratorGUI\\LetterApp\\bin\\Debug\\formats\\tdp-lastchance.rjf",
-      "Checked": false,
+      "Checked": true,
       "PaperSize": {
         "Papersize": 7,
         "DisplayName": "Papel A4",
@@ -52,11 +75,12 @@
       "Charge": {
         "ChargeClazz": "",
         "DisplayName": "Sin cargo"
-      }
+      },
+      "Filters": []
     },
     {
       "Url": "C:\\Users\\rigo\\OneDrive - ASESCOM RJ ABOGADOS EIRL\\git\\LetterGeneratorGUI\\LetterApp\\bin\\Debug\\formats\\tdp-non-compliance.rjf",
-      "Checked": false,
+      "Checked": true,
       "PaperSize": {
         "Papersize": 7,
         "DisplayName": "Papel A4",
@@ -70,11 +94,12 @@
       "Charge": {
         "ChargeClazz": "",
         "DisplayName": "Sin cargo"
-      }
+      },
+      "Filters": []
     },
     {
       "Url": "C:\\Users\\rigo\\OneDrive - ASESCOM RJ ABOGADOS EIRL\\git\\LetterGeneratorGUI\\LetterApp\\bin\\Debug\\formats\\tdp-urgent.rjf",
-      "Checked": false,
+      "Checked": true,
       "PaperSize": {
         "Papersize": 7,
         "DisplayName": "Papel A4",
@@ -88,7 +113,8 @@
       "Charge": {
         "ChargeClazz": "",
         "DisplayName": "Sin cargo"
-      }
+      },
+      "Filters": []
     }
   ],
   "Notifications": []
