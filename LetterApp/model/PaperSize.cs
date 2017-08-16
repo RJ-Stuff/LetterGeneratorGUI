@@ -8,8 +8,7 @@
     class PaperSize
     {
         public static readonly PaperSize DefaultSize =
-            new PaperSize("wdPaperA4", "Papel A4",
-                new List<Charge> { Charge.DefaultCharge });
+            new PaperSize("wdPaperA4", "Papel A4", new List<Charge> { Charge.DefaultCharge });
 
         public WdPaperSize Papersize { get; set; }
 

@@ -19,6 +19,7 @@
     using Newtonsoft.Json;
     using Newtonsoft.Json.Linq;
 
+    using Charge = LetterApp.model.Charge;
     using CheckBox = System.Windows.Forms.CheckBox;
     using Format = model.Format;
     using Point = System.Drawing.Point;
@@ -659,21 +660,26 @@
         {
             if (mainWindow.ckLbFormats.Items.Count != 0) return;
 
-            var dir = Path.Combine(Directory.GetCurrentDirectory(), "formats");
+            LoadFormatByPaperSize(PaperSize.DefaultSize);
+            //var dir = Path.Combine(Directory.GetCurrentDirectory(), "latex");
 
-            if (!Directory.Exists(dir)) return;
+            //if (!Directory.Exists(dir)) return;
 
-            var stream = Directory.EnumerateFiles(dir, "*.rjf")
-                .Select((url, i) => new { format = new Format(url), index = i }).ToList();
+            //var stream = Directory
+            //    .EnumerateFiles(dir, "*.tex")
+            //    .Where(url => !url.Contains("letters") && !url.Contains("cargo"))
+            //    .Select((url, i) => new { format = new Format(url), index = i })
+            //    .ToList();
 
-            configuration.SetFormats(stream.Select(o => o.format).ToList());
-            stream.ForEach(o =>
-                    {
-                        mainWindow.ckLbFormats.Items.Add(o.format);
-                        mainWindow.ckLbFormats.SetItemCheckState(
-                            o.index,
-                            o.format.Checked ? CheckState.Checked : CheckState.Unchecked);
-                    });
+            //configuration.SetFormats(stream.Select(o => o.format).ToList());
+
+            //stream.ForEach(o =>
+            //{
+            //    mainWindow.ckLbFormats.Items.Add(o.format);
+            //    mainWindow.ckLbFormats.SetItemCheckState(
+            //        o.index,
+            //        o.format.Checked ? CheckState.Checked : CheckState.Unchecked);
+            //});
         }
 
         private void SelectedPaperSizeChange(object sender, EventArgs e)
@@ -690,6 +696,8 @@
 
             var charge = (mainWindow.cbCharge.SelectedItem as model.Charge) ?? model.Charge.DefaultCharge;
 
+            LoadFormatByPaperSize(paperSize);
+
             mainWindow.ckLbFormats
                 .Items
                 .Cast<Format>()
@@ -701,6 +709,36 @@
                 });
 
             configuration.SetFormats(mainWindow.ckLbFormats.Items.Cast<Format>().ToList());
+        }
+
+        private void LoadFormatByPaperSize(PaperSize paperSize)
+        {
+            mainWindow.ckLbFormats.Items.Clear();
+
+            var dir = Path.Combine(Directory.GetCurrentDirectory(), "latex");
+
+            var stream = Directory
+                .EnumerateFiles(dir, "*.tex")
+                .Where(url => FilterFormatByPaperSize(url, paperSize))
+                .Select((url, i) => new { format = new Format(url), index = i })
+                .ToList();
+
+            configuration.SetFormats(stream.Select(o => o.format).ToList());
+
+            stream.ForEach(o =>
+            {
+                mainWindow.ckLbFormats.Items.Add(o.format);
+                mainWindow.ckLbFormats.SetItemCheckState(
+                    o.index,
+                    o.format.Checked ? CheckState.Checked : CheckState.Unchecked);
+            });
+        }
+
+        private bool FilterFormatByPaperSize(string url, PaperSize paperSize)
+        {
+            if (paperSize.Equals(PaperSize.DefaultSize))
+                return !url.Contains("letters") && !url.Contains("cargo");
+            return !url.Contains("letters") && url.Contains("cargo");
         }
 
         private void EditEditor(object sender, EventArgs e)

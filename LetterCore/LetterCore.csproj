@@ -59,6 +59,7 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="latex\LatexController.cs" />
     <Compile Include="Letters\AllInOneGenerator.cs" />
     <Compile Include="Letters\Charge.cs" />
     <Compile Include="Letters\ProgressIncrement.cs" />

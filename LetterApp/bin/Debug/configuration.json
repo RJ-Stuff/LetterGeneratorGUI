@@ -1,113 +1,97 @@
 {
   "Formats": [
     {
-      "Url": "C:\\Users\\rigo\\OneDrive - ASESCOM RJ ABOGADOS EIRL\\git\\LetterGeneratorGUI\\LetterApp\\bin\\Debug\\formats\\tdp-48.rjf",
+      "Url": "C:\\Users\\rigo\\OneDrive - ASESCOM RJ ABOGADOS EIRL\\git\\LetterGeneratorGUI\\LetterApp\\bin\\Debug\\latex\\48-horas-con-cargo.tex",
       "Checked": true,
       "PaperSize": {
-        "Papersize": 7,
-        "DisplayName": "Papel A4",
+        "Papersize": 4,
+        "DisplayName": "Papel Oficio",
         "Charges": [
           {
-            "ChargeClazz": "",
-            "DisplayName": "Sin cargo"
+            "ChargeClazz": "SimpleCharge",
+            "DisplayName": "Cargo simple"
           }
         ]
       },
       "Charge": {
-        "ChargeClazz": "",
-        "DisplayName": "Sin cargo"
-      },
-      "Filters": [
-        {
-          "DisplayName": "Rango deuda 151-180 días",
-          "InternalName": "deuda-151-180",
-          "Value": ""
-        },
-        {
-          "DisplayName": "Rango deuda 120-150 días",
-          "InternalName": "deuda120-150",
-          "Value": ""
-        },
-        {
-          "DisplayName": "Rango deuda 91-120 días",
-          "InternalName": "deuda91-120",
-          "Value": ""
-        }
-      ]
-    },
-    {
-      "Url": "C:\\Users\\rigo\\OneDrive - ASESCOM RJ ABOGADOS EIRL\\git\\LetterGeneratorGUI\\LetterApp\\bin\\Debug\\formats\\tdp-72.rjf",
-      "Checked": true,
-      "PaperSize": {
-        "Papersize": 7,
-        "DisplayName": "Papel A4",
-        "Charges": [
-          {
-            "ChargeClazz": "",
-            "DisplayName": "Sin cargo"
-          }
-        ]
-      },
-      "Charge": {
-        "ChargeClazz": "",
-        "DisplayName": "Sin cargo"
+        "ChargeClazz": "SimpleCharge",
+        "DisplayName": "Cargo simple"
       },
       "Filters": []
     },
     {
-      "Url": "C:\\Users\\rigo\\OneDrive - ASESCOM RJ ABOGADOS EIRL\\git\\LetterGeneratorGUI\\LetterApp\\bin\\Debug\\formats\\tdp-lastchance.rjf",
+      "Url": "C:\\Users\\rigo\\OneDrive - ASESCOM RJ ABOGADOS EIRL\\git\\LetterGeneratorGUI\\LetterApp\\bin\\Debug\\latex\\72-horas-con-cargo.tex",
       "Checked": true,
       "PaperSize": {
-        "Papersize": 7,
-        "DisplayName": "Papel A4",
+        "Papersize": 4,
+        "DisplayName": "Papel Oficio",
         "Charges": [
           {
-            "ChargeClazz": "",
-            "DisplayName": "Sin cargo"
+            "ChargeClazz": "SimpleCharge",
+            "DisplayName": "Cargo simple"
           }
         ]
       },
       "Charge": {
-        "ChargeClazz": "",
-        "DisplayName": "Sin cargo"
+        "ChargeClazz": "SimpleCharge",
+        "DisplayName": "Cargo simple"
       },
       "Filters": []
     },
     {
-      "Url": "C:\\Users\\rigo\\OneDrive - ASESCOM RJ ABOGADOS EIRL\\git\\LetterGeneratorGUI\\LetterApp\\bin\\Debug\\formats\\tdp-non-compliance.rjf",
+      "Url": "C:\\Users\\rigo\\OneDrive - ASESCOM RJ ABOGADOS EIRL\\git\\LetterGeneratorGUI\\LetterApp\\bin\\Debug\\latex\\no-cumplimiento-con-cargo.tex",
       "Checked": true,
       "PaperSize": {
-        "Papersize": 7,
-        "DisplayName": "Papel A4",
+        "Papersize": 4,
+        "DisplayName": "Papel Oficio",
         "Charges": [
           {
-            "ChargeClazz": "",
-            "DisplayName": "Sin cargo"
+            "ChargeClazz": "SimpleCharge",
+            "DisplayName": "Cargo simple"
           }
         ]
       },
       "Charge": {
-        "ChargeClazz": "",
-        "DisplayName": "Sin cargo"
+        "ChargeClazz": "SimpleCharge",
+        "DisplayName": "Cargo simple"
       },
       "Filters": []
     },
     {
-      "Url": "C:\\Users\\rigo\\OneDrive - ASESCOM RJ ABOGADOS EIRL\\git\\LetterGeneratorGUI\\LetterApp\\bin\\Debug\\formats\\tdp-urgent.rjf",
+      "Url": "C:\\Users\\rigo\\OneDrive - ASESCOM RJ ABOGADOS EIRL\\git\\LetterGeneratorGUI\\LetterApp\\bin\\Debug\\latex\\ultima-oportunidad-con-cargo.tex",
       "Checked": true,
       "PaperSize": {
-        "Papersize": 7,
-        "DisplayName": "Papel A4",
+        "Papersize": 4,
+        "DisplayName": "Papel Oficio",
         "Charges": [
           {
-            "ChargeClazz": "",
-            "DisplayName": "Sin cargo"
+            "ChargeClazz": "SimpleCharge",
+            "DisplayName": "Cargo simple"
           }
         ]
       },
       "Charge": {
-        "ChargeClazz": "",
-        "DisplayName": "Sin cargo"
+        "ChargeClazz": "SimpleCharge",
+        "DisplayName": "Cargo simple"
+      },
+      "Filters": []
+    },
+    {
+      "Url": "C:\\Users\\rigo\\OneDrive - ASESCOM RJ ABOGADOS EIRL\\git\\LetterGeneratorGUI\\LetterApp\\bin\\Debug\\latex\\urgente-con-cargo.tex",
+      "Checked": true,
+      "PaperSize": {
+        "Papersize": 4,
+        "DisplayName": "Papel Oficio",
+        "Charges": [
+          {
+            "ChargeClazz": "SimpleCharge",
+            "DisplayName": "Cargo simple"
+          }
+        ]
+      },
+      "Charge": {
+        "ChargeClazz": "SimpleCharge",
+        "DisplayName": "Cargo simple"
       },
       "Filters": []
     }
