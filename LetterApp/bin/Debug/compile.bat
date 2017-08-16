@@ -6,5 +6,5 @@
 
 @echo off
 
-latex.exe -output-directory=temp --src --interaction=errorstopmode --synctex=-1 "%1.tex"
+latex\install\miktex\bin\latex.exe -output-directory=temp --src --interaction=errorstopmode --synctex=-1 "%1.tex"
 dvipdfmx.exe "%1.dvi" -o %2
