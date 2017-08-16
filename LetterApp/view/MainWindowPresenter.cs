@@ -134,6 +134,13 @@
             return txb;
         }
 
+        private static bool FilterFormatByPaperSize(string url, PaperSize paperSize)
+        {
+            if (paperSize.Equals(PaperSize.DefaultSize))
+                return !url.Contains("letters") && !url.Contains("cargo");
+            return !url.Contains("letters") && url.Contains("cargo");
+        }
+
         private void CreateEvents()
         {
             mainWindow.btGenerateWords.Click += GenerateLetterEvent;
@@ -661,25 +668,6 @@
             if (mainWindow.ckLbFormats.Items.Count != 0) return;
 
             LoadFormatByPaperSize(PaperSize.DefaultSize);
-            //var dir = Path.Combine(Directory.GetCurrentDirectory(), "latex");
-
-            //if (!Directory.Exists(dir)) return;
-
-            //var stream = Directory
-            //    .EnumerateFiles(dir, "*.tex")
-            //    .Where(url => !url.Contains("letters") && !url.Contains("cargo"))
-            //    .Select((url, i) => new { format = new Format(url), index = i })
-            //    .ToList();
-
-            //configuration.SetFormats(stream.Select(o => o.format).ToList());
-
-            //stream.ForEach(o =>
-            //{
-            //    mainWindow.ckLbFormats.Items.Add(o.format);
-            //    mainWindow.ckLbFormats.SetItemCheckState(
-            //        o.index,
-            //        o.format.Checked ? CheckState.Checked : CheckState.Unchecked);
-            //});
         }
 
         private void SelectedPaperSizeChange(object sender, EventArgs e)
@@ -734,16 +722,9 @@
             });
         }
 
-        private bool FilterFormatByPaperSize(string url, PaperSize paperSize)
-        {
-            if (paperSize.Equals(PaperSize.DefaultSize))
-                return !url.Contains("letters") && !url.Contains("cargo");
-            return !url.Contains("letters") && url.Contains("cargo");
-        }
-
         private void EditEditor(object sender, EventArgs e)
         {
-            mainWindow.rtEditor.Enabled = mainWindow.ckbEditEditor.Checked;
+            mainWindow.rtEditor.ReadOnly = !mainWindow.ckbEditEditor.Checked;
             mainWindow.btSaveEditorChanges.Enabled = mainWindow.ckbEditEditor.Checked;
             mainWindow.ckbLineWrap.Enabled = mainWindow.ckbEditEditor.Checked;
         }

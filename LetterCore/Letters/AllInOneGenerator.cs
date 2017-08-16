@@ -1,18 +1,11 @@
 ﻿namespace LetterCore.Letters
 {
-    using System;
     using System.Collections.Generic;
     using System.ComponentModel;
-    using System.IO;
-    using System.Linq;
-    using System.Reflection;
-    using System.Runtime.InteropServices;
 
     using LetterCore.latex;
 
     using Microsoft.Office.Interop.Word;
-
-    using Newtonsoft.Json.Linq;
 
     public class AllInOneGenerator
     {

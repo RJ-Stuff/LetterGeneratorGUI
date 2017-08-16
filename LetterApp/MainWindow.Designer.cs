@@ -243,10 +243,10 @@
             // 
             this.rtEditor.DetectUrls = false;
             this.rtEditor.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.rtEditor.Enabled = false;
             this.rtEditor.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.rtEditor.Location = new System.Drawing.Point(3, 3);
             this.rtEditor.Name = "rtEditor";
+            this.rtEditor.ReadOnly = true;
             this.rtEditor.Size = new System.Drawing.Size(1092, 509);
             this.rtEditor.TabIndex = 0;
             this.rtEditor.Text = "";
