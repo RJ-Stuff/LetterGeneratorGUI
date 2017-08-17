@@ -141,6 +141,55 @@
             return !url.Contains("letters") && url.Contains("cargo");
         }
 
+        private static Configuration GetConfiguration()
+        {
+            var path = Path.Combine(Directory.GetCurrentDirectory(), "configuration.json");
+            return !File.Exists(path)
+                       ? new Configuration()
+                       : JsonConvert.DeserializeObject<Configuration>(File.ReadAllText(path, Encoding.Default));
+        }
+
+        private static Client GetClientFromGroup(List<DataRowView> group)
+        {
+            var client = ViewUtils.GetClient(group[0]);
+            client.DisaggregatedDebts = group.Select(ViewUtils.GetDebt).ToList();
+
+            return client;
+        }
+
+        private static List<Client> GetClientsFromBindingSource(Format f)
+        {
+            return ViewUtils
+                .GroupBy(f.BindingSource.List.Cast<DataRowView>(), "codluna")
+                .Select(GetClientFromGroup)
+                .ToList();
+        }
+
+        private static LetterCore.Letters.Format GetFormat(model.Format f)
+        {
+            return new LetterCore.Letters.Format(
+                f.Url,
+                GetClientsFromBindingSource(f),
+                f.Charge.ChargeClazz);
+        }
+
+        private static void ExtendedOptionHelp(object sender, EventArgs e)
+        {
+            MessageBox.Show(
+                "Mediante esta opción es posible\n" + "agregar filtros especializados o no\n"
+                + "contemplados en las restantes opciones.\n\n" +
+                "Este filtro se usa directamente en la consulta a la base de datos.",
+                "Información");
+        }
+
+        private static void MailHelp(object sender, EventArgs e)
+        {
+            MessageBox.Show("Las credenciales son las mismas que se \n" +
+                            "utilizan para abrir el correo de la empresa.\n\n" +
+                            "Ejemplo:\nUsuario: titu.cusi.huallpa@rjabogados.com\n" +
+                            "Contraseña: tu-contraseña-personal", "Información");
+        }
+
         private void CreateEvents()
         {
             mainWindow.btGenerateWords.Click += GenerateLetterEvent;
@@ -172,16 +221,7 @@
             mainWindow.btAddOption.Click += AddOption;
             mainWindow.btExtendedOptionHelp.Click += ExtendedOptionHelp;
         }
-
-        private void ExtendedOptionHelp(object sender, EventArgs e)
-        {
-            MessageBox.Show(
-                "Mediante esta opción es posible\n" + "agregar filtros especializados o no\n"
-                + "contemplados en las restantes opciones.\n\n" +
-                "Este filtro se usa directamente en la consulta a la base de datos.",
-                "Información");
-        }
-
+        
         private void UpdateFilterTab()
         {
             var filters = guiConfiguration["filters"] ?? new JArray();
@@ -334,31 +374,7 @@
             var worker = (BackgroundWorker)sender;
             GenerateLetters(((PaperSize)e.Argument).Papersize, worker, e);
         }
-
-        private Client GetClientFromGroup(List<DataRowView> group)
-        {
-            var client = ViewUtils.GetClient(group[0]);
-            client.DisaggregatedDebts = group.Select(ViewUtils.GetDebt).ToList();
-
-            return client;
-        }
-
-        private List<Client> GetClientsFromBindingSource(Format f)
-        {
-            return ViewUtils
-                .GroupBy(f.BindingSource.List.Cast<DataRowView>(), "codluna")
-                .Select(GetClientFromGroup)
-                .ToList();
-        }
-
-        private LetterCore.Letters.Format GetFormat(model.Format f)
-        {
-            return new LetterCore.Letters.Format(
-                f.Url,
-                GetClientsFromBindingSource(f),
-                f.Charge.ChargeClazz);
-        }
-
+        
         private void GenerateLetters(WdPaperSize paperSize, BackgroundWorker worker, DoWorkEventArgs e)
         {
             var formats = mainWindow.ckLbFormats.CheckedItems.Cast<Format>()
@@ -447,14 +463,6 @@
                 .ForEach(f => f.Charge = charge);
 
             configuration.SetFormats(mainWindow.ckLbFormats.Items.Cast<Format>().ToList());
-        }
-
-        private void MailHelp(object sender, EventArgs e)
-        {
-            MessageBox.Show("Las credenciales son las mismas que se \n" +
-                "utilizan para abrir el correo de la empresa.\n\n" +
-                "Ejemplo:\nUsuario: titu.cusi.huallpa@rjabogados.com\n" +
-                "Contraseña: tu-contraseña-personal", "Información");
         }
 
         private void RefreshGui()
@@ -622,31 +630,26 @@
             configuration.SetFormats(mainWindow.ckLbFormats.Items.Cast<Format>().ToList());
         }
 
+        private void SetFormatOnListBox(Tuple<Format, int> f)
+        {
+            mainWindow.ckLbFormats.Items.Add(f.Item1);
+            mainWindow.ckLbFormats.SetItemCheckState(f.Item2, f.Item1.Checked ? CheckState.Checked : CheckState.Unchecked);
+        }
+
         private void LoadConfiguration()
         {
             try
             {
-                var path = Path.Combine(Directory.GetCurrentDirectory(), "configuration.json");
-                if (!File.Exists(path))
-                {
-                    configuration = new Configuration();
-                }
-                else
-                {
-                    configuration = JsonConvert.DeserializeObject<Configuration>(
-                    File.ReadAllText(path, Encoding.Default));
-                }
+                configuration = GetConfiguration();
 
                 configuration.Formats
-                    .Select((f, i) => new { format = f, index = i })
+                    .Select((f, i) => Tuple.Create(f, i))
                     .ToList()
-                    .ForEach(p =>
-                    {
-                        mainWindow.ckLbFormats.Items.Add(p.format);
-                        mainWindow.ckLbFormats.SetItemCheckState(p.index, p.format.Checked ? CheckState.Checked : CheckState.Unchecked);
-                    });
+                    .ForEach(SetFormatOnListBox);
 
-                configuration.Notifications.ForEach(n => mainWindow.lbMails.Items.Add(n));
+                configuration
+                    .Notifications
+                    .ForEach(n => mainWindow.lbMails.Items.Add(n));
 
                 LoadDefaultFormats();
 
