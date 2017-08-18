@@ -7,4 +7,4 @@
 @echo off
 
 latex\install\miktex\bin\latex.exe -output-directory=temp --src --interaction=errorstopmode --synctex=-1 "%1.tex"
-dvipdfmx.exe "%1.dvi" -o %2
+latex\install\miktex\bin\dvipdfmx.exe "%1.dvi" -o %2

@@ -220,8 +220,24 @@
             mainWindow.btRemoveFilter.Click += RemoveFilter;
             mainWindow.btAddOption.Click += AddOption;
             mainWindow.btExtendedOptionHelp.Click += ExtendedOptionHelp;
+            mainWindow.rbOnlyMail.Click += CheckCredentials;
+            mainWindow.rbMailWithAtt.Click += CheckCredentials;
         }
-        
+
+        private void CheckCredentials(object sender, EventArgs e)
+        {
+            var rb = sender as RadioButton;
+            if (rb.Checked &&
+                (string.IsNullOrEmpty(mainWindow.txtbUser.Text.Trim())
+                               || string.IsNullOrEmpty(mainWindow.txtbPass.Text.Trim())
+                               || mainWindow.lbMails.Items.Count == 0))
+            {
+                MessageBox.Show("Por favor, compruebe que tenga un correo al cual notificar\ny que completó las credenciales correctamente.", "Información");
+                rb.Checked = false;
+                mainWindow.rbNoNotification.Checked = true;
+            }
+        }
+
         private void UpdateFilterTab()
         {
             var filters = guiConfiguration["filters"] ?? new JArray();
@@ -374,7 +390,7 @@
             var worker = (BackgroundWorker)sender;
             GenerateLetters(((PaperSize)e.Argument).Papersize, worker, e);
         }
-        
+
         private void GenerateLetters(WdPaperSize paperSize, BackgroundWorker worker, DoWorkEventArgs e)
         {
             var formats = mainWindow.ckLbFormats.CheckedItems.Cast<Format>()
