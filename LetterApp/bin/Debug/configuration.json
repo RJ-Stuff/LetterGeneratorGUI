@@ -18,14 +18,14 @@
         ]
       },
       "Charge": {
-        "ChargeClazz": "",
-        "DisplayName": "Sin cargo"
+        "ChargeClazz": "SpecialCharge",
+        "DisplayName": "Cargo especial"
       },
       "Filters": []
     },
     {
       "Url": "C:\\Users\\rigo\\OneDrive - ASESCOM RJ ABOGADOS EIRL\\git\\LetterGeneratorGUI\\LetterApp\\bin\\Debug\\latex\\72-horas.tex",
-      "Checked": true,
+      "Checked": false,
       "PaperSize": {
         "Papersize": 7,
         "DisplayName": "Papel A4",
@@ -41,14 +41,14 @@
         ]
       },
       "Charge": {
-        "ChargeClazz": "",
-        "DisplayName": "Sin cargo"
+        "ChargeClazz": "SpecialCharge",
+        "DisplayName": "Cargo especial"
       },
       "Filters": []
     },
     {
       "Url": "C:\\Users\\rigo\\OneDrive - ASESCOM RJ ABOGADOS EIRL\\git\\LetterGeneratorGUI\\LetterApp\\bin\\Debug\\latex\\no-cumplimiento.tex",
-      "Checked": true,
+      "Checked": false,
       "PaperSize": {
         "Papersize": 7,
         "DisplayName": "Papel A4",
@@ -64,14 +64,14 @@
         ]
       },
       "Charge": {
-        "ChargeClazz": "",
-        "DisplayName": "Sin cargo"
+        "ChargeClazz": "SpecialCharge",
+        "DisplayName": "Cargo especial"
       },
       "Filters": []
     },
     {
       "Url": "C:\\Users\\rigo\\OneDrive - ASESCOM RJ ABOGADOS EIRL\\git\\LetterGeneratorGUI\\LetterApp\\bin\\Debug\\latex\\ultima-oportunidad.tex",
-      "Checked": true,
+      "Checked": false,
       "PaperSize": {
         "Papersize": 7,
         "DisplayName": "Papel A4",
@@ -87,14 +87,14 @@
         ]
       },
       "Charge": {
-        "ChargeClazz": "",
-        "DisplayName": "Sin cargo"
+        "ChargeClazz": "SpecialCharge",
+        "DisplayName": "Cargo especial"
       },
       "Filters": []
     },
     {
       "Url": "C:\\Users\\rigo\\OneDrive - ASESCOM RJ ABOGADOS EIRL\\git\\LetterGeneratorGUI\\LetterApp\\bin\\Debug\\latex\\urgente.tex",
-      "Checked": true,
+      "Checked": false,
       "PaperSize": {
         "Papersize": 7,
         "DisplayName": "Papel A4",
@@ -110,8 +110,8 @@
         ]
       },
       "Charge": {
-        "ChargeClazz": "",
-        "DisplayName": "Sin cargo"
+        "ChargeClazz": "SpecialCharge",
+        "DisplayName": "Cargo especial"
       },
       "Filters": []
     }

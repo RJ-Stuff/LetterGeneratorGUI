@@ -19,6 +19,7 @@ namespace LetterCore.latex
         public static string LatexGenerator(
             List<Format> formats,
             string paperSize,
+            string chargeClazz,
             BackgroundWorker worker,
             DoWorkEventArgs e)
         {
@@ -29,7 +30,7 @@ namespace LetterCore.latex
             var bodyFormat = File.ReadAllText(Combine(Directory.GetCurrentDirectory(), @"latex\letters.tex"));
             var filename = $@"temp\letters-{id}";
             var texBody = bodyFormat
-                .Replace("%INCLUDEFILES%", string.Join(string.Empty, formats.Select(f => CreateFormat(f, worker, e))))
+                .Replace("%INCLUDEFILES%", string.Join(string.Empty, formats.Select(f => CreateFormat(f, chargeClazz, worker, e))))
                 .Replace("%PAPERSIZE%", paperSize)
                 .Replace("%TOPMARGIN%", paperSize == "a4paper" ? "2.8cm" : "2.25cm");
 
@@ -61,18 +62,18 @@ namespace LetterCore.latex
             Directory.CreateDirectory("temp");
         }
 
-        private static string CreateFormat(Format f, BackgroundWorker worker, DoWorkEventArgs e)
+        private static string CreateFormat(Format f, string chargeClazz, BackgroundWorker worker, DoWorkEventArgs e)
         {
             var progressCount = 0;
 
             var includeFiles = f.Clients
-                .Select(c => ProcessReactiveClient(f, worker, e, c, ref progressCount))
+                .Select(c => ProcessReactiveClient(f, chargeClazz, worker, e, c, ref progressCount))
                 .Select(s => $@"\include{{{s}}}");
 
             return string.Join("\r\n", includeFiles);
         }
 
-        private static string ProcessReactiveClient(Format f, BackgroundWorker worker, DoWorkEventArgs e, Client c, ref int progressCount)
+        private static string ProcessReactiveClient(Format f, string chargeClazz, BackgroundWorker worker, DoWorkEventArgs e, Client c, ref int progressCount)
         {
             if (worker.CancellationPending)
             {
@@ -80,7 +81,7 @@ namespace LetterCore.latex
                 return string.Empty;
             }
 
-            var result = GetFileName(ProcessClient(f, c));
+            var result = GetFileName(ProcessClient(f, chargeClazz, c));
             var letterKind = GetFileNameWithoutExtension(f.Url);
             var count = f.Clients.Count;
 
@@ -94,15 +95,29 @@ namespace LetterCore.latex
             return result;
         }
 
-        private static string ProcessClient(Format f, Client c)
+        private static string ProcessClient(Format f, string chargeClazz, Client c)
         {
             var bodyFormat = File.ReadAllText(f.Url);
+
+            var chargeFormat = chargeClazz != null
+                                   ? File.ReadAllText(
+                                       Path.Combine(Directory.GetCurrentDirectory(), "charges", chargeClazz))
+                                   : string.Empty;
+
+            var chargeBody = chargeFormat
+                .Replace("%DNI%", c.DocId)
+                .Replace("%CODLUNA%", Convert.ToString(c.CodLuna))
+                .Replace("%NAME%", c.Name)
+                .Replace("%TOTALDEBT%", Convert.ToString(c.TotalDebt))
+                .Replace("%BASEADD%", c.BaseAddress)
+                .Replace("%NEWADD%", c.NewAddress);
 
             var texBody = bodyFormat
                 .Replace("%NAME%", c.Name)
                 .Replace("%ADDRESS%", c.BaseAddress)
                 .Replace("%TOTALDEBT%", Convert.ToString(c.TotalDebt))
-                .Replace("%DEBTS%", GetDebtsTable(c.DisaggregatedDebts));
+                .Replace("%DEBTS%", GetDebtsTable(c.DisaggregatedDebts))
+                .Replace("%CHARGE%", chargeBody);
 
             var filename = $@"temp\{GetFileNameWithoutExtension(f.Url)}-{id}";
 

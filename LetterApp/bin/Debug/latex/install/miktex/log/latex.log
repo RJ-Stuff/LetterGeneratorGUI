@@ -1,0 +1,227 @@
+2017-08-16 14:12:30,324-0500 INFO  latex - starting with command line: latex\install\miktex\bin\latex.exe -output-directory=temp --src --interaction=errorstopmode --synctex=-1 temp\letters-16-08-2017-02-12-27.tex
+2017-08-16 14:12:30,341-0500 INFO  latex - going to create file: latex.fmt
+2017-08-16 14:23:05,669-0500 INFO  latex - starting with command line: latex\install\miktex\bin\latex.exe -include-directory=latex\install -output-directory=temp --src --interaction=errorstopmode --synctex=-1 temp\letters-16-08-2017-02-23-04.tex
+2017-08-16 14:37:07,798-0500 INFO  latex - starting with command line: latex\install\miktex\bin\latex.exe -output-directory=temp --src --interaction=errorstopmode --synctex=-1 temp\letters-16-08-2017-02-37-06.tex
+2017-08-16 14:47:25,180-0500 INFO  latex - starting with command line: latex\install\miktex\bin\latex.exe -output-directory=temp --src --interaction=errorstopmode --synctex=-1 temp\letters-16-08-2017-02-47-24.tex
+2017-08-16 17:24:24,811-0500 INFO  latex - starting with command line: latex\install\miktex\bin\latex.exe -output-directory=temp --src --interaction=errorstopmode --synctex=-1 temp\letters-16-08-2017-05-24-24.tex
+2017-08-16 17:25:17,032-0500 INFO  latex - installing package ucs triggered by tex\latex\ucs\utf8x.def
+2017-08-16 17:25:19,051-0500 INFO  latex - mpm: starting package maintenance...
+2017-08-16 17:25:19,051-0500 INFO  latex - mpm: installation directory: "C:\Users\rigo\OneDrive - ASESCOM RJ ABOGADOS EIRL\git\LetterGeneratorGUI\LetterApp\bin\Debug\latex\install"
+2017-08-16 17:25:19,051-0500 INFO  latex - mpm: package repository: http://ctan.uniminuto.edu/systems/win32/miktex/tm/packages/
+2017-08-16 17:25:19,053-0500 INFO  latex - mpm: visiting repository http://ctan.uniminuto.edu/systems/win32/miktex/tm/packages/...
+2017-08-16 17:25:19,053-0500 INFO  latex - mpm: repository type: remote package repository
+2017-08-16 17:25:19,053-0500 INFO  latex - mpm: loading lightweight database...
+2017-08-16 17:25:19,057-0500 INFO  latex - mpm: downloading http://ctan.uniminuto.edu/systems/win32/miktex/tm/packages/miktex-zzdb1-2.9.tar.lzma...
+2017-08-16 17:25:21,499-0500 INFO  latex - mpm: 168914 bytes, 67.66 KB/Sec
+2017-08-16 17:25:21,663-0500 INFO  latex - mpm: lightweight database digest: e83e892135de15c64c5f6450f0ef6b21
+2017-08-16 17:25:21,664-0500 INFO  latex - mpm: going to download 1619333 bytes
+2017-08-16 17:25:21,664-0500 INFO  latex - mpm: going to install 230 file(s) (1 package(s))
+2017-08-16 17:25:21,666-0500 INFO  latex - mpm: downloading http://ctan.uniminuto.edu/systems/win32/miktex/tm/packages/ucs.tar.lzma...
+2017-08-16 17:25:24,972-0500 INFO  latex - mpm: 1619333 bytes, 478.77 KB/Sec
+2017-08-16 17:25:24,978-0500 INFO  latex - mpm: extracting files from ucs.tar.lzma...
+2017-08-16 17:26:48,786-0500 INFO  latex - installing package arabi triggered by tex\latex\arabi\bblopts.cfg
+2017-08-16 17:26:50,381-0500 INFO  latex - mpm: starting package maintenance...
+2017-08-16 17:26:50,381-0500 INFO  latex - mpm: installation directory: "C:\Users\rigo\OneDrive - ASESCOM RJ ABOGADOS EIRL\git\LetterGeneratorGUI\LetterApp\bin\Debug\latex\install"
+2017-08-16 17:26:50,382-0500 INFO  latex - mpm: package repository: http://ctan.uniminuto.edu/systems/win32/miktex/tm/packages/
+2017-08-16 17:26:50,391-0500 INFO  latex - mpm: visiting repository http://ctan.uniminuto.edu/systems/win32/miktex/tm/packages/...
+2017-08-16 17:26:50,391-0500 INFO  latex - mpm: repository type: remote package repository
+2017-08-16 17:26:50,392-0500 INFO  latex - mpm: loading lightweight database...
+2017-08-16 17:26:50,409-0500 INFO  latex - mpm: downloading http://ctan.uniminuto.edu/systems/win32/miktex/tm/packages/miktex-zzdb1-2.9.tar.lzma...
+2017-08-16 17:26:52,397-0500 INFO  latex - mpm: 168914 bytes, 83.06 KB/Sec
+2017-08-16 17:26:52,540-0500 INFO  latex - mpm: lightweight database digest: e83e892135de15c64c5f6450f0ef6b21
+2017-08-16 17:26:52,541-0500 INFO  latex - mpm: going to download 3943043 bytes
+2017-08-16 17:26:52,541-0500 INFO  latex - mpm: going to install 257 file(s) (1 package(s))
+2017-08-16 17:26:52,543-0500 INFO  latex - mpm: downloading http://ctan.uniminuto.edu/systems/win32/miktex/tm/packages/arabi.tar.lzma...
+2017-08-16 17:26:58,371-0500 INFO  latex - mpm: 3943043 bytes, 661.28 KB/Sec
+2017-08-16 17:26:58,383-0500 INFO  latex - mpm: extracting files from arabi.tar.lzma...
+2017-08-16 17:27:04,517-0500 INFO  latex - installing package l3packages triggered by tex\latex\l3packages\xparse\xparse.sty
+2017-08-16 17:27:04,522-0500 INFO  latex - mpm: starting package maintenance...
+2017-08-16 17:27:04,522-0500 INFO  latex - mpm: installation directory: "C:\Users\rigo\OneDrive - ASESCOM RJ ABOGADOS EIRL\git\LetterGeneratorGUI\LetterApp\bin\Debug\latex\install"
+2017-08-16 17:27:04,524-0500 INFO  latex - mpm: package repository: http://ctan.uniminuto.edu/systems/win32/miktex/tm/packages/
+2017-08-16 17:27:04,533-0500 INFO  latex - mpm: visiting repository http://ctan.uniminuto.edu/systems/win32/miktex/tm/packages/...
+2017-08-16 17:27:04,533-0500 INFO  latex - mpm: repository type: remote package repository
+2017-08-16 17:27:04,533-0500 INFO  latex - mpm: loading lightweight database...
+2017-08-16 17:27:04,540-0500 INFO  latex - mpm: downloading http://ctan.uniminuto.edu/systems/win32/miktex/tm/packages/miktex-zzdb1-2.9.tar.lzma...
+2017-08-16 17:27:06,700-0500 INFO  latex - mpm: 168914 bytes, 76.44 KB/Sec
+2017-08-16 17:27:06,864-0500 INFO  latex - mpm: lightweight database digest: e83e892135de15c64c5f6450f0ef6b21
+2017-08-16 17:27:06,865-0500 INFO  latex - mpm: going to download 1830960 bytes
+2017-08-16 17:27:06,865-0500 INFO  latex - mpm: going to install 14 file(s) (1 package(s))
+2017-08-16 17:27:06,867-0500 INFO  latex - mpm: downloading http://ctan.uniminuto.edu/systems/win32/miktex/tm/packages/l3packages.tar.lzma...
+2017-08-16 17:27:10,977-0500 INFO  latex - mpm: 1830960 bytes, 435.15 KB/Sec
+2017-08-16 17:27:10,984-0500 INFO  latex - mpm: extracting files from l3packages.tar.lzma...
+2017-08-16 17:27:14,384-0500 INFO  latex - installing package l3kernel triggered by tex\latex\l3kernel\expl3.sty
+2017-08-16 17:27:14,387-0500 INFO  latex - mpm: starting package maintenance...
+2017-08-16 17:27:14,387-0500 INFO  latex - mpm: installation directory: "C:\Users\rigo\OneDrive - ASESCOM RJ ABOGADOS EIRL\git\LetterGeneratorGUI\LetterApp\bin\Debug\latex\install"
+2017-08-16 17:27:14,388-0500 INFO  latex - mpm: package repository: http://ctan.uniminuto.edu/systems/win32/miktex/tm/packages/
+2017-08-16 17:27:14,398-0500 INFO  latex - mpm: visiting repository http://ctan.uniminuto.edu/systems/win32/miktex/tm/packages/...
+2017-08-16 17:27:14,398-0500 INFO  latex - mpm: repository type: remote package repository
+2017-08-16 17:27:14,398-0500 INFO  latex - mpm: loading lightweight database...
+2017-08-16 17:27:14,409-0500 INFO  latex - mpm: downloading http://ctan.uniminuto.edu/systems/win32/miktex/tm/packages/miktex-zzdb1-2.9.tar.lzma...
+2017-08-16 17:27:15,749-0500 INFO  latex - mpm: 168914 bytes, 123.19 KB/Sec
+2017-08-16 17:27:15,899-0500 INFO  latex - mpm: lightweight database digest: e83e892135de15c64c5f6450f0ef6b21
+2017-08-16 17:27:15,900-0500 INFO  latex - mpm: going to download 5991361 bytes
+2017-08-16 17:27:15,900-0500 INFO  latex - mpm: going to install 47 file(s) (1 package(s))
+2017-08-16 17:27:15,902-0500 INFO  latex - mpm: downloading http://ctan.uniminuto.edu/systems/win32/miktex/tm/packages/l3kernel.tar.lzma...
+2017-08-16 17:27:24,005-0500 INFO  latex - mpm: 5991361 bytes, 722.16 KB/Sec
+2017-08-16 17:27:24,023-0500 INFO  latex - mpm: extracting files from l3kernel.tar.lzma...
+2017-08-16 17:27:28,558-0500 INFO  latex - installing package alegreya triggered by tex\latex\alegreya\AlegreyaSans.sty
+2017-08-16 17:27:28,563-0500 INFO  latex - mpm: starting package maintenance...
+2017-08-16 17:27:28,564-0500 INFO  latex - mpm: installation directory: "C:\Users\rigo\OneDrive - ASESCOM RJ ABOGADOS EIRL\git\LetterGeneratorGUI\LetterApp\bin\Debug\latex\install"
+2017-08-16 17:27:28,565-0500 INFO  latex - mpm: package repository: http://ctan.uniminuto.edu/systems/win32/miktex/tm/packages/
+2017-08-16 17:27:28,575-0500 INFO  latex - mpm: visiting repository http://ctan.uniminuto.edu/systems/win32/miktex/tm/packages/...
+2017-08-16 17:27:28,575-0500 INFO  latex - mpm: repository type: remote package repository
+2017-08-16 17:27:28,576-0500 INFO  latex - mpm: loading lightweight database...
+2017-08-16 17:27:28,578-0500 INFO  latex - mpm: downloading http://ctan.uniminuto.edu/systems/win32/miktex/tm/packages/miktex-zzdb1-2.9.tar.lzma...
+2017-08-16 17:27:30,433-0500 INFO  latex - mpm: 168914 bytes, 89.07 KB/Sec
+2017-08-16 17:27:30,576-0500 INFO  latex - mpm: lightweight database digest: e83e892135de15c64c5f6450f0ef6b21
+2017-08-16 17:27:30,577-0500 INFO  latex - mpm: going to download 4674757 bytes
+2017-08-16 17:27:30,577-0500 INFO  latex - mpm: going to install 2305 file(s) (1 package(s))
+2017-08-16 17:27:30,581-0500 INFO  latex - mpm: downloading http://ctan.uniminuto.edu/systems/win32/miktex/tm/packages/alegreya.tar.lzma...
+2017-08-16 17:27:37,365-0500 INFO  latex - mpm: 4674757 bytes, 673.13 KB/Sec
+2017-08-16 17:27:37,377-0500 INFO  latex - mpm: extracting files from alegreya.tar.lzma...
+2017-08-16 17:27:48,558-0500 INFO  latex - installing package fontaxes triggered by tex\latex\fontaxes\fontaxes.sty
+2017-08-16 17:27:48,567-0500 INFO  latex - mpm: starting package maintenance...
+2017-08-16 17:27:48,569-0500 INFO  latex - mpm: installation directory: "C:\Users\rigo\OneDrive - ASESCOM RJ ABOGADOS EIRL\git\LetterGeneratorGUI\LetterApp\bin\Debug\latex\install"
+2017-08-16 17:27:48,570-0500 INFO  latex - mpm: package repository: http://ctan.uniminuto.edu/systems/win32/miktex/tm/packages/
+2017-08-16 17:27:48,586-0500 INFO  latex - mpm: visiting repository http://ctan.uniminuto.edu/systems/win32/miktex/tm/packages/...
+2017-08-16 17:27:48,586-0500 INFO  latex - mpm: repository type: remote package repository
+2017-08-16 17:27:48,590-0500 INFO  latex - mpm: loading lightweight database...
+2017-08-16 17:27:48,593-0500 INFO  latex - mpm: downloading http://ctan.uniminuto.edu/systems/win32/miktex/tm/packages/miktex-zzdb1-2.9.tar.lzma...
+2017-08-16 17:27:50,452-0500 INFO  latex - mpm: 168914 bytes, 89.50 KB/Sec
+2017-08-16 17:27:50,599-0500 INFO  latex - mpm: lightweight database digest: e83e892135de15c64c5f6450f0ef6b21
+2017-08-16 17:27:50,600-0500 INFO  latex - mpm: going to download 129946 bytes
+2017-08-16 17:27:50,601-0500 INFO  latex - mpm: going to install 5 file(s) (1 package(s))
+2017-08-16 17:27:50,602-0500 INFO  latex - mpm: downloading http://ctan.uniminuto.edu/systems/win32/miktex/tm/packages/fontaxes.tar.lzma...
+2017-08-16 17:27:51,877-0500 INFO  latex - mpm: 129946 bytes, 99.76 KB/Sec
+2017-08-16 17:27:51,879-0500 INFO  latex - mpm: extracting files from fontaxes.tar.lzma...
+2017-08-16 17:27:54,762-0500 INFO  latex - installing package mweights triggered by tex\latex\mweights\mweights.sty
+2017-08-16 17:27:54,766-0500 INFO  latex - mpm: starting package maintenance...
+2017-08-16 17:27:54,766-0500 INFO  latex - mpm: installation directory: "C:\Users\rigo\OneDrive - ASESCOM RJ ABOGADOS EIRL\git\LetterGeneratorGUI\LetterApp\bin\Debug\latex\install"
+2017-08-16 17:27:54,771-0500 INFO  latex - mpm: package repository: http://ctan.uniminuto.edu/systems/win32/miktex/tm/packages/
+2017-08-16 17:27:54,779-0500 INFO  latex - mpm: visiting repository http://ctan.uniminuto.edu/systems/win32/miktex/tm/packages/...
+2017-08-16 17:27:54,779-0500 INFO  latex - mpm: repository type: remote package repository
+2017-08-16 17:27:54,779-0500 INFO  latex - mpm: loading lightweight database...
+2017-08-16 17:27:54,782-0500 INFO  latex - mpm: downloading http://ctan.uniminuto.edu/systems/win32/miktex/tm/packages/miktex-zzdb1-2.9.tar.lzma...
+2017-08-16 17:27:56,376-0500 INFO  latex - mpm: 168914 bytes, 103.55 KB/Sec
+2017-08-16 17:27:56,522-0500 INFO  latex - mpm: lightweight database digest: e83e892135de15c64c5f6450f0ef6b21
+2017-08-16 17:27:56,522-0500 INFO  latex - mpm: going to download 2261 bytes
+2017-08-16 17:27:56,523-0500 INFO  latex - mpm: going to install 3 file(s) (1 package(s))
+2017-08-16 17:27:56,525-0500 INFO  latex - mpm: downloading http://ctan.uniminuto.edu/systems/win32/miktex/tm/packages/mweights.tar.lzma...
+2017-08-16 17:27:56,968-0500 INFO  latex - mpm: 2261 bytes, 5.00 KB/Sec
+2017-08-16 17:27:56,969-0500 INFO  latex - mpm: extracting files from mweights.tar.lzma...
+2017-08-16 17:28:00,093-0500 INFO  latex - installing package datetime triggered by tex\latex\datetime\datetime.sty
+2017-08-16 17:28:00,098-0500 INFO  latex - mpm: starting package maintenance...
+2017-08-16 17:28:00,098-0500 INFO  latex - mpm: installation directory: "C:\Users\rigo\OneDrive - ASESCOM RJ ABOGADOS EIRL\git\LetterGeneratorGUI\LetterApp\bin\Debug\latex\install"
+2017-08-16 17:28:00,104-0500 INFO  latex - mpm: package repository: http://ctan.uniminuto.edu/systems/win32/miktex/tm/packages/
+2017-08-16 17:28:00,111-0500 INFO  latex - mpm: visiting repository http://ctan.uniminuto.edu/systems/win32/miktex/tm/packages/...
+2017-08-16 17:28:00,111-0500 INFO  latex - mpm: repository type: remote package repository
+2017-08-16 17:28:00,111-0500 INFO  latex - mpm: loading lightweight database...
+2017-08-16 17:28:00,114-0500 INFO  latex - mpm: downloading http://ctan.uniminuto.edu/systems/win32/miktex/tm/packages/miktex-zzdb1-2.9.tar.lzma...
+2017-08-16 17:28:01,708-0500 INFO  latex - mpm: 168914 bytes, 103.68 KB/Sec
+2017-08-16 17:28:01,849-0500 INFO  latex - mpm: lightweight database digest: e83e892135de15c64c5f6450f0ef6b21
+2017-08-16 17:28:01,850-0500 INFO  latex - mpm: going to download 464387 bytes
+2017-08-16 17:28:01,850-0500 INFO  latex - mpm: going to install 62 file(s) (1 package(s))
+2017-08-16 17:28:01,852-0500 INFO  latex - mpm: downloading http://ctan.uniminuto.edu/systems/win32/miktex/tm/packages/datetime.tar.lzma...
+2017-08-16 17:28:05,048-0500 INFO  latex - mpm: 464387 bytes, 142.03 KB/Sec
+2017-08-16 17:28:05,051-0500 INFO  latex - mpm: extracting files from datetime.tar.lzma...
+2017-08-16 17:28:08,337-0500 INFO  latex - installing package etoolbox triggered by tex\latex\etoolbox\etoolbox.sty
+2017-08-16 17:28:08,349-0500 INFO  latex - mpm: starting package maintenance...
+2017-08-16 17:28:08,359-0500 INFO  latex - mpm: installation directory: "C:\Users\rigo\OneDrive - ASESCOM RJ ABOGADOS EIRL\git\LetterGeneratorGUI\LetterApp\bin\Debug\latex\install"
+2017-08-16 17:28:08,361-0500 INFO  latex - mpm: package repository: http://ctan.uniminuto.edu/systems/win32/miktex/tm/packages/
+2017-08-16 17:28:08,370-0500 INFO  latex - mpm: visiting repository http://ctan.uniminuto.edu/systems/win32/miktex/tm/packages/...
+2017-08-16 17:28:08,371-0500 INFO  latex - mpm: repository type: remote package repository
+2017-08-16 17:28:08,373-0500 INFO  latex - mpm: loading lightweight database...
+2017-08-16 17:28:08,375-0500 INFO  latex - mpm: downloading http://ctan.uniminuto.edu/systems/win32/miktex/tm/packages/miktex-zzdb1-2.9.tar.lzma...
+2017-08-16 17:28:10,344-0500 INFO  latex - mpm: 168914 bytes, 83.86 KB/Sec
+2017-08-16 17:28:10,490-0500 INFO  latex - mpm: lightweight database digest: e83e892135de15c64c5f6450f0ef6b21
+2017-08-16 17:28:10,490-0500 INFO  latex - mpm: going to download 242710 bytes
+2017-08-16 17:28:10,490-0500 INFO  latex - mpm: going to install 6 file(s) (1 package(s))
+2017-08-16 17:28:10,492-0500 INFO  latex - mpm: downloading http://ctan.uniminuto.edu/systems/win32/miktex/tm/packages/etoolbox.tar.lzma...
+2017-08-16 17:28:12,877-0500 INFO  latex - mpm: 242710 bytes, 99.51 KB/Sec
+2017-08-16 17:28:12,878-0500 INFO  latex - mpm: extracting files from etoolbox.tar.lzma...
+2017-08-16 17:28:25,479-0500 INFO  latex - installing package fmtcount triggered by tex\latex\fmtcount\fmtcount.sty
+2017-08-16 17:28:25,482-0500 INFO  latex - mpm: starting package maintenance...
+2017-08-16 17:28:25,482-0500 INFO  latex - mpm: installation directory: "C:\Users\rigo\OneDrive - ASESCOM RJ ABOGADOS EIRL\git\LetterGeneratorGUI\LetterApp\bin\Debug\latex\install"
+2017-08-16 17:28:25,487-0500 INFO  latex - mpm: package repository: http://ctan.uniminuto.edu/systems/win32/miktex/tm/packages/
+2017-08-16 17:28:25,495-0500 INFO  latex - mpm: visiting repository http://ctan.uniminuto.edu/systems/win32/miktex/tm/packages/...
+2017-08-16 17:28:25,496-0500 INFO  latex - mpm: repository type: remote package repository
+2017-08-16 17:28:25,496-0500 INFO  latex - mpm: loading lightweight database...
+2017-08-16 17:28:25,499-0500 INFO  latex - mpm: downloading http://ctan.uniminuto.edu/systems/win32/miktex/tm/packages/miktex-zzdb1-2.9.tar.lzma...
+2017-08-16 17:28:27,360-0500 INFO  latex - mpm: 168914 bytes, 88.78 KB/Sec
+2017-08-16 17:28:27,504-0500 INFO  latex - mpm: lightweight database digest: e83e892135de15c64c5f6450f0ef6b21
+2017-08-16 17:28:27,505-0500 INFO  latex - mpm: going to download 459741 bytes
+2017-08-16 17:28:27,505-0500 INFO  latex - mpm: going to install 29 file(s) (1 package(s))
+2017-08-16 17:28:27,507-0500 INFO  latex - mpm: downloading http://ctan.uniminuto.edu/systems/win32/miktex/tm/packages/fmtcount.tar.lzma...
+2017-08-16 17:28:31,289-0500 INFO  latex - mpm: 459741 bytes, 118.74 KB/Sec
+2017-08-16 17:28:31,291-0500 INFO  latex - mpm: extracting files from fmtcount.tar.lzma...
+2017-08-16 17:28:35,030-0500 INFO  latex - installing package enumitem triggered by tex\latex\enumitem\enumitem.sty
+2017-08-16 17:28:35,034-0500 INFO  latex - mpm: starting package maintenance...
+2017-08-16 17:28:35,034-0500 INFO  latex - mpm: installation directory: "C:\Users\rigo\OneDrive - ASESCOM RJ ABOGADOS EIRL\git\LetterGeneratorGUI\LetterApp\bin\Debug\latex\install"
+2017-08-16 17:28:35,038-0500 INFO  latex - mpm: package repository: http://ctan.uniminuto.edu/systems/win32/miktex/tm/packages/
+2017-08-16 17:28:35,047-0500 INFO  latex - mpm: visiting repository http://ctan.uniminuto.edu/systems/win32/miktex/tm/packages/...
+2017-08-16 17:28:35,047-0500 INFO  latex - mpm: repository type: remote package repository
+2017-08-16 17:28:35,049-0500 INFO  latex - mpm: loading lightweight database...
+2017-08-16 17:28:35,051-0500 INFO  latex - mpm: downloading http://ctan.uniminuto.edu/systems/win32/miktex/tm/packages/miktex-zzdb1-2.9.tar.lzma...
+2017-08-16 17:28:36,645-0500 INFO  latex - mpm: 168914 bytes, 104.14 KB/Sec
+2017-08-16 17:28:36,793-0500 INFO  latex - mpm: lightweight database digest: e83e892135de15c64c5f6450f0ef6b21
+2017-08-16 17:28:36,793-0500 INFO  latex - mpm: going to download 356462 bytes
+2017-08-16 17:28:36,794-0500 INFO  latex - mpm: going to install 5 file(s) (1 package(s))
+2017-08-16 17:28:36,796-0500 INFO  latex - mpm: downloading http://ctan.uniminuto.edu/systems/win32/miktex/tm/packages/enumitem.tar.lzma...
+2017-08-16 17:28:39,010-0500 INFO  latex - mpm: 356462 bytes, 157.44 KB/Sec
+2017-08-16 17:28:39,012-0500 INFO  latex - mpm: extracting files from enumitem.tar.lzma...
+2017-08-16 17:32:35,043-0500 INFO  latex - starting with command line: latex\install\miktex\bin\latex.exe -output-directory=temp --src --interaction=errorstopmode --synctex=-1 temp\letters-16-08-2017-05-32-34.tex
+2017-08-16 17:33:31,790-0500 INFO  latex - starting with command line: latex\install\miktex\bin\latex.exe -output-directory=temp --src --interaction=errorstopmode --synctex=-1 temp\letters-16-08-2017-05-33-31.tex
+2017-08-16 17:35:35,992-0500 INFO  latex - starting with command line: latex\install\miktex\bin\latex.exe -output-directory=temp --src --interaction=errorstopmode --synctex=-1 temp\letters-16-08-2017-05-35-35.tex
+2017-08-18 13:36:42,449-0500 INFO  latex - starting with command line: latex\install\miktex\bin\latex.exe -output-directory=temp --src --interaction=errorstopmode --synctex=-1 temp\letters-18-08-2017-01-36-39.tex
+2017-08-18 13:39:18,817-0500 INFO  latex - starting with command line: latex\install\miktex\bin\latex.exe -output-directory=temp --src --interaction=errorstopmode --synctex=-1 temp\letters-18-08-2017-01-39-17.tex
+2017-08-18 13:48:14,554-0500 INFO  latex - starting with command line: latex\install\miktex\bin\latex.exe -output-directory=temp --src --interaction=errorstopmode --synctex=-1 temp\letters-18-08-2017-01-48-12.tex
+2017-08-18 13:50:41,361-0500 INFO  latex - starting with command line: latex\install\miktex\bin\latex.exe -output-directory=temp --src --interaction=errorstopmode --synctex=-1 temp\letters-18-08-2017-01-50-39.tex
+2017-08-18 13:53:12,059-0500 INFO  latex - starting with command line: latex\install\miktex\bin\latex.exe -output-directory=temp --src --interaction=errorstopmode --synctex=-1 temp\letters-18-08-2017-01-53-10.tex
+2017-08-18 13:59:49,277-0500 INFO  latex - starting with command line: latex\install\miktex\bin\latex.exe -output-directory=temp --src --interaction=errorstopmode --synctex=-1 temp\letters-18-08-2017-01-59-47.tex
+2017-08-18 14:05:26,028-0500 INFO  latex - starting with command line: latex\install\miktex\bin\latex.exe -output-directory=temp --src --interaction=errorstopmode --synctex=-1 temp\letters-18-08-2017-02-05-25.tex
+2017-08-18 14:07:53,389-0500 INFO  latex - starting with command line: latex\install\miktex\bin\latex.exe -output-directory=temp --src --interaction=errorstopmode --synctex=-1 temp\letters-18-08-2017-02-07-52.tex
+2017-08-18 14:11:39,497-0500 INFO  latex - starting with command line: latex\install\miktex\bin\latex.exe -output-directory=temp --src --interaction=errorstopmode --synctex=-1 temp\letters-18-08-2017-02-11-38.tex
+2017-08-18 14:17:09,745-0500 INFO  latex - starting with command line: latex\install\miktex\bin\latex.exe -output-directory=temp --src --interaction=errorstopmode --synctex=-1 temp\letters-18-08-2017-02-17-08.tex
+2017-08-18 14:18:34,256-0500 INFO  latex - starting with command line: latex\install\miktex\bin\latex.exe -output-directory=temp --src --interaction=errorstopmode --synctex=-1 temp\letters-18-08-2017-02-18-33.tex
+2017-08-18 14:21:08,394-0500 INFO  latex - starting with command line: latex\install\miktex\bin\latex.exe -output-directory=temp --src --interaction=errorstopmode --synctex=-1 temp\letters-18-08-2017-02-21-07.tex
+2017-08-18 14:25:59,771-0500 INFO  latex - starting with command line: latex\install\miktex\bin\latex.exe -output-directory=temp --src --interaction=errorstopmode --synctex=-1 temp\letters-18-08-2017-02-25-58.tex
+2017-08-18 14:26:43,581-0500 INFO  latex - starting with command line: latex\install\miktex\bin\latex.exe -output-directory=temp --src --interaction=errorstopmode --synctex=-1 temp\letters-18-08-2017-02-26-42.tex
+2017-08-18 18:44:27,003-0500 INFO  latex - starting with command line: latex\install\miktex\bin\latex.exe -output-directory=temp --src --interaction=errorstopmode --synctex=-1 temp\letters-18-08-2017-06-44-25.tex
+2017-08-20 19:05:10,926-0500 INFO  latex - starting with command line: latex\install\miktex\bin\latex.exe -output-directory=temp --src --interaction=errorstopmode --synctex=-1 temp\letters-20-08-2017-07-05-08.tex
+2017-08-20 19:09:36,739-0500 INFO  latex - starting with command line: latex\install\miktex\bin\latex.exe -output-directory=temp --src --interaction=errorstopmode --synctex=-1 temp\letters-20-08-2017-07-09-35.tex
+2017-08-20 19:33:42,342-0500 INFO  latex - starting with command line: latex\install\miktex\bin\latex.exe -output-directory=temp --src --interaction=errorstopmode --synctex=-1 temp\letters-20-08-2017-07-33-41.tex
+2017-08-20 19:34:48,481-0500 INFO  latex - starting with command line: latex\install\miktex\bin\latex.exe -output-directory=temp --src --interaction=errorstopmode --synctex=-1 temp\letters-20-08-2017-07-34-47.tex
+2017-08-20 19:35:25,558-0500 INFO  latex - starting with command line: latex\install\miktex\bin\latex.exe -output-directory=temp --src --interaction=errorstopmode --synctex=-1 temp\letters-20-08-2017-07-35-24.tex
+2017-08-20 19:36:32,592-0500 INFO  latex - starting with command line: latex\install\miktex\bin\latex.exe -output-directory=temp --src --interaction=errorstopmode --synctex=-1 temp\letters-20-08-2017-07-36-32.tex
+2017-08-20 19:48:08,820-0500 INFO  latex - starting with command line: latex\install\miktex\bin\latex.exe -output-directory=temp --src --interaction=errorstopmode --synctex=-1 temp\letters-20-08-2017-07-48-08.tex
+2017-08-20 19:49:23,372-0500 INFO  latex - starting with command line: latex\install\miktex\bin\latex.exe -output-directory=temp --src --interaction=errorstopmode --synctex=-1 temp\letters-20-08-2017-07-49-22.tex
+2017-08-20 19:50:03,903-0500 INFO  latex - starting with command line: latex\install\miktex\bin\latex.exe -output-directory=temp --src --interaction=errorstopmode --synctex=-1 temp\letters-20-08-2017-07-50-03.tex
+2017-08-20 19:57:49,522-0500 INFO  latex - starting with command line: latex\install\miktex\bin\latex.exe -output-directory=temp --src --interaction=errorstopmode --synctex=-1 temp\letters-20-08-2017-07-57-48.tex
+2017-08-20 19:59:12,798-0500 INFO  latex - starting with command line: latex\install\miktex\bin\latex.exe -output-directory=temp --src --interaction=errorstopmode --synctex=-1 temp\letters-20-08-2017-07-59-11.tex
+2017-08-20 20:00:44,192-0500 INFO  latex - starting with command line: latex\install\miktex\bin\latex.exe -output-directory=temp --src --interaction=errorstopmode --synctex=-1 temp\letters-20-08-2017-08-00-43.tex
+2017-08-20 20:01:41,573-0500 INFO  latex - starting with command line: latex\install\miktex\bin\latex.exe -output-directory=temp --src --interaction=errorstopmode --synctex=-1 temp\letters-20-08-2017-08-01-40.tex
+2017-08-20 20:05:58,007-0500 INFO  latex - starting with command line: latex\install\miktex\bin\latex.exe -output-directory=temp --src --interaction=errorstopmode --synctex=-1 temp\letters-20-08-2017-08-05-57.tex
+2017-08-20 20:08:19,618-0500 INFO  latex - starting with command line: latex\install\miktex\bin\latex.exe -output-directory=temp --src --interaction=errorstopmode --synctex=-1 temp\letters-20-08-2017-08-08-19.tex
+2017-08-20 20:09:14,213-0500 INFO  latex - starting with command line: latex\install\miktex\bin\latex.exe -output-directory=temp --src --interaction=errorstopmode --synctex=-1 temp\letters-20-08-2017-08-09-13.tex
+2017-08-20 20:16:39,119-0500 INFO  latex - starting with command line: latex\install\miktex\bin\latex.exe -output-directory=temp --src --interaction=errorstopmode --synctex=-1 temp\letters-20-08-2017-08-16-38.tex
+2017-08-20 20:17:45,409-0500 INFO  latex - starting with command line: latex\install\miktex\bin\latex.exe -output-directory=temp --src --interaction=errorstopmode --synctex=-1 temp\letters-20-08-2017-08-17-44.tex
+2017-08-20 20:19:06,890-0500 INFO  latex - starting with command line: latex\install\miktex\bin\latex.exe -output-directory=temp --src --interaction=errorstopmode --synctex=-1 temp\letters-20-08-2017-08-19-06.tex
+2017-08-21 12:07:18,713-0500 INFO  latex - starting with command line: latex\install\miktex\bin\latex.exe -output-directory=temp --src --interaction=errorstopmode --synctex=-1 temp\letters-21-08-2017-12-07-16.tex
+2017-08-21 13:04:17,378-0500 INFO  latex - starting with command line: latex\install\miktex\bin\latex.exe -output-directory=temp --src --interaction=errorstopmode --synctex=-1 temp\letters-21-08-2017-01-04-16.tex
+2017-08-21 13:07:10,085-0500 INFO  latex - starting with command line: latex\install\miktex\bin\latex.exe -output-directory=temp --src --interaction=errorstopmode --synctex=-1 temp\letters-21-08-2017-01-07-09.tex
+2017-08-21 13:18:38,646-0500 INFO  latex - starting with command line: latex\install\miktex\bin\latex.exe -output-directory=temp --src --interaction=errorstopmode --synctex=-1 temp\letters-21-08-2017-01-18-38.tex
+2017-08-21 13:22:10,125-0500 INFO  latex - starting with command line: latex\install\miktex\bin\latex.exe -output-directory=temp --src --interaction=errorstopmode --synctex=-1 temp\letters-21-08-2017-01-22-09.tex
+2017-08-21 13:23:09,601-0500 INFO  latex - starting with command line: latex\install\miktex\bin\latex.exe -output-directory=temp --src --interaction=errorstopmode --synctex=-1 temp\letters-21-08-2017-01-23-09.tex
+2017-08-21 13:23:38,768-0500 INFO  latex - starting with command line: latex\install\miktex\bin\latex.exe -output-directory=temp --src --interaction=errorstopmode --synctex=-1 temp\letters-21-08-2017-01-23-38.tex
+2017-08-21 13:24:06,602-0500 INFO  latex - starting with command line: latex\install\miktex\bin\latex.exe -output-directory=temp --src --interaction=errorstopmode --synctex=-1 temp\letters-21-08-2017-01-24-06.tex
+2017-08-21 13:27:57,502-0500 INFO  latex - starting with command line: latex\install\miktex\bin\latex.exe -output-directory=temp --src --interaction=errorstopmode --synctex=-1 temp\letters-21-08-2017-01-27-57.tex
+2017-08-21 13:30:27,492-0500 INFO  latex - starting with command line: latex\install\miktex\bin\latex.exe -output-directory=temp --src --interaction=errorstopmode --synctex=-1 temp\letters-21-08-2017-01-30-26.tex
+2017-08-21 13:31:34,214-0500 INFO  latex - starting with command line: latex\install\miktex\bin\latex.exe -output-directory=temp --src --interaction=errorstopmode --synctex=-1 temp\letters-21-08-2017-01-31-33.tex
+2017-08-21 13:32:38,003-0500 INFO  latex - starting with command line: latex\install\miktex\bin\latex.exe -output-directory=temp --src --interaction=errorstopmode --synctex=-1 temp\letters-21-08-2017-01-32-37.tex
+2017-08-21 13:33:49,889-0500 INFO  latex - starting with command line: latex\install\miktex\bin\latex.exe -output-directory=temp --src --interaction=errorstopmode --synctex=-1 temp\letters-21-08-2017-01-33-49.tex
+2017-08-21 13:34:22,914-0500 INFO  latex - starting with command line: latex\install\miktex\bin\latex.exe -output-directory=temp --src --interaction=errorstopmode --synctex=-1 temp\letters-21-08-2017-01-34-22.tex
+2017-08-21 13:36:19,964-0500 INFO  latex - starting with command line: latex\install\miktex\bin\latex.exe -output-directory=temp --src --interaction=errorstopmode --synctex=-1 temp\letters-21-08-2017-01-36-19.tex
+2017-08-21 13:36:48,083-0500 INFO  latex - starting with command line: latex\install\miktex\bin\latex.exe -output-directory=temp --src --interaction=errorstopmode --synctex=-1 temp\letters-21-08-2017-01-36-47.tex
+2017-08-21 13:37:32,578-0500 INFO  latex - starting with command line: latex\install\miktex\bin\latex.exe -output-directory=temp --src --interaction=errorstopmode --synctex=-1 temp\letters-21-08-2017-01-37-32.tex
+2017-08-21 13:39:44,039-0500 INFO  latex - starting with command line: latex\install\miktex\bin\latex.exe -output-directory=temp --src --interaction=errorstopmode --synctex=-1 temp\letters-21-08-2017-01-39-43.tex
+2017-08-21 13:40:49,573-0500 INFO  latex - starting with command line: latex\install\miktex\bin\latex.exe -output-directory=temp --src --interaction=errorstopmode --synctex=-1 temp\letters-21-08-2017-01-40-49.tex

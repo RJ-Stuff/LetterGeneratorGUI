@@ -9,11 +9,17 @@
 
     public class AllInOneGenerator
     {
-        public static string CreateDocs(List<Format> formats, WdPaperSize paperSize, BackgroundWorker worker, DoWorkEventArgs e)
+        public static string CreateDocs(
+            List<Format> formats,
+            WdPaperSize paperSize,
+            string chargeClazz,
+            BackgroundWorker worker,
+            DoWorkEventArgs e)
         {
             return LatexController.LatexGenerator(
                 formats,
                 paperSize == WdPaperSize.wdPaperLegal ? "legalpaper" : "a4paper",
+                chargeClazz,
                 worker,
                 e);
         }

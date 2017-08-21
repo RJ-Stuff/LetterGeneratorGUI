@@ -1,0 +1,24 @@
+2017-08-16 14:12:33,117-0500 INFO  initexmf - starting: MiKTeX Configuration Utility 2.9.6354 (MiKTeX 2.9.6350)
+2017-08-16 14:12:33,143-0500 INFO  initexmf - running 'miktex-makefmt.exe --engine=pdftex --dest-name=latex --no-dump latex.ini --engine-option=-tcx=cp227.tcx'
+2017-08-16 17:25:29,553-0500 INFO  initexmf - starting: MiKTeX Configuration Utility 2.9.6354 (MiKTeX 2.9.6350)
+2017-08-16 17:25:29,650-0500 INFO  initexmf - running: mkfntmap 
+2017-08-16 17:26:59,573-0500 INFO  initexmf - starting: MiKTeX Configuration Utility 2.9.6354 (MiKTeX 2.9.6350)
+2017-08-16 17:26:59,656-0500 INFO  initexmf - running: mkfntmap 
+2017-08-16 17:27:11,446-0500 INFO  initexmf - starting: MiKTeX Configuration Utility 2.9.6354 (MiKTeX 2.9.6350)
+2017-08-16 17:27:11,523-0500 INFO  initexmf - running: mkfntmap 
+2017-08-16 17:27:24,889-0500 INFO  initexmf - starting: MiKTeX Configuration Utility 2.9.6354 (MiKTeX 2.9.6350)
+2017-08-16 17:27:24,973-0500 INFO  initexmf - running: mkfntmap 
+2017-08-16 17:27:44,861-0500 INFO  initexmf - starting: MiKTeX Configuration Utility 2.9.6354 (MiKTeX 2.9.6350)
+2017-08-16 17:27:44,942-0500 INFO  initexmf - running: mkfntmap 
+2017-08-16 17:27:52,196-0500 INFO  initexmf - starting: MiKTeX Configuration Utility 2.9.6354 (MiKTeX 2.9.6350)
+2017-08-16 17:27:52,285-0500 INFO  initexmf - running: mkfntmap 
+2017-08-16 17:27:57,243-0500 INFO  initexmf - starting: MiKTeX Configuration Utility 2.9.6354 (MiKTeX 2.9.6350)
+2017-08-16 17:27:57,321-0500 INFO  initexmf - running: mkfntmap 
+2017-08-16 17:28:05,565-0500 INFO  initexmf - starting: MiKTeX Configuration Utility 2.9.6354 (MiKTeX 2.9.6350)
+2017-08-16 17:28:05,655-0500 INFO  initexmf - running: mkfntmap 
+2017-08-16 17:28:13,200-0500 INFO  initexmf - starting: MiKTeX Configuration Utility 2.9.6354 (MiKTeX 2.9.6350)
+2017-08-16 17:28:13,283-0500 INFO  initexmf - running: mkfntmap 
+2017-08-16 17:28:31,704-0500 INFO  initexmf - starting: MiKTeX Configuration Utility 2.9.6354 (MiKTeX 2.9.6350)
+2017-08-16 17:28:31,783-0500 INFO  initexmf - running: mkfntmap 
+2017-08-16 17:28:39,440-0500 INFO  initexmf - starting: MiKTeX Configuration Utility 2.9.6354 (MiKTeX 2.9.6350)
+2017-08-16 17:28:39,518-0500 INFO  initexmf - running: mkfntmap 

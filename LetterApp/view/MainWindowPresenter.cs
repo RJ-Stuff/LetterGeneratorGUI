@@ -227,8 +227,7 @@
         private void CheckCredentials(object sender, EventArgs e)
         {
             var rb = sender as RadioButton;
-            if (rb.Checked &&
-                (string.IsNullOrEmpty(mainWindow.txtbUser.Text.Trim())
+            if (rb.Checked && (string.IsNullOrEmpty(mainWindow.txtbUser.Text.Trim())
                                || string.IsNullOrEmpty(mainWindow.txtbPass.Text.Trim())
                                || mainWindow.lbMails.Items.Count == 0))
             {
@@ -388,10 +387,13 @@
         private void BwCreateLettersOnDoWork(object sender, DoWorkEventArgs e)
         {
             var worker = (BackgroundWorker)sender;
-            GenerateLetters(((PaperSize)e.Argument).Papersize, worker, e);
+            var tuple = (Tuple<object, object>)e.Argument;
+            var paperSize = (model.PaperSize)tuple.Item1;
+            var charge = (model.Charge)tuple.Item2;
+            GenerateLetters(paperSize.Papersize, charge?.ChargeClazz, worker, e);
         }
 
-        private void GenerateLetters(WdPaperSize paperSize, BackgroundWorker worker, DoWorkEventArgs e)
+        private void GenerateLetters(WdPaperSize paperSize, string chargeClazz, BackgroundWorker worker, DoWorkEventArgs e)
         {
             var formats = mainWindow.ckLbFormats.CheckedItems.Cast<Format>()
                 .Where(HasBindingSource)
@@ -403,6 +405,7 @@
             var docName = AllInOneGenerator.CreateDocs(
                 formats,
                 paperSize,
+                chargeClazz,
                 worker,
                 e);
 
@@ -920,7 +923,7 @@
             try
             {
                 mainWindow.btGenerateWords.Enabled = false;
-                mainWindow.bwCreateLetters.RunWorkerAsync(mainWindow.cbPaperSize.SelectedItem);
+                mainWindow.bwCreateLetters.RunWorkerAsync(Tuple.Create(mainWindow.cbPaperSize.SelectedItem, mainWindow.cbCharge.SelectedItem));
 
                 progressDialog.ShowDialog();
             }

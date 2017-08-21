@@ -1,0 +1,1 @@
+2017-08-16 14:12:38,894-0500 INFO  miktex-pdftex - starting with command line: "C:\Users\rigo\OneDrive - ASESCOM RJ ABOGADOS EIRL\git\LetterGeneratorGUI\LetterApp\bin\Debug\latex\install\miktex\bin\miktex-pdftex.exe" --initialize --interaction=nonstopmode --halt-on-error --alias=latex --job-name=latex -tcx=cp227.tcx --enable-etex latex.ini
