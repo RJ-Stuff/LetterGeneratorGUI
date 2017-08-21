@@ -32,7 +32,7 @@ namespace LetterCore.latex
             var texBody = bodyFormat
                 .Replace("%INCLUDEFILES%", string.Join(string.Empty, formats.Select(f => CreateFormat(f, chargeClazz, worker, e))))
                 .Replace("%PAPERSIZE%", paperSize)
-                .Replace("%TOPMARGIN%", paperSize == "a4paper" ? "2.8cm" : "2.25cm");
+                .Replace("%TOPMARGIN%", paperSize == "a4paper" ? "2.8cm" : "-1cm");
 
             File.WriteAllText($"{filename}.tex", texBody);
             var result = $"cartas-{id}.pdf";
@@ -99,7 +99,7 @@ namespace LetterCore.latex
         {
             var bodyFormat = File.ReadAllText(f.Url);
 
-            var chargeFormat = chargeClazz != null
+            var chargeFormat = !string.IsNullOrEmpty(chargeClazz)
                                    ? File.ReadAllText(
                                        Path.Combine(Directory.GetCurrentDirectory(), "charges", chargeClazz))
                                    : string.Empty;

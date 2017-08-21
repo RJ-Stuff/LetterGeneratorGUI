@@ -450,9 +450,7 @@
             var index = mainWindow.ckLbFormats.SelectedIndex;
             if (index == -1) return;
 
-            // todo
-            // var query = (mainWindow.ckLbFormats.Items[index] as Format).
-            // cargar el query....
+            // todo cargar el query....
             var format = (Format)mainWindow.ckLbFormats.Items[index];
 
             format.BindingSource = new BindingSource
