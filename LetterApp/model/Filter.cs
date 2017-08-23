@@ -1,5 +1,7 @@
 ﻿namespace LetterApp.model
 {
+    using System.Linq;
+
     class Filter
     {
         public string DisplayName { get; set; }
@@ -15,8 +17,20 @@
 
         public override string ToString()
         {
-            var value = Value.ToString().Trim().Length != 0 ? " = " + Value : string.Empty;
+            var value = (Value ?? string.Empty).ToString().Trim();
+            var op = "=<>";
+
+            if (!string.IsNullOrEmpty(value) && !value.Any(c => op.Contains(c)))
+            {
+                value = $" = {value}";
+            }
+            
             return $"{DisplayName}{value}";
+        }
+
+        public string InternalToString()
+        {
+            return ToString().Replace(DisplayName, InternalName);
         }
 
         public override int GetHashCode()

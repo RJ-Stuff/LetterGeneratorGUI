@@ -45,6 +45,9 @@
             this.rtEditor = new System.Windows.Forms.RichTextBox();
             this.tabFilters = new System.Windows.Forms.TabPage();
             this.panel10 = new System.Windows.Forms.Panel();
+            this.groupBox6 = new System.Windows.Forms.GroupBox();
+            this.nudLetterCount = new System.Windows.Forms.NumericUpDown();
+            this.label7 = new System.Windows.Forms.Label();
             this.gbExtendedOptions = new System.Windows.Forms.GroupBox();
             this.ckbExtendedOptions = new System.Windows.Forms.CheckBox();
             this.btAddOption = new System.Windows.Forms.Button();
@@ -98,6 +101,7 @@
             this.panel3 = new System.Windows.Forms.Panel();
             this.bsMain = new System.Windows.Forms.BindingSource(this.components);
             this.bwCreateLetters = new System.ComponentModel.BackgroundWorker();
+            this.bwGetData = new System.ComponentModel.BackgroundWorker();
             ((System.ComponentModel.ISupportInitialize)(this.picLogo)).BeginInit();
             this.tabControl1.SuspendLayout();
             this.tabEditor.SuspendLayout();
@@ -105,6 +109,8 @@
             this.panel5.SuspendLayout();
             this.tabFilters.SuspendLayout();
             this.panel10.SuspendLayout();
+            this.groupBox6.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.nudLetterCount)).BeginInit();
             this.gbExtendedOptions.SuspendLayout();
             this.panel8.SuspendLayout();
             this.panel9.SuspendLayout();
@@ -266,12 +272,57 @@
             // 
             this.panel10.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left)));
+            this.panel10.Controls.Add(this.groupBox6);
             this.panel10.Controls.Add(this.gbExtendedOptions);
             this.panel10.Controls.Add(this.gbFilters);
             this.panel10.Location = new System.Drawing.Point(336, 0);
             this.panel10.Name = "panel10";
             this.panel10.Size = new System.Drawing.Size(762, 515);
             this.panel10.TabIndex = 1;
+            // 
+            // groupBox6
+            // 
+            this.groupBox6.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left)));
+            this.groupBox6.Controls.Add(this.nudLetterCount);
+            this.groupBox6.Controls.Add(this.label7);
+            this.groupBox6.Location = new System.Drawing.Point(410, 3);
+            this.groupBox6.Name = "groupBox6";
+            this.groupBox6.Size = new System.Drawing.Size(349, 511);
+            this.groupBox6.TabIndex = 2;
+            this.groupBox6.TabStop = false;
+            this.groupBox6.Text = "Salida esperada";
+            // 
+            // nudLetterCount
+            // 
+            this.nudLetterCount.Location = new System.Drawing.Point(143, 26);
+            this.nudLetterCount.Maximum = new decimal(new int[] {
+            10000,
+            0,
+            0,
+            0});
+            this.nudLetterCount.Minimum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            this.nudLetterCount.Name = "nudLetterCount";
+            this.nudLetterCount.Size = new System.Drawing.Size(80, 23);
+            this.nudLetterCount.TabIndex = 1;
+            this.nudLetterCount.Value = new decimal(new int[] {
+            50,
+            0,
+            0,
+            0});
+            // 
+            // label7
+            // 
+            this.label7.AutoSize = true;
+            this.label7.Location = new System.Drawing.Point(6, 28);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(131, 17);
+            this.label7.TabIndex = 0;
+            this.label7.Text = "Cantidad de cartas:";
             // 
             // gbExtendedOptions
             // 
@@ -803,6 +854,11 @@
             this.bwCreateLetters.WorkerReportsProgress = true;
             this.bwCreateLetters.WorkerSupportsCancellation = true;
             // 
+            // bwGetData
+            // 
+            this.bwGetData.WorkerReportsProgress = true;
+            this.bwGetData.WorkerSupportsCancellation = true;
+            // 
             // MainWindow
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -816,6 +872,7 @@
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MainMenuStrip = this.menuStrip1;
             this.Name = "MainWindow";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Generador de cartas";
             ((System.ComponentModel.ISupportInitialize)(this.picLogo)).EndInit();
             this.tabControl1.ResumeLayout(false);
@@ -826,6 +883,9 @@
             this.panel5.PerformLayout();
             this.tabFilters.ResumeLayout(false);
             this.panel10.ResumeLayout(false);
+            this.groupBox6.ResumeLayout(false);
+            this.groupBox6.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.nudLetterCount)).EndInit();
             this.gbExtendedOptions.ResumeLayout(false);
             this.gbExtendedOptions.PerformLayout();
             this.panel8.ResumeLayout(false);
@@ -925,6 +985,10 @@
         public TextBox txtbExtendedOption;
         public GroupBox gbFilters;
         public GroupBox gbExtendedOptions;
+        private GroupBox groupBox6;
+        public NumericUpDown nudLetterCount;
+        private Label label7;
+        public BackgroundWorker bwGetData;
     }
 }
 

@@ -10,10 +10,6 @@
           {
             "ChargeClazz": "",
             "DisplayName": "Sin cargo"
-          },
-          {
-            "ChargeClazz": "SpecialCharge",
-            "DisplayName": "Cargo especial"
           }
         ]
       },
@@ -33,10 +29,6 @@
           {
             "ChargeClazz": "",
             "DisplayName": "Sin cargo"
-          },
-          {
-            "ChargeClazz": "SpecialCharge",
-            "DisplayName": "Cargo especial"
           }
         ]
       },
@@ -56,10 +48,6 @@
           {
             "ChargeClazz": "",
             "DisplayName": "Sin cargo"
-          },
-          {
-            "ChargeClazz": "SpecialCharge",
-            "DisplayName": "Cargo especial"
           }
         ]
       },
@@ -79,10 +67,6 @@
           {
             "ChargeClazz": "",
             "DisplayName": "Sin cargo"
-          },
-          {
-            "ChargeClazz": "SpecialCharge",
-            "DisplayName": "Cargo especial"
           }
         ]
       },
@@ -102,10 +86,6 @@
           {
             "ChargeClazz": "",
             "DisplayName": "Sin cargo"
-          },
-          {
-            "ChargeClazz": "SpecialCharge",
-            "DisplayName": "Cargo especial"
           }
         ]
       },

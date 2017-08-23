@@ -14,7 +14,7 @@
     {
         public static IEnumerable<List<DataRowView>> GroupBy(IEnumerable<DataRowView> data, string key) =>
             data.GroupBy(row => row[key], (k, group) => group.ToList());
-
+        //todo actualizar en consulta el nombre de las columnas.
         public static Client GetClient(DataRowView rowView) =>
             new Client()
             {

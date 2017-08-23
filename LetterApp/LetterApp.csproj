@@ -88,6 +88,12 @@
     <Compile Include="LettersGenerationDialog.Designer.cs">
       <DependentUpon>LettersGenerationDialog.cs</DependentUpon>
     </Compile>
+    <Compile Include="LoadingDataDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="LoadingDataDialog.Designer.cs">
+      <DependentUpon>LoadingDataDialog.cs</DependentUpon>
+    </Compile>
     <Compile Include="MainWindow.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -112,6 +118,9 @@
     <Compile Include="view\ViewUtils.cs" />
     <EmbeddedResource Include="LettersGenerationDialog.resx">
       <DependentUpon>LettersGenerationDialog.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="LoadingDataDialog.resx">
+      <DependentUpon>LoadingDataDialog.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="MainWindow.resx">
       <DependentUpon>MainWindow.cs</DependentUpon>

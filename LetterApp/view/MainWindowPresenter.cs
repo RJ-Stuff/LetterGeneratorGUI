@@ -19,6 +19,8 @@
     using Newtonsoft.Json;
     using Newtonsoft.Json.Linq;
 
+    using Zuby.ADGV;
+
     using Charge = LetterApp.model.Charge;
     using CheckBox = System.Windows.Forms.CheckBox;
     using Format = model.Format;
@@ -29,8 +31,9 @@
     {
         private readonly MainWindow mainWindow;
         private readonly LettersGenerationDialog progressDialog;
+        private readonly LoadingDataDialog loadingDataDialog;
         private readonly JToken guiConfiguration;
-        private readonly Dictionary<CheckBox, Tuple<TextBox, string>> filterPair;
+        private readonly Dictionary<CheckBox, Tuple<TextBox, string, string, string>> filterPair;
 
         private Configuration configuration;
         private bool notSavedChanges;
@@ -43,8 +46,9 @@
             maxProgress = 0;
             totalProgress = 0;
             progressDialog = new LettersGenerationDialog();
+            loadingDataDialog = new LoadingDataDialog();
             notSavedChanges = false;
-            filterPair = new Dictionary<CheckBox, Tuple<TextBox, string>>();
+            filterPair = new Dictionary<CheckBox, Tuple<TextBox, string, string, string>>();
 
             guiConfiguration = JToken.Parse(File.ReadAllText(
                 Path.Combine(Directory.GetCurrentDirectory(), "GUIConfiguration.json"),
@@ -97,7 +101,7 @@
         private static void MainWindowOnClosing(object sender, CancelEventArgs cancelEventArgs)
         {
             var option = MessageBox.Show(
-                "¿Está seguro de que desea salir?",
+                "¿Está seguro que desea salir?",
                 "Cerrar aplicación",
                 MessageBoxButtons.YesNo,
                 MessageBoxIcon.Question);
@@ -131,6 +135,7 @@
                 Width = 150,
                 Height = 23
             };
+
             return txb;
         }
 
@@ -214,7 +219,11 @@
             mainWindow.bwCreateLetters.DoWork += BwCreateLettersOnDoWork;
             mainWindow.bwCreateLetters.RunWorkerCompleted += BwCreateLettersOnRunWorkerCompleted;
             mainWindow.bwCreateLetters.ProgressChanged += BwCreateLettersOnProgressChanged;
+            mainWindow.bwGetData.DoWork += BwGetDataOnDoWork;
+            mainWindow.bwGetData.RunWorkerCompleted += BwGetDataOnRunWorkerCompleted;
+            mainWindow.bwGetData.ProgressChanged += BwGetDataOnProgressChanged;
             progressDialog.Closing += ProgressDialogOnClosing;
+            loadingDataDialog.Closing += LoadingDataDialogOnClosing;
             mainWindow.Closing += MainWindowOnClosing;
             mainWindow.cerrarToolStripMenuItem.Click += CerrarToolStripMenuItemOnClick;
             mainWindow.btRemoveFilter.Click += RemoveFilter;
@@ -222,6 +231,103 @@
             mainWindow.btExtendedOptionHelp.Click += ExtendedOptionHelp;
             mainWindow.rbOnlyMail.Click += CheckCredentials;
             mainWindow.rbMailWithAtt.Click += CheckCredentials;
+        }
+
+        private void LoadingDataDialogOnClosing(object sender, CancelEventArgs e)
+        {
+            e.Cancel = true;
+            loadingDataDialog.Visible = false;
+            mainWindow.bwGetData.CancelAsync();
+        }
+
+        private void BwGetDataOnProgressChanged(object sender, ProgressChangedEventArgs e)
+        {
+            var format = (Format)e.UserState;
+
+            mainWindow.bsMain = format.BindingSource;
+            mainWindow.dgClients.DataSource = format.BindingSource;
+            mainWindow.dgClients.CleanFilterAndSort();
+            mainWindow.lClientCount.Text = ViewUtils
+                .GroupBy(format.BindingSource.List.Cast<DataRowView>(), "codluna")
+                .Count()
+                .ToString();
+        }
+
+        private void BwGetDataOnRunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
+        {
+            if (e.Error != null)
+            {
+                var msg = $"Ocurrió un error en la obtención de datos.\n\nDescripción:\n{e.Error.Message}";
+                MessageBox.Show(msg, "Error");
+            }
+            else if (e.Cancelled)
+            {
+                MessageBox.Show("La obtención de datos fue cancelada.", "Advertencia");
+            }
+            else
+            {
+                MessageBox.Show("Datos obtenidos correctamente.", "Información");
+            }
+
+            mainWindow.btLoadData.Enabled = true;
+            loadingDataDialog.Visible = false;
+        }
+
+        private void BwGetDataOnDoWork(object sender, DoWorkEventArgs e)
+        {
+            var worker = (BackgroundWorker)sender;
+            var format = (Format)e.Argument;
+            var conn = guiConfiguration["connectionstring"].Value<string>();
+            var token = guiConfiguration["queries"]
+                .Where(t => t["format"].Value<string>().Equals(Path.GetFileNameWithoutExtension(format.Url)))
+                .Single();
+            var countQuery = token["countquery"].Value<string>();
+            var dataQuery = token["dataquery"].Value<string>();
+            var count = DataHelper.GetCount(conn, countQuery);
+
+            if (count == 0)
+            {
+                MessageBox.Show(
+                    "La consulta no arroja ningún resultado,\nsi está seguro que existen datos,\nconsulte al equipo de sistemas.",
+                    "Advertencia",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Warning);
+                e.Cancel = true;
+                worker.CancelAsync();
+                return;
+            }
+
+            if (count > Convert.ToInt32(mainWindow.nudLetterCount.Value) + 10)
+            {
+                var msg = "Por favor, revise los filtros,\n"
+                          + "la cantidad de elementos arrojados\n" +
+                          "en la consulta excede la cantidad esperada.\n\n" +
+                          "¿Desea cargar de todas formas los datos?";
+
+                var option = MessageBox.Show(msg, "Advertencia", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+                if (option == DialogResult.No)
+                {
+                    e.Cancel = true;
+                    worker.CancelAsync();
+                    return;
+                }
+            }
+
+            if (worker.CancellationPending)
+            {
+                e.Cancel = true;
+                worker.CancelAsync();
+                return;
+            }
+
+            format.BindingSource = new BindingSource
+            {
+                DataSource = DataHelper.GetData(conn, dataQuery),
+                DataMember = "Clientes"
+            };
+            format.BindingSource.ListChanged += DataSourceChange;
+
+            worker.ReportProgress(0, format);
         }
 
         private void CheckCredentials(object sender, EventArgs e)
@@ -263,14 +369,18 @@
                 mainWindow.gbFilters.Controls.Add(txb);
             }
 
-            filterPair[ckb] = new Tuple<TextBox, string>(txb, t.Item1["internalname"].Value<string>());
+            filterPair[ckb] = Tuple.Create(
+                txb,
+                t.Item1["internalname"].Value<string>(),
+                t.Item1["validate"].Value<string>(),
+                t.Item1["hint"].Value<string>());
         }
 
         private void FilterAction(object sender, EventArgs e)
         {
             var chk = sender as CheckBox;
 
-            if (filterPair.TryGetValue(chk, out Tuple<TextBox, string> tuple) && Utils.Validate(tuple.Item1))
+            if (filterPair.TryGetValue(chk, out Tuple<TextBox, string, string, string> tuple) && Utils.Validate(tuple))
             {
                 var functions = new Dictionary<bool, Action<object>>
                 {
@@ -290,9 +400,11 @@
             }
             else
             {
-                var alt = tuple.Item1.Text.Trim().Length == 0 ? ", comience agregando algún valor al mismo." : ".";
-                MessageBox.Show($"Hay problemas con la validación del valor del filtro{alt}", "Validación");
+                var alt = string.IsNullOrEmpty(tuple.Item1.Text.Trim()) ?
+                    "Comience agregando algún valor al mismo." : tuple.Item4;
+                MessageBox.Show($"Hay problemas con la validación del valor del filtro.\n{alt}", "Validación");
                 chk.Checked = false;
+                tuple.Item1.Text = string.Empty;
             }
         }
 
@@ -320,7 +432,7 @@
         private void CerrarToolStripMenuItemOnClick(object sender, EventArgs eventArgs)
         {
             var option = MessageBox.Show(
-                "¿Está seguro de que desea salir?",
+                "¿Está seguro que desea salir?",
                 "Cerrar aplicación",
                 MessageBoxButtons.YesNo,
                 MessageBoxIcon.Question);
@@ -447,26 +559,28 @@
 
         private void LoadData(object sender, EventArgs e)
         {
-            var index = mainWindow.ckLbFormats.SelectedIndex;
-            if (index == -1) return;
-
-            // todo cargar el query....
-            var format = (Format)mainWindow.ckLbFormats.Items[index];
-
-            format.BindingSource = new BindingSource
+            try
             {
-                DataSource = DataHelper.SampleData,
-                DataMember = "Clientes"
-            };
-            format.BindingSource.ListChanged += DataSourceChange;
+                var index = mainWindow.ckLbFormats.SelectedIndex;
+                if (index == -1) return;
 
-            mainWindow.bsMain = format.BindingSource;
-            mainWindow.dgClients.DataSource = format.BindingSource;
-            mainWindow.dgClients.CleanFilterAndSort();
-            mainWindow.lClientCount.Text = ViewUtils
-                .GroupBy(format.BindingSource.List.Cast<DataRowView>(), "codluna")
-                .Count()
-                .ToString();
+                var filters = string.Join(
+                    "\r\n",
+                    Enumerable.Range(0, mainWindow.lbFilters.Items.Count)
+                        .Select(i => ((Filter)mainWindow.lbFilters.Items[i]).InternalToString()));
+
+                //todo agregar filters a las consultas
+                Console.WriteLine(filters);
+
+                mainWindow.btLoadData.Enabled = false;
+                mainWindow.bwGetData.RunWorkerAsync(mainWindow.ckLbFormats.Items[index]);
+                loadingDataDialog.ShowDialog();
+            }
+            catch (Exception ex)
+            {
+                var msg = $"Ocurrió un problema al cargar los datos\n\nDescripción:\n{ex.Message}";
+                MessageBox.Show(msg, "Error");
+            }
         }
 
         private void SelectedChargeChange(object sender, EventArgs e)
@@ -920,6 +1034,14 @@
         {
             try
             {
+                if (!Enumerable.Range(0, mainWindow.ckLbFormats.Items.Count)
+                        .Select(i => ((Format)mainWindow.ckLbFormats.Items[i]).BindingSource)
+                        .Any(bs => bs != null))
+                {
+                    MessageBox.Show("Debe cargar datos en algún formato para generar cartas.", "Información");
+                    return;
+                }
+
                 mainWindow.btGenerateWords.Enabled = false;
                 mainWindow.bwCreateLetters.RunWorkerAsync(Tuple.Create(mainWindow.cbPaperSize.SelectedItem, mainWindow.cbCharge.SelectedItem));
 

@@ -3,52 +3,72 @@
     {
       "kind": "Negocio",
       "internalname": "negocio",
-      "box": "true"
+      "box": "true",
+      "validate": ".*",
+      "hint":  "" 
     },
     {
       "kind": "Rango deuda 91-120 días",
-      "internalname": "deuda91-120",
-      "box": "false"
+      "internalname": "and r.cod_rango_deuda = 5",
+      "box": "false",
+      "validate": ".*",
+      "hint": ""
     },
     {
       "kind": "Rango deuda 120-150 días",
-      "internalname": "deuda120-150",
-      "box": "false"
+      "internalname": "and r.cod_rango_deuda = 6",
+      "box": "false",
+      "validate": ".*",
+      "hint": ""
     },
     {
       "kind": "Rango deuda 151-180 días",
-      "internalname": "deuda-151-180",
-      "box": "false"
+      "internalname": "and r.cod_rango_deuda = 7",
+      "box": "false",
+      "validate": ".*",
+      "hint": ""
     },
     {
       "kind": "Zonales",
-      "internalname": "zonales",
-      "box": "true"
+      "internalname": "and z.NOMBRE",
+      "box": "true",
+      "validate": "'.{3}'",
+      "hint": "Debe escribir los zonales entre\ncomillas simples, ej. 'TRU',\nsolo se admiten 3 letras."
     },
     {
       "kind": "Sector",
       "internalname": "sector",
-      "box": "true"
+      "box": "true",
+      "validate": ".*",
+      "hint": ""
     },
     {
       "kind": "Distrito",
       "internalname": "distrito",
-      "box": "true"
+      "box": "true",
+      "validate": ".*",
+      "hint": ""
     },
     {
       "kind": "Tipo de gestión",
       "internalname": "gestion",
-      "box": "true"
+      "box": "true",
+      "validate": ".*",
+      "hint": ""
     },
     {
       "kind": "Monto",
-      "internalname": "monto",
-      "box": "true"
+      "internalname": "and lc.Exigible",
+      "box": "true",
+      "validate": ".*",
+      "hint": ""
     },
     {
-      "kind": "Cliente especial",
-      "internalname": "especial",
-      "box": "false"
+      "kind": "Eliminar Dir. vacías",
+      "internalname": "and m.UltimaDireccionUbicada is not null",
+      "box": "false",
+      "validate": ".*",
+      "hint": ""
     }
   ],
   "papersizes": [
@@ -75,6 +95,59 @@
           "DisplayName": "Cargo especial"
         }
       ]
+    }
+  ],
+  "connectionstring": "Server=181.65.184.171;Database=RJAbogados;User id=mgeldres;Password=asescomadmin2014.rar;Integrated Security=false;",
+  "queries": [
+    {
+      "format": "48-horas",
+      "countquery": "queries\\count.sql",
+      "dataquery": "queries\\data.sql"
+    },
+    {
+      "format": "48-horas-con-cargo",
+      "countquery": "queries\\count.sql",
+      "dataquery": "queries\\data.sql"
+    },
+    {
+      "format": "72-horas",
+      "countquery": "queries\\count.sql",
+      "dataquery": "queries\\data.sql"
+    },
+    {
+      "format": "72-horas-con-cargo",
+      "countquery": "queries\\count.sql",
+      "dataquery": "queries\\data.sql"
+    },
+    {
+      "format": "no-cumplimiento",
+      "countquery": "queries\\count.sql",
+      "dataquery": "queries\\data.sql"
+    },
+    {
+      "format": "no-cumplimiento-con-cargo",
+      "countquery": "queries\\count.sql",
+      "dataquery": "queries\\data.sql"
+    },
+    {
+      "format": "ultima-oportunidad",
+      "countquery": "queries\\count.sql",
+      "dataquery": "queries\\data.sql"
+    },
+    {
+      "format": "ultima-oportunidad-con-cargo",
+      "countquery": "queries\\count.sql",
+      "dataquery": "queries\\data.sql"
+    },
+    {
+      "format": "urgente",
+      "countquery": "queries\\count.sql",
+      "dataquery": "queries\\data.sql"
+    },
+    {
+      "format": "urgente-con-cargo",
+      "countquery": "queries\\count.sql",
+      "dataquery": "queries\\data.sql"
     }
   ]
 }
