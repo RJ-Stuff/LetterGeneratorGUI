@@ -97,7 +97,7 @@
       ]
     }
   ],
-  "connectionstring": "Server=181.65.184.171;Database=RJAbogados;User id=mgeldres;Password=asescomadmin2014.rar;Integrated Security=false;",
+  "connectionstring": "Server=192.168.1.170;Database=RJAbogados;User id=mgeldres;Password=asescomadmin2014.rar;Integrated Security=false;",
   "queries": [
     {
       "format": "48-horas",

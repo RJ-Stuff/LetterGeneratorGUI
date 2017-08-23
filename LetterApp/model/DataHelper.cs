@@ -26,6 +26,7 @@
             {
                 using (var cmd = new SqlCommand(queryBody, conn))
                 {
+                    cmd.CommandTimeout = 120;
                     conn.Open();
                     count = Convert.ToInt32(cmd.ExecuteScalar());
                 }
@@ -45,6 +46,7 @@
             {
                 using (var cmd = new SqlCommand(queryBody, conn))
                 {
+                    cmd.CommandTimeout = 120;
                     using (var adapter = new SqlDataAdapter(cmd))
                     {
                         adapter.Fill(ds);

@@ -1,7 +1,7 @@
 {
   "Formats": [
     {
-      "Url": "C:\\Users\\rigo\\OneDrive - ASESCOM RJ ABOGADOS EIRL\\git\\LetterGeneratorGUI\\LetterApp\\bin\\Debug\\latex\\48-horas.tex",
+      "Url": "C:\\Users\\sistemas\\Desktop\\LetterGeneratorGUI\\LetterApp\\bin\\Debug\\latex\\48-horas.tex",
       "Checked": true,
       "PaperSize": {
         "Papersize": 7,
@@ -20,7 +20,7 @@
       "Filters": []
     },
     {
-      "Url": "C:\\Users\\rigo\\OneDrive - ASESCOM RJ ABOGADOS EIRL\\git\\LetterGeneratorGUI\\LetterApp\\bin\\Debug\\latex\\72-horas.tex",
+      "Url": "C:\\Users\\sistemas\\Desktop\\LetterGeneratorGUI\\LetterApp\\bin\\Debug\\latex\\72-horas.tex",
       "Checked": true,
       "PaperSize": {
         "Papersize": 7,
@@ -39,7 +39,7 @@
       "Filters": []
     },
     {
-      "Url": "C:\\Users\\rigo\\OneDrive - ASESCOM RJ ABOGADOS EIRL\\git\\LetterGeneratorGUI\\LetterApp\\bin\\Debug\\latex\\no-cumplimiento.tex",
+      "Url": "C:\\Users\\sistemas\\Desktop\\LetterGeneratorGUI\\LetterApp\\bin\\Debug\\latex\\no-cumplimiento.tex",
       "Checked": true,
       "PaperSize": {
         "Papersize": 7,
@@ -58,7 +58,7 @@
       "Filters": []
     },
     {
-      "Url": "C:\\Users\\rigo\\OneDrive - ASESCOM RJ ABOGADOS EIRL\\git\\LetterGeneratorGUI\\LetterApp\\bin\\Debug\\latex\\ultima-oportunidad.tex",
+      "Url": "C:\\Users\\sistemas\\Desktop\\LetterGeneratorGUI\\LetterApp\\bin\\Debug\\latex\\ultima-oportunidad.tex",
       "Checked": true,
       "PaperSize": {
         "Papersize": 7,
@@ -77,7 +77,7 @@
       "Filters": []
     },
     {
-      "Url": "C:\\Users\\rigo\\OneDrive - ASESCOM RJ ABOGADOS EIRL\\git\\LetterGeneratorGUI\\LetterApp\\bin\\Debug\\latex\\urgente.tex",
+      "Url": "C:\\Users\\sistemas\\Desktop\\LetterGeneratorGUI\\LetterApp\\bin\\Debug\\latex\\urgente.tex",
       "Checked": true,
       "PaperSize": {
         "Papersize": 7,

@@ -1,26 +1,29 @@
 select  DISTINCT 
-	lc.cod_luna,
+	lc.cod_luna as codluna,
 	LTRIM(RTRIM(UPPER(l.NOMBRE))) + ' ' + LTRIM(RTRIM(UPPER(APELLIDO_PATERNO)))+ ' '+ LTRIM(RTRIM(UPPER(APELLIDO_MATERNO))) as clientname,
 	lc.exigible as totaldebt,
 	l.NRO_IDENTIFICACION as docid,
-	s.exigible as bill,
+	null as bill,
 	CASE s.COD_SISTEMA
 		WHEN 1 THEN 'FIJA'
 		WHEN 2 THEN 'CABLE'
 		WHEN 3 THEN 'MÓVIL'
 		WHEN 4 THEN 'AMDOCS'
 	END as service,
-	s.Telefono as phonenumbre,
+	s.Telefono as phonenumber,
 	fecha_vencimiento as duedate,
 	SUM(MONTO_EXIGIBLE) over (partition by d.cod_sistema, d.cod_cliente, d.cod_cuenta, d.fecha_vencimiento) as debt,
 	'TDP' as business,
 	r.descripcion as duerange,
 	z.NOMBRE as zonal,
-	m.ultimadireccionubicada, 
+	m.ultimadireccionubicada as alternativeaddress, 
 	m.ultimadireccionubicada2, 
-	m.ultimadireccionporverificar, 
+	m.ultimadireccionporverificar as newaddress, 
 	m.ultimadireccionporverificar2,
-	'' as baseaddress
+	null as baseaddress,
+	null as sector,
+	null as district,
+	'CAMPO' as managementkind 
 from luna_control lc
 	inner join master_luna l on l.cod_luna = lc.cod_luna
 	inner join core_zonal z on z.COD_ZONAL = l.COD_ZONAL
