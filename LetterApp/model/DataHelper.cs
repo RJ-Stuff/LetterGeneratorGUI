@@ -11,14 +11,11 @@
         {
         }
 
-        public static int GetCount(string connectionString, string query)
+        public static int GetCount(string connectionString, string query, string filters)
         {
             var count = 0;
-
             
-
-            //todo set filters
-            var queryBody = File.ReadAllText(query);
+            var queryBody = File.ReadAllText(query).Replace("--CUSTOMFILTERS", filters);
 
             using (var conn = new SqlConnection(connectionString))
             {
@@ -33,12 +30,11 @@
             return count;
         }
 
-        public static DataSet GetData(string connectionString, string query)
+        public static DataSet GetData(string connectionString, string query, string filters)
         {
             var ds = new DataSet();
-
-            //todo set filters
-            var queryBody = File.ReadAllText(query);
+            
+            var queryBody = File.ReadAllText(query).Replace("--CUSTOMFILTERS", filters);
 
             using (var conn = new SqlConnection(connectionString))
             {

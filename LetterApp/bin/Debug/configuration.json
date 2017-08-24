@@ -10,6 +10,10 @@
           {
             "ChargeClazz": "",
             "DisplayName": "Sin cargo"
+          },
+          {
+            "ChargeClazz": "SpecialCharge",
+            "DisplayName": "Cargo especial"
           }
         ]
       },
@@ -17,7 +21,18 @@
         "ChargeClazz": "",
         "DisplayName": "Sin cargo"
       },
-      "Filters": []
+      "Filters": [
+        {
+          "DisplayName": "Rango deuda 120-150 días",
+          "InternalName": "and r.cod_rango_deuda = 6",
+          "Value": ""
+        },
+        {
+          "DisplayName": "Monto",
+          "InternalName": "and lc.Exigible",
+          "Value": "> 700"
+        }
+      ]
     },
     {
       "Url": "C:\\Users\\sistemas\\Desktop\\LetterGeneratorGUI\\LetterApp\\bin\\Debug\\latex\\72-horas.tex",
@@ -29,6 +44,10 @@
           {
             "ChargeClazz": "",
             "DisplayName": "Sin cargo"
+          },
+          {
+            "ChargeClazz": "SpecialCharge",
+            "DisplayName": "Cargo especial"
           }
         ]
       },
@@ -48,6 +67,10 @@
           {
             "ChargeClazz": "",
             "DisplayName": "Sin cargo"
+          },
+          {
+            "ChargeClazz": "SpecialCharge",
+            "DisplayName": "Cargo especial"
           }
         ]
       },
@@ -67,6 +90,10 @@
           {
             "ChargeClazz": "",
             "DisplayName": "Sin cargo"
+          },
+          {
+            "ChargeClazz": "SpecialCharge",
+            "DisplayName": "Cargo especial"
           }
         ]
       },
@@ -86,6 +113,10 @@
           {
             "ChargeClazz": "",
             "DisplayName": "Sin cargo"
+          },
+          {
+            "ChargeClazz": "SpecialCharge",
+            "DisplayName": "Cargo especial"
           }
         ]
       },
@@ -96,7 +127,5 @@
       "Filters": []
     }
   ],
-  "Notifications": [
-    "miguel.geldres@Rjabogados.com"
-  ]
+  "Notifications": []
 }

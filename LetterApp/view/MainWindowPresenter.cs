@@ -276,19 +276,22 @@
         private void BwGetDataOnDoWork(object sender, DoWorkEventArgs e)
         {
             var worker = (BackgroundWorker)sender;
-            var format = (Format)e.Argument;
+            var tuple = (Tuple<object,string>)e.Argument;
+            var format = (Format)tuple.Item1;
+            var filters = tuple.Item2;
             var conn = guiConfiguration["connectionstring"].Value<string>();
             var token = guiConfiguration["queries"]
                 .Where(t => t["format"].Value<string>().Equals(Path.GetFileNameWithoutExtension(format.Url)))
                 .Single();
             var countQuery = token["countquery"].Value<string>();
             var dataQuery = token["dataquery"].Value<string>();
-            var count = DataHelper.GetCount(conn, countQuery);
+            var count = DataHelper.GetCount(conn, countQuery, filters);
 
             if (count == 0)
             {
                 MessageBox.Show(
-                    "La consulta no arroja ningún resultado,\nsi está seguro que existen datos,\nconsulte al equipo de sistemas.",
+                    "La consulta no arroja ningún resultado,\n" +
+                    "si está seguro que existen datos,\nconsulte al equipo de sistemas.",
                     "Advertencia",
                     MessageBoxButtons.OK,
                     MessageBoxIcon.Warning);
@@ -322,7 +325,7 @@
 
             format.BindingSource = new BindingSource
             {
-                DataSource = DataHelper.GetData(conn, dataQuery),
+                DataSource = DataHelper.GetData(conn, dataQuery, filters),
                 DataMember = "Clientes"
             };
             format.BindingSource.ListChanged += DataSourceChange;
@@ -565,15 +568,12 @@
                 if (index == -1) return;
 
                 var filters = string.Join(
-                    "\r\n",
+                    " ",
                     Enumerable.Range(0, mainWindow.lbFilters.Items.Count)
                         .Select(i => ((Filter)mainWindow.lbFilters.Items[i]).InternalToString()));
-
-                //todo agregar filters a las consultas
-                Console.WriteLine(filters);
-
+                
                 mainWindow.btLoadData.Enabled = false;
-                mainWindow.bwGetData.RunWorkerAsync(mainWindow.ckLbFormats.Items[index]);
+                mainWindow.bwGetData.RunWorkerAsync(Tuple.Create(mainWindow.ckLbFormats.Items[index], filters));
                 loadingDataDialog.ShowDialog();
             }
             catch (Exception ex)

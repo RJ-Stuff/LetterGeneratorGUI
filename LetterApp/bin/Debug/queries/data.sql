@@ -42,8 +42,4 @@ where
 	and lc.estadogestioncall = 3 
 	and i.cod_indicador is null
 
-
-	--and r.COD_RANGO_DEUDA = 6
-	--and z.NOMBRE = 'tru'
-	--filtros seleccionados dentro de la aplicación
 	--CUSTOMFILTERS

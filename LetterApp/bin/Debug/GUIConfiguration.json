@@ -1,13 +1,6 @@
 ﻿{
   "filters": [
     {
-      "kind": "Negocio",
-      "internalname": "negocio",
-      "box": "true",
-      "validate": ".*",
-      "hint":  "" 
-    },
-    {
       "kind": "Rango deuda 91-120 días",
       "internalname": "and r.cod_rango_deuda = 5",
       "box": "false",
@@ -36,32 +29,11 @@
       "hint": "Debe escribir los zonales entre\ncomillas simples, ej. 'TRU',\nsolo se admiten 3 letras."
     },
     {
-      "kind": "Sector",
-      "internalname": "sector",
-      "box": "true",
-      "validate": ".*",
-      "hint": ""
-    },
-    {
-      "kind": "Distrito",
-      "internalname": "distrito",
-      "box": "true",
-      "validate": ".*",
-      "hint": ""
-    },
-    {
-      "kind": "Tipo de gestión",
-      "internalname": "gestion",
-      "box": "true",
-      "validate": ".*",
-      "hint": ""
-    },
-    {
       "kind": "Monto",
       "internalname": "and lc.Exigible",
       "box": "true",
-      "validate": ".*",
-      "hint": ""
+      "validate": "^(=|<\\s*=|>\\s*=|<|>)?\\s*[0-9]*(?:\\.[0-9]*)?$",
+      "hint": "Debe escribir números de la siguiente forma,\nej. 666\nej. 66.6\nej. > 666.0\nej. >= 6.66"
     },
     {
       "kind": "Eliminar Dir. vacías",
