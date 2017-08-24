@@ -310,7 +310,7 @@
             this.nudLetterCount.Size = new System.Drawing.Size(80, 23);
             this.nudLetterCount.TabIndex = 1;
             this.nudLetterCount.Value = new decimal(new int[] {
-            50,
+            100,
             0,
             0,
             0});
