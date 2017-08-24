@@ -14,35 +14,41 @@
     {
         public static IEnumerable<List<DataRowView>> GroupBy(IEnumerable<DataRowView> data, string key) =>
             data.GroupBy(row => row[key], (k, group) => group.ToList());
-        //todo actualizar en consulta el nombre de las columnas.
-        public static Client GetClient(DataRowView rowView) =>
-            new Client()
-            {
-                CodLuna = Convert.ToInt32(rowView.Row["codluna"]),
-                Name = Convert.ToString(rowView.Row["clientname"]),
-                TotalDebt = Convert.ToSingle(rowView.Row["totaldebt"]),
-                DocId = Convert.ToString(rowView.Row["docid"]),
-                BaseAddress = Convert.ToString(rowView.Row["baseaddress"]),
-                NewAddress = Convert.ToString(rowView.Row["newaddress"]),
-                AlternativeAddress = Convert.ToString(rowView.Row["alternativeaddress"]),
-                Business = Convert.ToString(rowView.Row["business"]),
-                DueRange = Convert.ToInt32(rowView.Row["duerange"]),
-                Zonal = Convert.ToString(rowView.Row["zonal"]),
-                Sector = Convert.ToString(rowView.Row["sector"]),
-                District = Convert.ToString(rowView.Row["district"]),
-                ManagementKind = Convert.ToString(rowView.Row["managementkind"])
-            };
 
-        public static DisaggregatedDebt GetDebt(DataRowView rowView) =>
-            new DisaggregatedDebt()
-            {
-                Bill = Convert.ToInt32(rowView.Row["bill"]),
-                DaysPastDue = Convert.ToInt16(rowView.Row["dayspastdue"]),
-                Debt = Convert.ToSingle(rowView.Row["debt"]),
-                DueDate = Convert.ToDateTime(rowView.Row["duedate"]),
-                PhoneNumber = Convert.ToString(rowView.Row["phonenumber"]),
-                Service = Convert.ToString(rowView.Row["service"])
-            };
+        public static Client GetClient(DataRowView rowView)
+        {
+            var client = new Client();
+
+            client.CodLuna = Convert.ToInt32(rowView.Row["codluna"]);
+            client.Name = Convert.ToString(rowView.Row["clientname"]);
+            client.TotalDebt = Convert.ToSingle(rowView.Row["totaldebt"]);
+            client.DocId = Convert.ToString(rowView.Row["docid"]);
+            client.BaseAddress = Convert.ToString(rowView.Row["baseaddress"]);
+            client.NewAddress = Convert.ToString(rowView.Row["newaddress"]);
+            client.AlternativeAddress = Convert.ToString(rowView.Row["alternativeaddress"]);
+            client.Business = Convert.ToString(rowView.Row["business"]);
+            client.DueRange = Convert.ToString(rowView.Row["duerange"]);
+            client.Zonal = Convert.ToString(rowView.Row["zonal"]);
+            client.Sector = Convert.ToString(rowView.Row["sector"]);
+            client.District = Convert.ToString(rowView.Row["district"]);
+            client.ManagementKind = Convert.ToString(rowView.Row["managementkind"]);
+
+            return client;
+        }
+
+        public static DisaggregatedDebt GetDebt(DataRowView rowView)
+        {
+            var debt = new DisaggregatedDebt();
+
+            debt.Bill = Convert.ToString(rowView.Row["bill"]);
+            debt.DaysPastDue = Convert.ToInt16(rowView.Row["dayspastdue"]);
+            debt.Debt = Convert.ToSingle(rowView.Row["debt"]);
+            debt.DueDate = Convert.ToDateTime(rowView.Row["duedate"]);
+            debt.PhoneNumber = Convert.ToString(rowView.Row["phonenumber"]);
+            debt.Service = Convert.ToString(rowView.Row["service"]);
+
+            return debt;
+        }
 
         public static void SendNotification(List<string> emails, string username, string password, string attachment)
         {

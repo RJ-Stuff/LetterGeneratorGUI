@@ -7,8 +7,6 @@
 
     public class DataHelper
     {
-        private static DataSet dataSet;
-
         private DataHelper()
         {
         }

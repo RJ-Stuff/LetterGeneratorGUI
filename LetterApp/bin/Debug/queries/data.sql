@@ -1,4 +1,4 @@
-select  DISTINCT 
+select   
 	lc.cod_luna as codluna,
 	LTRIM(RTRIM(UPPER(l.NOMBRE))) + ' ' + LTRIM(RTRIM(UPPER(APELLIDO_PATERNO)))+ ' '+ LTRIM(RTRIM(UPPER(APELLIDO_MATERNO))) as clientname,
 	lc.exigible as totaldebt,
@@ -23,7 +23,8 @@ select  DISTINCT
 	null as baseaddress,
 	null as sector,
 	null as district,
-	'CAMPO' as managementkind 
+	'CAMPO' as managementkind,
+	DATEDIFF(day, fecha_vencimiento, getdate()) as dayspastdue
 from luna_control lc
 	inner join master_luna l on l.cod_luna = lc.cod_luna
 	inner join core_zonal z on z.COD_ZONAL = l.COD_ZONAL
@@ -41,11 +42,8 @@ where
 	and lc.estadogestioncall = 3 
 	and i.cod_indicador is null
 
-	and r.cod_rango_deuda = 6
 
-	and z.NOMBRE like'%tru%'
+	--and r.COD_RANGO_DEUDA = 6
+	--and z.NOMBRE = 'tru'
 	--filtros seleccionados dentro de la aplicación
 	--CUSTOMFILTERS
-
-
-

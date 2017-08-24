@@ -119,7 +119,7 @@ namespace LetterCore.latex
                 .Replace("%DEBTS%", GetDebtsTable(c.DisaggregatedDebts))
                 .Replace("%CHARGE%", chargeBody);
 
-            var filename = $@"temp\{GetFileNameWithoutExtension(f.Url)}-{id}";
+            var filename = $@"temp\{GetFileNameWithoutExtension(f.Url)}-{id}-{c.CodLuna}";
 
             File.WriteAllText($"{filename}.tex", texBody);
 

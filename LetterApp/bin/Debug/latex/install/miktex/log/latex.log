@@ -243,3 +243,9 @@
 2017-08-21 15:51:12,155-0500 INFO  latex - starting with command line: latex\install\miktex\bin\latex.exe -output-directory=temp --src --interaction=errorstopmode --synctex=-1 temp\letters-21-08-2017-03-51-11.tex
 2017-08-21 15:55:10,251-0500 INFO  latex - starting with command line: latex\install\miktex\bin\latex.exe -output-directory=temp --src --interaction=errorstopmode --synctex=-1 temp\letters-21-08-2017-03-55-09.tex
 2017-08-22 14:58:03,561-0500 INFO  latex - starting with command line: latex\install\miktex\bin\latex.exe -output-directory=temp --src --interaction=errorstopmode --synctex=-1 temp\letters-22-08-2017-02-58-01.tex
+2017-08-24 10:32:35,887-0500 INFO  latex - starting with command line: latex\install\miktex\bin\latex.exe -output-directory=temp --src --interaction=errorstopmode --synctex=-1 temp\letters-24-08-2017-10-32-33.tex
+2017-08-24 10:37:38,187-0500 INFO  latex - starting with command line: latex\install\miktex\bin\latex.exe -output-directory=temp --src --interaction=errorstopmode --synctex=-1 temp\letters-24-08-2017-10-37-29.tex
+2017-08-24 10:40:57,086-0500 INFO  latex - starting with command line: latex\install\miktex\bin\latex.exe -output-directory=temp --src --interaction=errorstopmode --synctex=-1 temp\letters-24-08-2017-10-40-52.tex
+2017-08-24 10:49:03,398-0500 INFO  latex - starting with command line: latex\install\miktex\bin\latex.exe -output-directory=temp --src --interaction=errorstopmode --synctex=-1 temp\letters-24-08-2017-10-48-59.tex
+2017-08-24 12:19:10,074-0500 INFO  latex - starting with command line: latex\install\miktex\bin\latex.exe -output-directory=temp --src --interaction=errorstopmode --synctex=-1 temp\letters-24-08-2017-12-16-07.tex
+2017-08-24 12:26:17,646-0500 INFO  latex - starting with command line: latex\install\miktex\bin\latex.exe -output-directory=temp --src --interaction=errorstopmode --synctex=-1 temp\letters-24-08-2017-12-26-16.tex

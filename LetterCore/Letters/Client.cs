@@ -5,7 +5,7 @@
 
     public class DisaggregatedDebt
     {
-        public int Bill { get; set; }
+        public string Bill { get; set; }
         public string Service { get; set; }
         public string PhoneNumber { get; set; }
         public DateTime DueDate { get; set; }
@@ -23,7 +23,7 @@
         public string NewAddress { get; set; }
         public string AlternativeAddress { get; set; }
         public string Business { get; set; }
-        public int DueRange { get; set; }
+        public string DueRange { get; set; }
         public string Zonal { get; set; }
         public string Sector { get; set; }
         public string District { get; set; }
