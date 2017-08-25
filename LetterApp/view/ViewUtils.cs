@@ -9,6 +9,7 @@
     using System.Windows.Forms;
 
     using LetterCore.Letters;
+    using System.Text;
 
     public class ViewUtils
     {

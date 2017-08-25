@@ -25,8 +25,8 @@
       "kind": "Zonales",
       "internalname": "and z.NOMBRE",
       "box": "true",
-      "validate": "'.{3}'",
-      "hint": "Debe escribir los zonales entre\ncomillas simples, ej. 'TRU',\nsolo se admiten 3 letras."
+      "validate": "'.{3,4}'",
+      "hint": "Debe escribir los zonales entre\ncomillas simples, ej. 'TRU',\nsolo se admiten 3 o 4 letras."
     },
     {
       "kind": "Monto",
