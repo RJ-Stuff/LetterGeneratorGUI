@@ -1,16 +1,15 @@
 ﻿namespace LetterApp.model
 {
-    using System;
     using System.Collections.Generic;
-
-    using Microsoft.Office.Interop.Word;
 
     class PaperSize
     {
         public static readonly PaperSize DefaultSize =
-            new PaperSize("wdPaperA4", "Papel A4", new List<Charge> { Charge.DefaultCharge, new Charge("SpecialCharge", "Cargo especial") });
-
-        public WdPaperSize Papersize { get; set; }
+            new PaperSize(
+                "Papel A4",
+                new List<Charge> {
+                    Charge.DefaultCharge,
+                    new Charge("SpecialCharge", "Cargo especial") });
 
         public string DisplayName { get; set; }
 
@@ -21,28 +20,12 @@
 
         }
 
-        public PaperSize(string paperSize, string displayName, List<Charge> charges)
+        public PaperSize(string displayName, List<Charge> charges)
         {
-            Papersize = (WdPaperSize)Enum.Parse(typeof(WdPaperSize), paperSize);
             DisplayName = displayName;
             Charges = charges;
         }
-
-        public PaperSize(int paperSize, string displayName, List<Charge> charges)
-        {
-            if (Enum.IsDefined(typeof(WdPaperSize), paperSize))
-            {
-                Papersize = (WdPaperSize)paperSize;
-            }
-            else
-            {
-                Papersize = WdPaperSize.wdPaperLegal;
-            }
-
-            DisplayName = displayName;
-            Charges = charges;
-        }
-
+        
         public override string ToString()
         {
             return DisplayName;
@@ -53,8 +36,7 @@
             unchecked
             {
                 var hash = 17;
-
-                hash = hash * 23 + Papersize.ToString().GetHashCode();
+                
                 hash = hash * 23 + DisplayName.GetHashCode();
 
                 return hash;

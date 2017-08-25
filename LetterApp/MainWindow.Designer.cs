@@ -93,7 +93,6 @@
             this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.acercaDeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.groupBox5 = new System.Windows.Forms.GroupBox();
-            this.btChargesHelp = new System.Windows.Forms.Button();
             this.cbCharge = new System.Windows.Forms.ComboBox();
             this.label5 = new System.Windows.Forms.Label();
             this.panel1 = new System.Windows.Forms.Panel();
@@ -776,7 +775,6 @@
             // 
             // groupBox5
             // 
-            this.groupBox5.Controls.Add(this.btChargesHelp);
             this.groupBox5.Controls.Add(this.cbCharge);
             this.groupBox5.Controls.Add(this.label5);
             this.groupBox5.Controls.Add(this.label4);
@@ -789,15 +787,6 @@
             this.groupBox5.TabIndex = 8;
             this.groupBox5.TabStop = false;
             this.groupBox5.Text = "Opciones del formato";
-            // 
-            // btChargesHelp
-            // 
-            this.btChargesHelp.Location = new System.Drawing.Point(304, 65);
-            this.btChargesHelp.Name = "btChargesHelp";
-            this.btChargesHelp.Size = new System.Drawing.Size(25, 24);
-            this.btChargesHelp.TabIndex = 4;
-            this.btChargesHelp.Text = "?";
-            this.btChargesHelp.UseVisualStyleBackColor = true;
             // 
             // cbCharge
             // 
@@ -956,7 +945,6 @@
         public ToolStripMenuItem cerrarToolStripMenuItem;
         private Label label5;
         public ComboBox cbCharge;
-        public Button btChargesHelp;
         private TabPage tabData;
         public Button btLoadData;
         private Panel panel1;

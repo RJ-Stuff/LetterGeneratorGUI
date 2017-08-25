@@ -2,7 +2,7 @@
 {
     class Charge
     {
-        public static readonly Charge DefaultCharge = new Charge(string.Empty, "Sin cargo");
+        public static readonly Charge DefaultCharge = new Charge("SimpleCharge", "Cargo simple");
 
         public string ChargeClazz { get; set; }
 

@@ -12,7 +12,7 @@ namespace LetterCore.latex
 
     using static System.IO.Path;
 
-    class LatexController
+    public class LatexController
     {
         private static string id;
 
@@ -28,11 +28,12 @@ namespace LetterCore.latex
             id = $"{DateTime.Now:dd-MM-yyyy-hh-mm-ss}";
 
             var bodyFormat = File.ReadAllText(Combine(Directory.GetCurrentDirectory(), @"latex\letters.tex"));
+
             var filename = $@"temp\letters-{id}";
+
             var texBody = bodyFormat
                 .Replace("%INCLUDEFILES%", string.Join(string.Empty, formats.Select(f => CreateFormat(f, chargeClazz, worker, e))))
-                .Replace("%PAPERSIZE%", paperSize)
-                .Replace("%TOPMARGIN%", paperSize == "a4paper" ? "2.8cm" : "-1cm");
+                .Replace("%INCLUDECHARGES%", CreateCharges(formats.SelectMany(f => f.Clients), chargeClazz));
 
             File.WriteAllText($"{filename}.tex", texBody);
             var result = $"cartas-{id}.pdf";
@@ -50,9 +51,38 @@ namespace LetterCore.latex
             latexProcess.Start();
             latexProcess.WaitForExit();
 
-            if (latexProcess.ExitCode != 0) throw new Exception("An error occurred.");
+            if (latexProcess.ExitCode != 0) throw new Exception("Ha ocurrido un error en la creación del PDF.");
 
             return result;
+        }
+
+        private static string CreateCharges(IEnumerable<Client> clients, string chargeClazz)
+        {
+            return string.Join(
+                "\r\n",
+                clients
+                .Select(c => GetCharge(chargeClazz, c))
+                .Select(f => GetFileNameWithoutExtension(f))
+                .Select(f => $@"\include{{{f}}}"));
+        }
+
+        private static string GetCharge(string chargeClazz, Client c)
+        {
+            var chargeFormat = File.ReadAllText(Combine(Directory.GetCurrentDirectory(), "charges", chargeClazz));
+
+            var chargeBody = chargeFormat
+                .Replace("%DNI%", c.DocId)
+                .Replace("%CODLUNA%", Convert.ToString(c.CodLuna))
+                .Replace("%NAME%", c.Name)
+                .Replace("%TOTALDEBT%", Convert.ToString(c.TotalDebt))
+                .Replace("%BASEADD%", c.BaseAddress)
+                .Replace("%NEWADD%", c.NewAddress);
+
+            var filename = $@"temp\{chargeClazz}-{id}-{c.CodLuna}";
+
+            File.WriteAllText($"{filename}.tex", chargeBody);
+
+            return filename;
         }
 
         private static void CheckTempDirectory()
@@ -99,25 +129,11 @@ namespace LetterCore.latex
         {
             var bodyFormat = File.ReadAllText(f.Url);
 
-            var chargeFormat = !string.IsNullOrEmpty(chargeClazz)
-                                   ? File.ReadAllText(
-                                       Path.Combine(Directory.GetCurrentDirectory(), "charges", chargeClazz))
-                                   : string.Empty;
-
-            var chargeBody = chargeFormat
-                .Replace("%DNI%", c.DocId)
-                .Replace("%CODLUNA%", Convert.ToString(c.CodLuna))
-                .Replace("%NAME%", c.Name)
-                .Replace("%TOTALDEBT%", Convert.ToString(c.TotalDebt))
-                .Replace("%BASEADD%", c.BaseAddress)
-                .Replace("%NEWADD%", c.NewAddress);
-
             var texBody = bodyFormat
                 .Replace("%NAME%", c.Name)
                 .Replace("%ADDRESS%", c.BaseAddress)
                 .Replace("%TOTALDEBT%", Convert.ToString(c.TotalDebt))
-                .Replace("%DEBTS%", GetDebtsTable(c.DisaggregatedDebts))
-                .Replace("%CHARGE%", chargeBody);
+                .Replace("%DEBTS%", GetDebtsTable(c.DisaggregatedDebts));
 
             var filename = $@"temp\{GetFileNameWithoutExtension(f.Url)}-{id}-{c.CodLuna}";
 

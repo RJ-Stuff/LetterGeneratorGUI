@@ -14,18 +14,13 @@
 
     using LetterCore.Letters;
 
-    using Microsoft.Office.Interop.Word;
-
     using Newtonsoft.Json;
     using Newtonsoft.Json.Linq;
-
-    using Zuby.ADGV;
-
-    using Charge = LetterApp.model.Charge;
     using CheckBox = System.Windows.Forms.CheckBox;
     using Format = model.Format;
     using Point = System.Drawing.Point;
     using Utils = model.Utils;
+    using LetterCore.latex;
 
     public class MainWindowPresenter
     {
@@ -70,7 +65,6 @@
         private static PaperSize GetPaperSize(JToken p)
         {
             return new PaperSize(
-                p["name"].Value<string>(),
                 p["displayname"].Value<string>(),
                 (p["charges"] ?? new JArray()).Select(GetCharge).ToList());
         }
@@ -91,11 +85,6 @@
                 "Acerca de",
                 MessageBoxButtons.OK,
                 MessageBoxIcon.Information);
-        }
-
-        private static void ChargesHelp(object sender, EventArgs e)
-        {
-            MessageBox.Show("El cargo está en relación con el tamaño de la hoja.", "Información");
         }
 
         private static void MainWindowOnClosing(object sender, CancelEventArgs cancelEventArgs)
@@ -137,13 +126,6 @@
             };
 
             return txb;
-        }
-
-        private static bool FilterFormatByPaperSize(string url, PaperSize paperSize)
-        {
-            if (paperSize.Equals(PaperSize.DefaultSize))
-                return !url.Contains("letters") && !url.Contains("cargo");
-            return !url.Contains("letters") && url.Contains("cargo");
         }
 
         private static Configuration GetConfiguration()
@@ -211,7 +193,6 @@
             mainWindow.ckLbFormats.ItemCheck += FormatCheck;
             mainWindow.btMailHelp.Click += MailHelp;
             mainWindow.cbCharge.SelectedIndexChanged += SelectedChargeChange;
-            mainWindow.btChargesHelp.Click += ChargesHelp;
             mainWindow.acercaDeToolStripMenuItem.Click += AboutHelp;
             mainWindow.btLoadData.Click += LoadData;
             mainWindow.dgClients.FilterStringChanged += FilterStringChanged;
@@ -276,7 +257,7 @@
         private void BwGetDataOnDoWork(object sender, DoWorkEventArgs e)
         {
             var worker = (BackgroundWorker)sender;
-            var tuple = (Tuple<object,string>)e.Argument;
+            var tuple = (Tuple<object, string>)e.Argument;
             var format = (Format)tuple.Item1;
             var filters = tuple.Item2;
             var conn = guiConfiguration["connectionstring"].Value<string>();
@@ -505,10 +486,10 @@
             var tuple = (Tuple<object, object>)e.Argument;
             var paperSize = (model.PaperSize)tuple.Item1;
             var charge = (model.Charge)tuple.Item2;
-            GenerateLetters(paperSize.Papersize, charge?.ChargeClazz, worker, e);
+            GenerateLetters(charge.ChargeClazz, worker, e);
         }
 
-        private void GenerateLetters(WdPaperSize paperSize, string chargeClazz, BackgroundWorker worker, DoWorkEventArgs e)
+        private void GenerateLetters(string chargeClazz, BackgroundWorker worker, DoWorkEventArgs e)
         {
             var formats = mainWindow.ckLbFormats.CheckedItems.Cast<Format>()
                 .Where(HasBindingSource)
@@ -517,9 +498,9 @@
 
             maxProgress = formats.Select(l => l.Clients.Count).Sum();
 
-            var docName = AllInOneGenerator.CreateDocs(
+            var docName = LatexController.LatexGenerator(
                 formats,
-                paperSize,
+                "a4paper",
                 chargeClazz,
                 worker,
                 e);
@@ -571,7 +552,7 @@
                     " ",
                     Enumerable.Range(0, mainWindow.lbFilters.Items.Count)
                         .Select(i => ((Filter)mainWindow.lbFilters.Items[i]).InternalToString()));
-                
+
                 mainWindow.btLoadData.Enabled = false;
                 mainWindow.bwGetData.RunWorkerAsync(Tuple.Create(mainWindow.ckLbFormats.Items[index], filters));
                 loadingDataDialog.ShowDialog();
@@ -841,7 +822,7 @@
 
             var stream = Directory
                 .EnumerateFiles(dir, "*.tex")
-                .Where(url => FilterFormatByPaperSize(url, paperSize))
+                .Where(f => !Path.GetFileNameWithoutExtension(f).Equals("letters"))
                 .Select((url, i) => new { format = new Format(url), index = i })
                 .ToList();
 

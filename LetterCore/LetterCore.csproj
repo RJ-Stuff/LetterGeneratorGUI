@@ -30,9 +30,6 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Microsoft.Office.Interop.Word, Version=15.0.0.0, Culture=neutral, PublicKeyToken=71e9bce111e9429c, processorArchitecture=MSIL">
-      <EmbedInteropTypes>True</EmbedInteropTypes>
-    </Reference>
     <Reference Include="Newtonsoft.Json, Version=10.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>..\packages\Newtonsoft.Json.10.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
@@ -60,17 +57,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="latex\LatexController.cs" />
-    <Compile Include="Letters\AllInOneGenerator.cs" />
-    <Compile Include="Letters\Charge.cs" />
     <Compile Include="Letters\ProgressIncrement.cs" />
-    <Compile Include="Letters\SimpleCharge.cs" />
     <Compile Include="Letters\Client.cs" />
     <Compile Include="Letters\Format.cs" />
-    <Compile Include="Letters\InputData.cs" />
-    <Compile Include="Letters\Letter.cs" />
-    <Compile Include="Letters\NonComplianceLetter.cs" />
-    <Compile Include="Letters\SpecialCharge.cs" />
-    <Compile Include="Letters\UrgentLetter.cs" />
     <Compile Include="Letters\Utils.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
