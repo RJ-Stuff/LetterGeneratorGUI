@@ -1,0 +1,37 @@
+% Autor: Rigoberto Leander Salgado Reyes <rigoberto.salgado@rjabogados.com>
+%
+% © 2017 RJAbogados
+% Todos los derechos reservados.
+%
+
+\documentclass[openany,a4paper,11pt]{report}
+
+\usepackage[tmargin=1cm, rmargin=2.0cm, bmargin=1.75cm, lmargin=2.0cm]{geometry}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage[spanish]{babel}
+\usepackage{xparse}
+\usepackage{graphicx}
+\usepackage{array}
+\usepackage{color}
+\usepackage{datetime}
+\usepackage{enumitem}
+\usepackage{helvet}
+\usepackage{framed}
+
+\renewcommand{\familydefault}{\sfdefault}
+\linespread{1}
+\newcolumntype{x}[1]{>{\centering\arraybackslash}p{#1}}
+\pagenumbering{gobble}
+\newdateformat{monthyeardate}{%
+  \THEDAY/\THEMONTH/\THEYEAR}
+
+\begin{document}
+
+%INCLUDEFILES%
+
+%\include{carta-pase-extrajudicial-bbva}
+%\include{carta-pases-extra-agencia}
+\include{carta-facilidades-y-beneficios-agencia-actual}
+
+\end{document} 

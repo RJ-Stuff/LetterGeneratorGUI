@@ -1,0 +1,170 @@
+{
+  "Formats": [
+    {
+      "Url": "C:\\Users\\sistemas\\Desktop\\LetterGeneratorGUI\\LetterApp\\bin\\Debug\\latex\\48-horas.tex",
+      "Checked": true,
+      "PaperSize": {
+        "DisplayName": "Papel A4",
+        "Charges": [
+          {
+            "ChargeClazz": "SimpleCharge",
+            "DisplayName": "Cargo simple"
+          },
+          {
+            "ChargeClazz": "SpecialCharge",
+            "DisplayName": "Cargo especial"
+          }
+        ]
+      },
+      "Charge": {
+        "ChargeClazz": "SimpleCharge",
+        "DisplayName": "Cargo simple"
+      },
+      "Filters": [
+        {
+          "DisplayName": "Rango deuda 120-150 días",
+          "InternalName": "and r.cod_rango_deuda = 6",
+          "Value": ""
+        },
+        {
+          "DisplayName": "Zonales",
+          "InternalName": "and z.NOMBRE",
+          "Value": "'tru'"
+        }
+      ]
+    },
+    {
+      "Url": "C:\\Users\\sistemas\\Desktop\\LetterGeneratorGUI\\LetterApp\\bin\\Debug\\latex\\72-horas.tex",
+      "Checked": true,
+      "PaperSize": {
+        "DisplayName": "Papel A4",
+        "Charges": [
+          {
+            "ChargeClazz": "SimpleCharge",
+            "DisplayName": "Cargo simple"
+          },
+          {
+            "ChargeClazz": "SpecialCharge",
+            "DisplayName": "Cargo especial"
+          }
+        ]
+      },
+      "Charge": {
+        "ChargeClazz": "SimpleCharge",
+        "DisplayName": "Cargo simple"
+      },
+      "Filters": [
+        {
+          "DisplayName": "Rango deuda 120-150 días",
+          "InternalName": "and r.cod_rango_deuda = 6",
+          "Value": ""
+        },
+        {
+          "DisplayName": "Zonales",
+          "InternalName": "and z.NOMBRE",
+          "Value": "'tru'"
+        }
+      ]
+    },
+    {
+      "Url": "C:\\Users\\sistemas\\Desktop\\LetterGeneratorGUI\\LetterApp\\bin\\Debug\\latex\\no-cumplimiento.tex",
+      "Checked": true,
+      "PaperSize": {
+        "DisplayName": "Papel A4",
+        "Charges": [
+          {
+            "ChargeClazz": "SimpleCharge",
+            "DisplayName": "Cargo simple"
+          },
+          {
+            "ChargeClazz": "SpecialCharge",
+            "DisplayName": "Cargo especial"
+          }
+        ]
+      },
+      "Charge": {
+        "ChargeClazz": "SimpleCharge",
+        "DisplayName": "Cargo simple"
+      },
+      "Filters": [
+        {
+          "DisplayName": "Rango deuda 120-150 días",
+          "InternalName": "and r.cod_rango_deuda = 6",
+          "Value": ""
+        },
+        {
+          "DisplayName": "Zonales",
+          "InternalName": "and z.NOMBRE",
+          "Value": "'tru'"
+        }
+      ]
+    },
+    {
+      "Url": "C:\\Users\\sistemas\\Desktop\\LetterGeneratorGUI\\LetterApp\\bin\\Debug\\latex\\ultima-oportunidad.tex",
+      "Checked": true,
+      "PaperSize": {
+        "DisplayName": "Papel A4",
+        "Charges": [
+          {
+            "ChargeClazz": "SimpleCharge",
+            "DisplayName": "Cargo simple"
+          },
+          {
+            "ChargeClazz": "SpecialCharge",
+            "DisplayName": "Cargo especial"
+          }
+        ]
+      },
+      "Charge": {
+        "ChargeClazz": "SimpleCharge",
+        "DisplayName": "Cargo simple"
+      },
+      "Filters": [
+        {
+          "DisplayName": "Rango deuda 120-150 días",
+          "InternalName": "and r.cod_rango_deuda = 6",
+          "Value": ""
+        },
+        {
+          "DisplayName": "Zonales",
+          "InternalName": "and z.NOMBRE",
+          "Value": "'tru'"
+        }
+      ]
+    },
+    {
+      "Url": "C:\\Users\\sistemas\\Desktop\\LetterGeneratorGUI\\LetterApp\\bin\\Debug\\latex\\urgente.tex",
+      "Checked": true,
+      "PaperSize": {
+        "DisplayName": "Papel A4",
+        "Charges": [
+          {
+            "ChargeClazz": "SimpleCharge",
+            "DisplayName": "Cargo simple"
+          },
+          {
+            "ChargeClazz": "SpecialCharge",
+            "DisplayName": "Cargo especial"
+          }
+        ]
+      },
+      "Charge": {
+        "ChargeClazz": "SimpleCharge",
+        "DisplayName": "Cargo simple"
+      },
+      "Filters": [
+        {
+          "DisplayName": "Rango deuda 120-150 días",
+          "InternalName": "and r.cod_rango_deuda = 6",
+          "Value": ""
+        },
+        {
+          "DisplayName": "Zonales",
+          "InternalName": "and z.NOMBRE",
+          "Value": "'tru'"
+        }
+      ]
+    }
+  ],
+  "Notifications": []
+}
