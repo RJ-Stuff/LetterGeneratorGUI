@@ -20,8 +20,10 @@
         public float TotalDebt { get; set; }
         public string DocId { get; set; }
         public string BaseAddress { get; set; }
-        public string NewAddress { get; set; }
-        public string AlternativeAddress { get; set; }
+        public string NewAddress1 { get; set; }
+        public string NewAddress2 { get; set; }
+        public string AlternativeAddress1 { get; set; }
+        public string AlternativeAddress2 { get; set; }
         public string Business { get; set; }
         public string DueRange { get; set; }
         public string Zonal { get; set; }

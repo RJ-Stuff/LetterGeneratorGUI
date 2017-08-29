@@ -99,3 +99,15 @@
 2017-08-25 13:17:50,987-0500 INFO  dvipdfmx - starting with command line: latex\install\miktex\bin\dvipdfmx.exe temp\letters-25-08-2017-01-17-49.dvi -o cartas-25-08-2017-01-17-49.pdf
 2017-08-25 15:24:01,424-0500 INFO  dvipdfmx - starting with command line: latex\install\miktex\bin\dvipdfmx.exe temp\letters-25-08-2017-03-23-58.dvi -o cartas-25-08-2017-03-23-58.pdf
 2017-08-25 17:47:05,406-0500 INFO  dvipdfmx - starting with command line: latex\install\miktex\bin\dvipdfmx.exe temp\letters-25-08-2017-05-47-03.dvi -o cartas-25-08-2017-05-47-03.pdf
+2017-08-29 10:29:39,483-0500 INFO  dvipdfmx - starting with command line: latex\install\miktex\bin\dvipdfmx.exe temp\letters-29-08-2017-10-29-31.dvi -o cartas-29-08-2017-10-29-31.pdf
+2017-08-29 11:46:19,456-0500 INFO  dvipdfmx - starting with command line: latex\install\miktex\bin\dvipdfmx.exe temp\letters-29-08-2017-11-45-33.dvi -o cartas-29-08-2017-11-45-33.pdf
+2017-08-29 12:02:12,393-0500 INFO  dvipdfmx - starting with command line: latex\install\miktex\bin\dvipdfmx.exe temp\letters-29-08-2017-12-01-37.dvi -o cartas-29-08-2017-12-01-37.pdf
+2017-08-29 12:07:49,461-0500 INFO  dvipdfmx - starting with command line: latex\install\miktex\bin\dvipdfmx.exe temp\letters-29-08-2017-12-05-51.dvi -o cartas-29-08-2017-12-05-51.pdf
+2017-08-29 14:18:12,010-0500 INFO  dvipdfmx - starting with command line: latex\install\miktex\bin\dvipdfmx.exe temp\letters-29-08-2017-02-18-08.dvi -o cartas-29-08-2017-02-18-08.pdf
+2017-08-29 14:18:51,858-0500 INFO  dvipdfmx - starting with command line: latex\install\miktex\bin\dvipdfmx.exe temp\letters-29-08-2017-02-18-49.dvi -o cartas-29-08-2017-02-18-49.pdf
+2017-08-29 15:14:12,652-0500 INFO  dvipdfmx - starting with command line: latex\install\miktex\bin\dvipdfmx.exe temp\letters-29-08-2017-03-14-10.dvi -o cartas-29-08-2017-03-14-10.pdf
+2017-08-29 15:16:21,712-0500 INFO  dvipdfmx - starting with command line: latex\install\miktex\bin\dvipdfmx.exe temp\letters-29-08-2017-03-16-20.dvi -o cartas-29-08-2017-03-16-20.pdf
+2017-08-29 16:08:49,749-0500 INFO  dvipdfmx - starting with command line: latex\install\miktex\bin\dvipdfmx.exe temp\letters-29-08-2017-04-08-24.dvi -o cartas-29-08-2017-04-08-24.pdf
+2017-08-29 16:11:10,682-0500 INFO  dvipdfmx - starting with command line: latex\install\miktex\bin\dvipdfmx.exe temp\letters-29-08-2017-04-10-52.dvi -o cartas-29-08-2017-04-10-52.pdf
+2017-08-29 16:14:35,205-0500 INFO  dvipdfmx - starting with command line: latex\install\miktex\bin\dvipdfmx.exe temp\letters-29-08-2017-04-14-14.dvi -o cartas-29-08-2017-04-14-14.pdf
+2017-08-29 16:32:23,767-0500 INFO  dvipdfmx - starting with command line: latex\install\miktex\bin\dvipdfmx.exe temp\letters-29-08-2017-04-32-03.dvi -o cartas-29-08-2017-04-32-03.pdf

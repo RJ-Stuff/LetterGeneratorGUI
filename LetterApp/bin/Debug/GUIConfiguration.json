@@ -110,5 +110,6 @@
       "countquery": "queries\\count.sql",
       "dataquery": "queries\\data.sql"
     }
-  ]
+  ],
+  "limit": 15
 }

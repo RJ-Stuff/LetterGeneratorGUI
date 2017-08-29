@@ -3,11 +3,10 @@
 \end{center}
 {\noindent
 \textbf{ASESCOM RJ ABOGADOS}\hfill \textbf{FECHA GESTIÓN:}\hfill \textbf{HORA GESTIÓN:}\hfill \textbf{TIPO DE CARTA:}\hfill \space\\
-Gestor:\\
-\textbf{DNI:} %DNI% \hfill \textbf{CÓDIGO CLIENTE:} %CODLUNA% \hfill \textbf{NOMBRE:} %NAME% \hfill	\textbf{IMPORTE DEUDA:} S/. %TOTALDEBT%\\
-\textbf{CORREO ELECTRÓNICO:}\hfill \textbf{TELÉFONO MÓVIL:}\hfill	\textbf{TELÉFONO FIJO:}\hfill \space\\
-\textbf{DIRECCIÓN BASE:} %BASEADD%\\
-\textbf{DIRECCIÓN NUEVA:} %NEWADD% \hfill \textbf{DIRECCIÓN ALTERNATIVA:} \hfill \space\\
+Gestor:\hfill Sector:\hfill Negocio:\hfill \space\\
+\textbf{DNI:} %DNI% \hfill \textbf{CÓDIGO CLIENTE:} %CODLUNA% \hfill \textbf{NOMBRE:} %NAME% \hfill	\space\\
+\textbf{IMPORTE DEUDA:} S/. %TOTALDEBT% \hfill \textbf{TELÉFONO MÓVIL:}\hfill	\textbf{TELÉFONO FIJO:}\hfill \space\\
+\textbf{DIRECCIÓN A VISITAR:} %BASEADD%\\
 \textbf{UBICABILIDAD:}\hfill 1.- Entregado en domicilio \framebox(8,8){}\hfill 2.- Dirección Incompleta/incorrecta \framebox(8,8){}\hfill 3.- Mudado \framebox(8,8){}\hfill \space\\
 4.- Bajo puerta \framebox(8,8){}\hfill 5.- Nunca vivió en dirección \framebox(8,8){}\hfill 6.- Falleció \framebox(8,8){}\hfill 7.- Titular en el extranjero \framebox(8,8){}\hfill \space\\
 \textbf{DATOS DEL PREDIO:}\hfill Casa/Hab. \framebox(8,8){}\hfill 2.- Departamento \framebox(8,8){}\hfill 3.- Local Comercial \framebox(8,8){}\hfill Color:\hfill Pisos:\hfill \space\\
@@ -20,6 +19,5 @@ Gestor:\\
 4.- Sufrió Robo \framebox(8,8){}\hfill 5.- Siniestro/Desastre \framebox(8,8){}\hfill \space\\
 Observaciones:\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\\
 \_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_
-\textbf{ULTIMA GESTIÓN:}\\
-\textbf{MEJOR GESTIÓN:}
+\textbf{NUEVAS DIRECCIONES:} %NEWADD%
 }

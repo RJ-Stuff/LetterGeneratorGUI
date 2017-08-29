@@ -21,7 +21,8 @@ namespace LetterCore.latex
             string paperSize,
             string chargeClazz,
             BackgroundWorker worker,
-            DoWorkEventArgs e)
+            DoWorkEventArgs e,
+            int limit)
         {
             CheckTempDirectory();
 
@@ -32,7 +33,7 @@ namespace LetterCore.latex
             var filename = $@"temp\letters-{id}";
 
             var texBody = bodyFormat
-                .Replace("%INCLUDEFILES%", string.Join(string.Empty, formats.Select(f => CreateFormat(f, chargeClazz, worker, e))))
+                .Replace("%INCLUDEFILES%", string.Join(string.Empty, formats.Select(f => CreateFormat(f, worker, e, limit))))
                 .Replace("%INCLUDECHARGES%", CreateCharges(formats.SelectMany(f => f.Clients), chargeClazz));
 
             File.WriteAllText($"{filename}.tex", texBody);
@@ -70,13 +71,18 @@ namespace LetterCore.latex
         {
             var chargeFormat = File.ReadAllText(Combine(Directory.GetCurrentDirectory(), "charges", chargeClazz));
 
+            var newAddresses = new List<string>()
+            { c.NewAddress1, c.NewAddress2, c.AlternativeAddress1, c.AlternativeAddress2 }
+            .Where(s => !string.IsNullOrEmpty(s))
+            .ToList();
+
             var chargeBody = chargeFormat
                 .Replace("%DNI%", c.DocId)
                 .Replace("%CODLUNA%", Convert.ToString(c.CodLuna))
                 .Replace("%NAME%", c.Name)
                 .Replace("%TOTALDEBT%", Convert.ToString(c.TotalDebt))
                 .Replace("%BASEADD%", c.BaseAddress)
-                .Replace("%NEWADD%", c.NewAddress);
+                .Replace("%NEWADD%", string.Join("\\\\", newAddresses));
 
             var filename = $@"temp\{chargeClazz}-{id}-{c.CodLuna}";
 
@@ -92,18 +98,24 @@ namespace LetterCore.latex
             Directory.CreateDirectory("temp");
         }
 
-        private static string CreateFormat(Format f, string chargeClazz, BackgroundWorker worker, DoWorkEventArgs e)
+        private static string CreateFormat(Format f, BackgroundWorker worker, DoWorkEventArgs e, int limit)
         {
             var progressCount = 0;
 
             var includeFiles = f.Clients
-                .Select(c => ProcessReactiveClient(f, chargeClazz, worker, e, c, ref progressCount))
+                .Select(c => ProcessReactiveClient(f, worker, e, c, ref progressCount, limit))
                 .Select(s => $@"\include{{{s}}}");
 
             return string.Join("\r\n", includeFiles);
         }
 
-        private static string ProcessReactiveClient(Format f, string chargeClazz, BackgroundWorker worker, DoWorkEventArgs e, Client c, ref int progressCount)
+        private static string ProcessReactiveClient(
+            Format f, 
+            BackgroundWorker worker, 
+            DoWorkEventArgs e, 
+            Client c, 
+            ref int progressCount,
+            int limit)
         {
             if (worker.CancellationPending)
             {
@@ -111,7 +123,7 @@ namespace LetterCore.latex
                 return string.Empty;
             }
 
-            var result = GetFileName(ProcessClient(f, chargeClazz, c));
+            var result = GetFileName(ProcessClient(f, c, limit));
             var letterKind = GetFileNameWithoutExtension(f.Url);
             var count = f.Clients.Count;
 
@@ -125,7 +137,7 @@ namespace LetterCore.latex
             return result;
         }
 
-        private static string ProcessClient(Format f, string chargeClazz, Client c)
+        private static string ProcessClient(Format f, Client c, int limit)
         {
             var bodyFormat = File.ReadAllText(f.Url);
 
@@ -133,7 +145,7 @@ namespace LetterCore.latex
                 .Replace("%NAME%", c.Name)
                 .Replace("%ADDRESS%", c.BaseAddress)
                 .Replace("%TOTALDEBT%", Convert.ToString(c.TotalDebt))
-                .Replace("%DEBTS%", GetDebtsTable(c.DisaggregatedDebts));
+                .Replace("%DEBTS%", GetDebtsTable(c.DisaggregatedDebts, limit));
 
             var filename = $@"temp\{GetFileNameWithoutExtension(f.Url)}-{id}-{c.CodLuna}";
 
@@ -142,13 +154,16 @@ namespace LetterCore.latex
             return filename;
         }
 
-        private static string GetDebtsTable(IEnumerable<DisaggregatedDebt> debts)
+        private static string GetDebtsTable(IEnumerable<DisaggregatedDebt> debts, int limit)
         {
-            return string.Join(
+            var table = string.Join(
                 @"\hline ",
                 debts
+                .Take(limit)
                 .Select(d => $"{d.Bill} & {d.Service} & {d.PhoneNumber} & {d.DueDate:d} & {d.DaysPastDue} & {d.Debt}\\\\")
                 .ToArray());
+
+            return debts.Count() > limit ? $"{table} \\hline - & Otros. & - & - & - & -\\\\" : table;
         }
     }
 }

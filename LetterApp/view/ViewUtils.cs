@@ -20,19 +20,21 @@
         {
             var client = new Client();
 
-            client.CodLuna = Convert.ToInt32(rowView.Row["codluna"]);
-            client.Name = Convert.ToString(rowView.Row["clientname"]);
-            client.TotalDebt = Convert.ToSingle(rowView.Row["totaldebt"]);
-            client.DocId = Convert.ToString(rowView.Row["docid"]);
-            client.BaseAddress = Convert.ToString(rowView.Row["baseaddress"]);
-            client.NewAddress = Convert.ToString(rowView.Row["newaddress"]);
-            client.AlternativeAddress = Convert.ToString(rowView.Row["alternativeaddress"]);
-            client.Business = Convert.ToString(rowView.Row["business"]);
-            client.DueRange = Convert.ToString(rowView.Row["duerange"]);
-            client.Zonal = Convert.ToString(rowView.Row["zonal"]);
-            client.Sector = Convert.ToString(rowView.Row["sector"]);
-            client.District = Convert.ToString(rowView.Row["district"]);
-            client.ManagementKind = Convert.ToString(rowView.Row["managementkind"]);
+            client.CodLuna = Convert.ToInt32(rowView.Row["Código_Cliente"]);
+            client.Name = Convert.ToString(rowView.Row["Nombre_Cliente"]);
+            client.TotalDebt = Convert.ToSingle(rowView.Row["Deuda_Total"]);
+            client.DocId = Convert.ToString(rowView.Row["No_Identificación"]);
+            client.BaseAddress = Convert.ToString(rowView.Row["Dirección_Base_Carta"]);
+            client.NewAddress1 = Convert.ToString(rowView.Row["Direccion_Nueva1"]);
+            client.NewAddress2 = Convert.ToString(rowView.Row["Direccion_Nueva2"]);
+            client.AlternativeAddress1 = Convert.ToString(rowView.Row["Direccion_Ubicada1"]);
+            client.AlternativeAddress2 = Convert.ToString(rowView.Row["Direccion_Ubicada2"]);
+            client.Business = Convert.ToString(rowView.Row["Negocio"]);
+            client.DueRange = Convert.ToString(rowView.Row["Rango_Deuda"]);
+            client.Zonal = Convert.ToString(rowView.Row["Zonal"]);
+            client.Sector = Convert.ToString(rowView.Row["Sector"]);
+            client.District = Convert.ToString(rowView.Row["Distrito"]);
+            client.ManagementKind = Convert.ToString(rowView.Row["Tipo_Getión"]);
 
             return client;
         }
@@ -41,12 +43,12 @@
         {
             var debt = new DisaggregatedDebt();
 
-            debt.Bill = Convert.ToString(rowView.Row["bill"]);
-            debt.DaysPastDue = Convert.ToInt16(rowView.Row["dayspastdue"]);
-            debt.Debt = Convert.ToSingle(rowView.Row["debt"]);
-            debt.DueDate = Convert.ToDateTime(rowView.Row["duedate"]);
-            debt.PhoneNumber = Convert.ToString(rowView.Row["phonenumber"]);
-            debt.Service = Convert.ToString(rowView.Row["service"]);
+            debt.Bill = Convert.ToString(rowView.Row["Factura"]);
+            debt.DaysPastDue = Convert.ToInt16(rowView.Row["Días_Mora"]);
+            debt.Debt = Convert.ToSingle(rowView.Row["Deuda"]);
+            debt.DueDate = Convert.ToDateTime(rowView.Row["Fecha_Vencimiento"]);
+            debt.PhoneNumber = Convert.ToString(rowView.Row["Número_Teléfono"]);
+            debt.Service = Convert.ToString(rowView.Row["Servicio"]);
 
             return debt;
         }

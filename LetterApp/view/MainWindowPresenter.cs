@@ -147,7 +147,7 @@
         private static List<Client> GetClientsFromBindingSource(Format f)
         {
             return ViewUtils
-                .GroupBy(f.BindingSource.List.Cast<DataRowView>(), "codluna")
+                .GroupBy(f.BindingSource.List.Cast<DataRowView>(), "Código_Cliente")
                 .Select(GetClientFromGroup)
                 .ToList();
         }
@@ -229,7 +229,7 @@
             mainWindow.dgClients.DataSource = format.BindingSource;
             mainWindow.dgClients.CleanFilterAndSort();
             mainWindow.lClientCount.Text = ViewUtils
-                .GroupBy(format.BindingSource.List.Cast<DataRowView>(), "codluna")
+                .GroupBy(format.BindingSource.List.Cast<DataRowView>(), "Código_Cliente")
                 .Count()
                 .ToString();
         }
@@ -503,7 +503,8 @@
                 "a4paper",
                 chargeClazz,
                 worker,
-                e);
+                e,
+                guiConfiguration["limit"].Value<int>());
 
             MailNotification(docName);
         }
@@ -536,7 +537,7 @@
             if (index == -1) return;
             var format = (Format)mainWindow.ckLbFormats.Items[index];
             mainWindow.lClientCount.Text = ViewUtils
-                .GroupBy(format.BindingSource.List.Cast<DataRowView>(), "codluna")
+                .GroupBy(format.BindingSource.List.Cast<DataRowView>(), "Código_Cliente")
                 .Count()
                 .ToString();
         }
@@ -636,7 +637,7 @@
 
                 mainWindow.lClientCount.Text = ViewUtils.GroupBy(
                     format.BindingSource?.List.Cast<DataRowView>() ?? new List<DataRowView>(),
-                    "codluna").Count().ToString();
+                    "Código_Cliente").Count().ToString();
             }
             catch (Exception)
             {
