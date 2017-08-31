@@ -160,7 +160,7 @@ namespace LetterCore.latex
                 @"\hline ",
                 debts
                 .Take(limit)
-                .Select(d => $"{d.Bill} & {d.Service} & {d.PhoneNumber} & {d.DueDate:d} & {d.DaysPastDue} & {d.Debt}\\\\")
+                .Select(d => $"{d.Bill} & {d.Service} & {d.PhoneNumber} & {d.DueDate:d} & {d.DaysPastDue} & {d.Debt:C2}\\\\")
                 .ToArray());
 
             return debts.Count() > limit ? $"{table} \\hline - & Otros. & - & - & - & -\\\\" : table;

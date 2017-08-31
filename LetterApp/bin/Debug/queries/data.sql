@@ -44,5 +44,5 @@ where
 	and lc.retiro = 0 
 	and lc.estadogestioncall = 3 
 	and i.cod_indicador is null
- 
+
 	--CUSTOMFILTERS

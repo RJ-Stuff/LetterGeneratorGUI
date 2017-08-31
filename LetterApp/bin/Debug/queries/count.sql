@@ -1,5 +1,5 @@
-select DISTINCT 
-	count(distinct lc.cod_luna)
+select 
+	count(distinct xy1.Direccion)
 from luna_control lc
 	inner join moroso m on lc.moroso = m.moroso
 	inner join master_luna l on l.cod_luna = lc.cod_luna

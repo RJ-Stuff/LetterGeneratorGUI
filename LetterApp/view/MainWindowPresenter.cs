@@ -147,7 +147,7 @@
         private static List<Client> GetClientsFromBindingSource(Format f)
         {
             return ViewUtils
-                .GroupBy(f.BindingSource.List.Cast<DataRowView>(), "Código_Cliente")
+                .GroupBy(f.BindingSource.List.Cast<DataRowView>(), "Dirección_Base_Carta")
                 .Select(GetClientFromGroup)
                 .ToList();
         }
@@ -229,7 +229,7 @@
             mainWindow.dgClients.DataSource = format.BindingSource;
             mainWindow.dgClients.CleanFilterAndSort();
             mainWindow.lClientCount.Text = ViewUtils
-                .GroupBy(format.BindingSource.List.Cast<DataRowView>(), "Código_Cliente")
+                .GroupBy(format.BindingSource.List.Cast<DataRowView>(), "Dirección_Base_Carta")
                 .Count()
                 .ToString();
         }
@@ -537,7 +537,7 @@
             if (index == -1) return;
             var format = (Format)mainWindow.ckLbFormats.Items[index];
             mainWindow.lClientCount.Text = ViewUtils
-                .GroupBy(format.BindingSource.List.Cast<DataRowView>(), "Código_Cliente")
+                .GroupBy(format.BindingSource.List.Cast<DataRowView>(), "Dirección_Base_Carta")
                 .Count()
                 .ToString();
         }
@@ -637,7 +637,7 @@
 
                 mainWindow.lClientCount.Text = ViewUtils.GroupBy(
                     format.BindingSource?.List.Cast<DataRowView>() ?? new List<DataRowView>(),
-                    "Código_Cliente").Count().ToString();
+                    "Dirección_Base_Carta").Count().ToString();
             }
             catch (Exception)
             {
