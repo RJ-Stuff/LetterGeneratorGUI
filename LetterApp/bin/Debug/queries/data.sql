@@ -11,8 +11,7 @@
     WHEN 4 THEN 'AMDOCS'
     END as Servicio,
     s.Telefono as Número_Teléfono,
-    fecha_vencimiento as Fecha_Vencimiento, 
-	monto_exigible,
+    fecha_vencimiento as Fecha_Vencimiento,
     SUM(MONTO_EXIGIBLE) over (partition by d.cod_sistema, d.cod_cliente, d.cod_cuenta, d.fecha_vencimiento, xy1.direccion) as Deuda,
     'TDP' as Negocio,
     r.descripcion as Rango_Deuda,
@@ -44,5 +43,6 @@ where
 	and lc.retiro = 0 
 	and lc.estadogestioncall = 3 
 	and i.cod_indicador is null
+	and d.fecha_vencimiento < getdate()
 
 	--CUSTOMFILTERS
